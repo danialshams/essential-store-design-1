@@ -3,14 +3,16 @@ import {useEffect,useMemo,useState} from "react";
 import Link from "next/link";
 import {useSearchParams} from "next/navigation";
 import {SlidersHorizontal,ChevronDown,X,Search,RotateCcw,ArrowLeft} from "lucide-react";
-import {categories,demoProducts,type Product,numberFa} from "@/lib/catalog";
+import {type Product,numberFa} from "@/lib/catalog";
+import {useShop} from "@/components/ShopProvider";
 import {ProductCard} from "@/components/ProductCard";
 export function ProductCollection({category,initialProducts}:{category?:string;initialProducts?:Product[]}){
+ const {store}=useShop(),categories=store.categories;
  const params=useSearchParams(),[localSearch,setLocalSearch]=useState(params.get("q")||"");
  const [selectedCategory,setSelectedCategory]=useState(category||params.get("category")||"");
  const [sort,setSort]=useState(params.get("sort")||"popular"),[onlyInStock,setOnlyInStock]=useState(false),[openFilters,setOpenFilters]=useState(false);
  const [maxPrice,setMaxPrice]=useState<number>(0);
- const products=initialProducts??demoProducts;
+ const products=initialProducts??store.products;
  useEffect(()=>setLocalSearch(params.get("q")||""),[params]);
  useEffect(()=>setSelectedCategory(category||params.get("category")||""),[category,params]);
  useEffect(()=>{document.body.style.overflow=openFilters?"hidden":"";return()=>{document.body.style.overflow=""}},[openFilters]);

@@ -13,7 +13,8 @@ test("all product visual demo assets are local",()=>{
 test("checkout is a truthful demo with no fake real payment",()=>{
  const checkout=read("src/app/checkout/page.tsx");
  assert.match(checkout,/ثبت سفارش نمایشی/);
- assert.match(checkout,/پرداخت بانکی و ثبت سفارش روی سرور فعال نیست/);
+ assert.match(checkout,/پرداخت و ثبت سفارش روی سرور فعال نیست/);
+ assert.match(checkout,/سفارش در پنل مدیریت با وضعیت در انتظار پرداخت ثبت می‌شود/);
  assert.doesNotMatch(checkout,/https:\/\/[^ ]+gateway\/verify/);
  assert.doesNotMatch(checkout,/<form className="coupon-form"/);
 });
