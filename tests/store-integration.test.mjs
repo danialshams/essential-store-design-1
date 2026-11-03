@@ -20,3 +20,10 @@ test("mobile header has one visible search form, not redundant header icon",()=>
  assert.match(header,/mobile-search-drawer/);
  assert.doesNotMatch(header,/className="icon-action compact-search"/);
 });
+
+test("components calling useShop are client boundaries (prevent production SSR crash)",()=>{
+ const footer=read("../src/components/Footer.tsx");
+ assert.match(footer, /^["']use client["'];/);
+ const root=read("../src/app/layout.tsx");
+ assert.match(root, /<ShopProvider store=\{store\}>/);
+});
