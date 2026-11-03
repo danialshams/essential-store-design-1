@@ -19,7 +19,7 @@ export function Header(){
   <header className="site-header">
    <div className="container header-inner">
     <button aria-label="باز کردن فهرست" className="icon-action hamburger" onClick={()=>setMenuOpen(true)}><Menu size={25}/></button>
-    <Link href="/" className="brand" aria-label="دایرا استور، صفحه اصلی"><span className="brand-icon">{store.settings.logoUrl?<Image src={store.settings.logoUrl} alt="" width={32} height={32} unoptimized/>:<ShoppingBag size={25} strokeWidth={1.9}/>}</span><strong>{store.settings.storeName}</strong></Link>
+    <Link href="/" className="brand" aria-label={`${store.settings.storeName}، صفحه اصلی`}><span className="brand-icon">{store.settings.logoUrl?<Image src={store.settings.logoUrl} alt="" width={32} height={32} unoptimized/>:<ShoppingBag size={25} strokeWidth={1.9}/>}</span><strong>{store.settings.storeName}</strong></Link>
     <nav className="desktop-links" aria-label="فهرست اصلی">
      <Link className={active("/")?"current":""} href="/">خانه</Link>
      <div className="category-nav"><button className={categoryOpen?"nav-expanded":""} aria-expanded={categoryOpen} onClick={()=>setCategoryOpen(v=>!v)}>دسته‌بندی‌ها <ChevronDown size={14}/></button>
