@@ -31,3 +31,11 @@
 /* Keep the mobile search field visible under the header like the approved mockup. */
 @media(max-width:760px){.site-header .header-inner{position:relative}.site-header .header-inner>.brand{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);margin:0}.site-header .header-actions{margin-right:auto}.site-header .hamburger{margin-left:auto}}
 @media(min-width:761px) and (max-width:1000px){.header-inner{gap:14px}.desktop-links{display:none}.hamburger{display:inline-grid}.header-search{max-width:330px;min-width:120px;flex:1;margin-inline-start:auto}.header-actions{margin-inline-start:0;gap:7px}.brand strong{font-size:21px}}
+
+/* iOS Safari zooms the viewport when an editable field uses a font smaller than 16px.
+   Keep native pinch-to-zoom available; size only search inputs for touch layouts. */
+@media (max-width:1000px){
+  .mobile-search-drawer input,
+  .collection-search input,
+  .header-search input{font-size:16px}
+}
