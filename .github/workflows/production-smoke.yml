@@ -1,0 +1,48 @@
+name: Production commerce sync smoke
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify-sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - name: Check live admin and storefront public APIs
+        run: |
+          python3 - <<'PY'
+          import json, time, urllib.request
+          admin_url = 'https://studio-commerce-admin.vercel.app/api/store/bootstrap'
+          shop_url = 'https://essential-store-design-1.vercel.app/api/catalog'
+          def get_json(url):
+              req = urllib.request.Request(url, headers={'User-Agent': 'Commerce-Sync-Healthcheck/1.0'})
+              with urllib.request.urlopen(req, timeout=16) as response:
+                  if response.status != 200:
+                      raise RuntimeError(f'HTTP {response.status}: {url}')
+                  return json.load(response)
+          for attempt in range(30):
+              try:
+                  admin = get_json(admin_url)
+                  shop = get_json(shop_url)
+                  if admin.get('mode') != 'live' or shop.get('demo') is not False:
+                      raise AssertionError('Shop is not in live sync mode')
+                  admin_products = {p['slug']: p for p in admin.get('products', [])}
+                  shop_products = {p['slug']: p for p in shop.get('products', [])}
+                  if len(admin_products) < 8 or len(shop_products) < 8:
+                      raise AssertionError('Seeded product catalog not available')
+                  if set(admin_products) != set(shop_products):
+                      raise AssertionError('Catalog slugs mismatch')
+                  for slug, product in admin_products.items():
+                      storefront = shop_products[slug]
+                      for k in ('id', 'name', 'price', 'inventory'):
+                          if product[k] != storefront[k]:
+                              raise AssertionError(f'{slug} {k} not synchronized')
+                  print(f'PASS: {len(shop_products)} live products, identical prices/inventory and slug set')
+                  break
+              except Exception as ex:
+                  print(f'Attempt {attempt+1}/30: {type(ex).__name__}: {ex}', flush=True)
+                  if attempt == 29: raise
+                  time.sleep(6)
+          PY
