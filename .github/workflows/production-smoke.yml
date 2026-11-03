@@ -39,6 +39,18 @@ jobs:
                       for k in ('id', 'name', 'price', 'inventory'):
                           if product[k] != storefront[k]:
                               raise AssertionError(f'{slug} {k} not synchronized')
+                  # A passing API is not enough: verify the rendered storefront pages as users see them.
+                  page_paths = ['/', '/products', '/category/clothing', '/product/minimal-leather-bag', '/cart', '/checkout', '/account', '/info/privacy', '/blog']
+                  for path in page_paths:
+                      request = urllib.request.Request('https://essential-store-design-1.vercel.app'+path,
+                          headers={'User-Agent': 'Commerce-SSR-Healthcheck/1.0'})
+                      with urllib.request.urlopen(request, timeout=18) as response:
+                          html = response.read(12000).decode('utf-8', 'replace')
+                          if response.status != 200 or '<html' not in html:
+                              raise AssertionError(f'Invalid storefront page {path}: {response.status}')
+                  with urllib.request.urlopen('https://studio-commerce-admin.vercel.app/login', timeout=18) as response:
+                      if response.status != 200: raise AssertionError('Admin login failed to render')
+                  print(f'PASS: {len(page_paths)} storefront pages and admin login serve HTTP 200')
                   # Verify the live order relay reaches the admin and rejects invalid products.
                   # This request must create no customer, order or payment.
                   import urllib.error
@@ -59,6 +71,9 @@ jobs:
                   except urllib.error.HTTPError as error:
                       if error.code != 409:
                           raise AssertionError(f'Order relay did not validate product: {error.code}')
+                      message = json.loads(error.read().decode('utf-8')).get('error', '')
+                      if 'کالا' not in message:
+                          raise AssertionError('Server returned generic database failure instead of invalid-product rejection: '+message)
                   print('PASS: invalid order rejected by admin service (409), no order created')
                   print(f'PASS: {len(shop_products)} live products, identical prices/inventory and slug set')
                   break
