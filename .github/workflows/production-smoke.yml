@@ -39,6 +39,27 @@ jobs:
                       for k in ('id', 'name', 'price', 'inventory'):
                           if product[k] != storefront[k]:
                               raise AssertionError(f'{slug} {k} not synchronized')
+                  # Verify the live order relay reaches the admin and rejects invalid products.
+                  # This request must create no customer, order or payment.
+                  import urllib.error
+                  order_body = json.dumps({
+                      'buyer': {'name': 'تست اتصال', 'phone': '09120000000',
+                                'province': 'تهران', 'city': 'تهران', 'address': 'آدرس آزمایشی'},
+                      'items': [{'productId': 'nonexistent-ci-product', 'quantity': 1}],
+                      'shippingId': 'demo-post'
+                  }, ensure_ascii=False).encode('utf-8')
+                  order_req = urllib.request.Request(
+                      'https://essential-store-design-1.vercel.app/api/store/order',
+                      data=order_body, method='POST',
+                      headers={'Content-Type': 'application/json',
+                               'Origin': 'https://essential-store-design-1.vercel.app'})
+                  try:
+                      with urllib.request.urlopen(order_req, timeout=20) as response:
+                          raise AssertionError(f'Invalid product was accepted: {response.status}')
+                  except urllib.error.HTTPError as error:
+                      if error.code != 409:
+                          raise AssertionError(f'Order relay did not validate product: {error.code}')
+                  print('PASS: invalid order rejected by admin service (409), no order created')
                   print(f'PASS: {len(shop_products)} live products, identical prices/inventory and slug set')
                   break
               except Exception as ex:
