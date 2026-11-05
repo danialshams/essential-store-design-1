@@ -19,27 +19,26 @@ const photo=(file:string)=>origin+({"chapter-detail.webp":"hero-woman.webp","sto
 const products:Destination={kind:"products"};
 const category:Destination={kind:"category",id:"bags"};
 export const editionTwoDefaults:EditionTwoConfig={
- version:2,announcement:"انتخاب‌های ماندگار برای سلیقه‌های متفاوت",
+ version:2,announcement:"ارسال رایگان برای خریدهای بالای ۳ میلیون تومان",
  hero:[
-  {id:"hero-1",title:"زیبایی در سادگی\nاتفاق می‌افتد.",description:"انتخاب‌هایی برای کسانی که زیبایی را در جزئیات پیدا می‌کنند.",eyebrow:"کالکشن منتخب فصل",imageUrl:photo("chapter-detail.webp"),mobileImageUrl:photo("chapter-detail.webp"),ctaLabel:"کشف کالکشن",target:products,enabled:true},
-  {id:"hero-2",title:"فرم‌های ساده.\nاثر ماندگار.",description:"آرامش در فرم و کیفیت در انتخاب.",eyebrow:"روایت دوم / فرم و سبک",imageUrl:photo("story-detail.webp"),mobileImageUrl:photo("story-detail.webp"),ctaLabel:"کشف داستان",target:{kind:"page",id:"about"},enabled:true},
-  {id:"hero-3",title:"زیبایی در\nجزئیات است.",description:"انتخاب‌هایی که در هر فصل همراهتان می‌مانند.",eyebrow:"روایت سوم / هنر جزئیات",imageUrl:photo("campaign.webp"),mobileImageUrl:photo("chapter-detail.webp"),ctaLabel:"دیدن کالکشن",target:category,enabled:true}
+  {id:"hero-1",title:"فروشگاه ساده، سریع و حرفه‌ای",description:"خریدی مطمئن، آسان و لذت‌بخش از مجموعه‌ای متنوع از پوشاک، کیف، کفش و اکسسوری‌های باکیفیت.",eyebrow:"خریدی متفاوت، ساده و مطمئن",imageUrl:"/images/hero-woman.webp",mobileImageUrl:"/images/hero-mobile.webp",ctaLabel:"مشاهده محصولات",target:{kind:"products"},enabled:true}
  ],
- categories:{title:"کالکشن را کشف کنید",items:[{categoryId:"clothing",imageUrl:photo("category-clothing.webp")},{categoryId:"bags",imageUrl:photo("category-bags.webp")},{categoryId:"shoes",imageUrl:photo("category-shoes.webp")},{categoryId:"accessories",imageUrl:photo("category-accessories.webp")}]},
- featured:{title:"منتخب این فصل",description:"قطعاتی برای امروز؛ انتخاب‌هایی برای سال‌های بعد.",productIds:[]},
- campaign:{title:"جزئیاتی که\nتفاوت می‌سازند.",description:"طراحی‌هایی که هر روز همراهتان می‌مانند.",imageUrl:photo("campaign.webp"),ctaLabel:"دیدن کالکشن",target:category},
- story:{title:"کمتر انتخاب کن.\nبهتر انتخاب کن.",description:"استایل یعنی ترکیب سادگی و شخصیت.",imageUrl:photo("story-portrait.webp"),secondaryImageUrl:photo("story-detail.webp"),ctaLabel:"داستان این نگاه",target:{kind:"page",id:"about"}},
+ categories:{title:"دسته‌بندی محصولات",items:[{categoryId:"clothing",imageUrl:photo("category-clothing.webp")},{categoryId:"bags",imageUrl:photo("category-bags.webp")},{categoryId:"shoes",imageUrl:photo("category-shoes.webp")},{categoryId:"accessories",imageUrl:photo("category-accessories.webp")}]},
+ featured:{title:"پرفروش‌ترین محصولات",description:"گزیده‌ای از بهترین انتخاب‌ها",productIds:[]},
+ campaign:{title:"کیف‌های جدید و خاص",description:"مناسب استایل روزمره و رسمی",imageUrl:"/images/bag.webp",ctaLabel:"مشاهده کیف‌ها",target:category},
+ story:{title:"جدیدترین مدل‌های کفش",description:"ترکیبی از راحتی، کیفیت و استایل روز",imageUrl:"/images/sneakers.webp",secondaryImageUrl:"",ctaLabel:"مشاهده کفش‌ها",target:{kind:"category",id:"shoes"}},
  chapters:[
-  {id:"chapter-form",title:"هر انتخاب، یک روایت.",description:"زیبایی واقعی از جزئیات با دقت ساخته می‌شود.",imageUrl:photo("chapter-form.webp")},
-  {id:"chapter-details",title:"کیفیتی که می‌ماند.",description:"طرح‌های ماندگار در هر فصل.",imageUrl:photo("chapter-detail.webp")}
+  {id:"chapter-form",title:"محصولات جدید و کاربردی",description:"گزینه‌های تازه برای انتخاب شما",imageUrl:"/images/linen-shirt.webp"},
+  {id:"chapter-details",title:"استایل موردعلاقه‌ات را پیدا کن",description:"از بین محصولات جدید، انتخابی مناسب سلیقه‌ات داشته باش.",imageUrl:"/images/bag.webp"}
  ],
  journal:{title:"از نگاه ژورنال",articleIds:[]},
  benefits:[
-  {id:"shipping",title:"روش‌های ارسال متنوع",description:"انتخاب روش ارسال هنگام ثبت سفارش",icon:"truck"},
-  {id:"products",title:"جزئیات شفاف محصولات",description:"قیمت و موجودی متصل به پنل",icon:"package"},
-  {id:"support",title:"پشتیبانی و همراهی",description:"اطلاعات تماس از پنل مدیریت",icon:"headphones"}
+  {id:"shipping",title:"ارسال سریع",description:"تحویل در کوتاه‌ترین زمان",icon:"truck"},
+  {id:"products",title:"پرداخت امن",description:"اتصال به درگاه معتبر",icon:"package"},
+  {id:"support",title:"پشتیبانی",description:"پاسخگویی سریع",icon:"headphones"},
+  {id:"quality",title:"ضمانت اصالت",description:"تضمین کیفیت و اصالت کالا",icon:"shield"}
  ],
- footer:{eyebrow:"THE WAY WE SEE STYLE",title:"سلیقه، در انتخاب‌های کوچک معنا پیدا می‌کند.",bottomNote:"ساخته‌شده با توجه به جزئیات"},
+ footer:{eyebrow:"برای انتخاب راحت‌تر",title:"استایل موردعلاقه‌ات را پیدا کن",bottomNote:"از بین محصولات جدید، انتخابی مناسب سلیقه‌ات داشته باش."},
  footerColumns:[
   {id:"guide",title:"راهنمای خرید",links:[
    {id:"all-products",label:"همه محصولات",target:{kind:"products"}},
@@ -76,4 +75,4 @@ export function resolveTarget(target:Destination,catalog:EdCatalog):string{
   default:return "#";
  }
 }
-export function editionTwoTitleFor(kind:string){return ({hero:"هیرو",categories:"کالکشن‌ها",featured:"منتخب فصل",campaign:"کمپین تصویری",story:"داستان برند",chapters:"فصل‌های تصویری",journal:"ژورنال",benefits:"مزایای فروشگاه",footer:"فوتر و هدر"} as Record<string,string>)[kind]||kind;}
+export function editionTwoTitleFor(kind:string){return ({hero:"هیرو",categories:"دسته‌بندی‌ها",featured:"پرفروش‌ترین‌ها",campaign:"بنر کیف",story:"بنر کفش",chapters:"بنرهای پایین",journal:"مقالات",benefits:"مزایا",footer:"فوتر و منو"} as Record<string,string>)[kind]||kind;}

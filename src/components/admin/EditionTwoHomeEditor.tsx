@@ -2,7 +2,7 @@
 import {useCallback,useEffect,useState,type ReactNode} from "react";
 import Link from "next/link";
 import {ArrowLeft,ArrowUp,ArrowDown,ArrowUpLeft,Check,Eye,Loader2,Monitor,Smartphone,
- Plus,Trash2,Truck,Headphones,PackageCheck,ShieldCheck,Undo2,ExternalLink,Save} from "lucide-react";
+ Plus,Trash2,Truck,Headphones,PackageCheck,ShieldCheck,NotebookPen,Undo2,ExternalLink,Save} from "lucide-react";
 import {adminFetch,DEMO_MODE} from "@/lib/admin/demo-api";
 import {DestinationPicker,MediaField,EntityChoices} from "@/components/admin/EditionTwoControls";
 import {editionTwoDefaults,editionTwoTitleFor,type EditionTwoConfig,type EdCatalog,type EdImageText,type Destination} from "@/lib/admin/edition-two";

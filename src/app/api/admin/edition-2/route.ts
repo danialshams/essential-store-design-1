@@ -22,7 +22,7 @@ export async function GET(req:NextRequest){
  const initial=structuredClone(editionTwoDefaults);
  // New stores should start with their own real categories, not demo slugs.
  initial.categories.items=categories.slice(0,4).map(c=>({categoryId:c.id,imageUrl:c.imageUrl||undefined}));
- initial.hero[2].target=categories[0]?{kind:"category",id:categories[0].id}:{kind:"products"};
+ initial.hero[0].target={kind:"products"};
  initial.campaign.target=categories[0]?{kind:"category",id:categories[0].id}:{kind:"products"};
  const published=editionTwoSchema.safeParse(settings.editorialConfig);
  const draft=editionTwoSchema.safeParse(settings.editorialDraft);
@@ -79,7 +79,7 @@ export async function POST(req:NextRequest){
  }
  await db.$transaction(async tx=>{
   await tx.storeSettings.update({where:{id:"main"},data:{
-   editorialConfig:config as Prisma.InputJsonValue,editorialDraft:Prisma.DbNull,themeId:"design-2"
+   editorialConfig:config as Prisma.InputJsonValue,editorialDraft:Prisma.DbNull,themeId:"design-1"
   }});
   await tx.auditLog.create({data:{resource:"edition2",resourceId:"main",operation:"PUBLISH"}});
  });
