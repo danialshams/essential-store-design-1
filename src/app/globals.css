@@ -39,3 +39,19 @@
   .collection-search input,
   .header-search input{font-size:16px}
 }
+
+
+/* Edition 01 native hero carousel, content and responsive manager preview */
+.ed1-slide-dots{display:flex;align-items:center;gap:7px;margin-top:8px}
+.ed1-slide-dots button{border:0;background:#bed5f5;width:7px;height:7px;border-radius:50%;padding:0;transition:all .25s ease}
+.ed1-slide-dots button.active{width:20px;border-radius:8px;background:#0868d9}
+.ed1-featured-caption{color:#78879d;font-size:12px;margin:-4px 0 20px}
+.ed1-managed-promo{background:#f2f7ff}
+.ed1-managed-chapter{min-height:165px}
+.ed1-journal-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.ed1-journal-card{display:flex;min-width:0;gap:16px;border:1px solid #edf0f5;background:#fff;border-radius:14px;overflow:hidden}
+.ed1-journal-card img{width:42%;height:175px;object-fit:cover}
+.ed1-journal-card>div{padding:15px 8px;min-width:0}
+.ed1-journal-card h3{font-size:16px;margin:0 0 7px}.ed1-journal-card p{color:#7a8a9d;font-size:12px}
+.ed1-journal-card span{color:#1267d0;font-weight:700;display:inline-flex;align-items:center;gap:5px}
+@media(max-width:700px){.ed1-journal-grid{grid-template-columns:1fr}.ed1-journal-card img{height:145px}.ed1-featured-caption{font-size:11px}}

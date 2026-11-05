@@ -1,17 +1,96 @@
 import Link from "next/link";
 import Image from "next/image";
-import {ShoppingCart,LayoutGrid,ChevronLeft,Truck,ShieldCheck,Headphones,Medal,ArrowLeft} from "lucide-react";
+import {ChevronLeft,Truck,ShieldCheck,Headphones,Medal,PackageCheck,ArrowLeft} from "lucide-react";
 import {loadStore} from "@/lib/live-store";
 import {ProductCard} from "@/components/ProductCard";
 import {SectionHeading} from "@/components/SectionHeading";
-export default async function Home(){const store=await loadStore(),categories=store.categories;const best=store.products.filter(p=>p.featured).slice(0,4);const sections=store.settings.homeSections?.filter(s=>s.enabled).sort((a,b)=>a.position-b.position)||[],heroSection=sections[0];const heroImage=heroSection?.imageUrl||"/images/hero-woman.webp";return <>
- <div className="container">
-  <section className="hero" aria-labelledby="hero-title"><div className="hero-copy"><span className="hero-eyebrow">خریدی متفاوت، ساده و مطمئن</span><h1 id="hero-title">{heroSection?.title||store.settings.seoTitle||"فروشگاه ساده، سریع و حرفه‌ای"}</h1><p>{heroSection?.description||store.settings.description||"خریدی مطمئن، آسان و لذت‌بخش از مجموعه‌ای متنوع از پوشاک، کیف، کفش و اکسسوری‌های باکیفیت."}</p><div className="hero-actions"><Link className="button button-primary" href="/products">مشاهده محصولات <ShoppingCart size={18}/></Link><Link className="button button-outline" href="/products#categories">دسته‌بندی‌ها <LayoutGrid size={17}/></Link></div></div><div className="hero-photo"><Image src={heroImage} width={1136} height={412} alt="استایل روزمره و خریدی دلنشین" priority className="hero-desktop-photo" unoptimized={heroImage.startsWith("http")}/><Image src={heroSection?.imageUrl||"/images/hero-mobile.webp"} width={668} height={522} alt="" priority className="hero-mobile-photo" unoptimized={Boolean(heroSection?.imageUrl?.startsWith("http"))}/></div></section>
-  <section className="category-section" id="categories" aria-label="دسته‌بندی محصولات"><div className="category-strip">{categories.map(c=><Link className="category-tile" href={`/category/${c.id}`} key={c.id}><span className="category-tile-label">{c.name}<ChevronLeft size={16}/></span><Image src={c.image} alt="" width={240} height={120} unoptimized={c.image.startsWith("http")}/></Link>)}</div></section>
-  <section className="products-section" aria-labelledby="best-sellers-title"><SectionHeading title="پرفروش‌ترین محصولات"/><div className="product-grid">{best.map(p=><ProductCard key={p.id} product={p}/>)}</div></section>
-  {!store.live&&<section className="promotions-section"><SectionHeading title="محصولات جدید" href="/products?sort=new" linkLabel="مشاهده همه"/><div className="promo-grid"><Link className="promo-banner promo-bag" href="/category/bags"><div><h3>کیف‌های جدید و خاص</h3><p>مناسب استایل روزمره و رسمی</p><span>مشاهده کیف‌ها <ChevronLeft size={14}/></span></div><Image src="/images/bag.webp" alt="کیف‌های تازه" width={410} height={200}/></Link><Link className="promo-banner promo-shoe" href="/category/shoes"><div><h3>جدیدترین مدل‌های کفش</h3><p>ترکیبی از راحتی، کیفیت و استایل روز</p><span>مشاهده کفش‌ها <ChevronLeft size={14}/></span></div><Image src="/images/sneakers.webp" alt="کفش‌های تازه" width={410} height={200}/></Link></div></section>}
-  {store.banners.length>0&&<section className="promotions-section"><SectionHeading title="پیشنهادهای فروشگاه"/><div className="promo-grid">{store.banners.map(b=><Link key={b.id} href={b.linkUrl||"/products"} className="promo-banner"><div><h3>{b.title}</h3><p>{b.subtitle}</p><span>مشاهده <ChevronLeft size={14}/></span></div>{b.imageUrl&&<Image src={b.imageUrl} alt="" width={410} height={200} unoptimized/>}</Link>)}</div></section>}
-  {sections.slice(1).map(s=><section className="bottom-promo" key={s.id}><div><span>فروشگاه</span><h2>{s.title}</h2><p>{s.description}</p></div>{s.imageUrl&&<Image src={s.imageUrl} alt="" width={240} height={130} unoptimized={s.imageUrl.startsWith("http")}/>}</section>)}
-  <section className="benefits" aria-label="مزایای خرید"><div><Truck/><span><strong>ارسال سریع</strong><small>تحویل در کوتاه‌ترین زمان</small></span></div><div><ShieldCheck/><span><strong>پرداخت امن</strong><small>زیرساخت قابل اتصال به درگاه معتبر</small></span></div><div><Headphones/><span><strong>پشتیبانی</strong><small>پاسخگویی سریع و حرفه‌ای</small></span></div><div><Medal/><span><strong>ضمانت اصالت</strong><small>تضمین اصالت و کیفیت کالا</small></span></div></section>
-  <section className="bottom-promo"><div><span>برای انتخاب راحت‌تر</span><h2>استایل موردعلاقه‌ات را پیدا کن</h2><p>از بین محصولات جدید، انتخابی مناسب سلیقه‌ات داشته باش.</p></div><Link href="/products" className="button button-outline">دیدن همه محصولات <ArrowLeft size={17}/></Link></section>
- </div></>}
+import {EditionOneHero,type EssentialOneSlide} from "@/components/EditionOneHero";
+import {targetUrl} from "@/lib/edition-two-content";
+import type {StoreData} from "@/lib/live-store";
+
+const benefitIcons={truck:Truck,package:PackageCheck,headphones:Headphones,shield:ShieldCheck};
+const fallbackBenefits=[
+ {id:"shipping",title:"ارسال سریع",description:"تحویل در کوتاه‌ترین زمان",icon:"truck" as const},
+ {id:"pay",title:"پرداخت امن",description:"زیرساخت قابل اتصال به درگاه معتبر",icon:"shield" as const},
+ {id:"support",title:"پشتیبانی",description:"پاسخگویی سریع و حرفه‌ای",icon:"headphones" as const},
+ {id:"quality",title:"ضمانت اصالت",description:"تضمین اصالت و کیفیت کالا",icon:"package" as const}
+];
+function Promotion({title,description,image,href,label}:{title:string;description:string;image:string;href:string;label:string}){
+ return <Link className="promo-banner ed1-managed-promo" href={href}>
+  <div><h3>{title}</h3><p>{description}</p><span>{label} <ChevronLeft size={14}/></span></div>
+  {image&&<Image src={image} alt="" width={410} height={200} unoptimized={image.startsWith("http")}/>}
+ </Link>;
+}
+export default async function Home(){
+ const store:StoreData=await loadStore();
+ const edition=store.settings.editorialConfig;
+ const sections=[...(store.settings.homeSections||[])].filter(s=>s.enabled).sort((a,b)=>a.position-b.position);
+ const homeHero=sections[0];
+ const baseSlide:EssentialOneSlide={id:"fallback",eyebrow:"خریدی متفاوت، ساده و مطمئن",
+  title:homeHero?.title||store.settings.seoTitle||"فروشگاه ساده، سریع و حرفه‌ای",
+  description:homeHero?.description||store.settings.description||"خریدی مطمئن، آسان و لذت‌بخش",
+  imageUrl:homeHero?.imageUrl||"/images/hero-woman.webp",
+  mobileImageUrl:homeHero?.mobileImageUrl||"/images/hero-mobile.webp",
+  ctaLabel:homeHero?.ctaLabel||"مشاهده محصولات",ctaHref:homeHero?.ctaHref?.startsWith("/")?homeHero.ctaHref:"/products"};
+ const slides=edition?edition.hero.filter(x=>x.enabled).map((x):EssentialOneSlide=>({
+  id:x.id,title:x.title,description:x.description,eyebrow:x.eyebrow,imageUrl:x.imageUrl||baseSlide.imageUrl,
+  mobileImageUrl:x.mobileImageUrl||x.imageUrl||baseSlide.mobileImageUrl,ctaLabel:x.ctaLabel,
+  ctaHref:targetUrl(x.target,store)})):[baseSlide];
+ const categories=edition?edition.categories.items.map(item=>({
+  category:store.categories.find(c=>c.dbId===item.categoryId||c.id===item.categoryId),
+  image:item.imageUrl})).filter(x=>Boolean(x.category)):store.categories.map(category=>({category,image:undefined}));
+ const featured=store.products.filter(p=>p.featured).slice(0,4);
+ const products=edition?.featured.productIds.length?edition.featured.productIds.map(id=>store.products.find(p=>p.id===id)).filter((p):p is StoreData["products"][number]=>Boolean(p)).slice(0,4):featured;
+ const best=products.length?products:store.products.slice(0,4);
+ const benefits=edition?.benefits??fallbackBenefits;
+ const journal=edition?.journal.articleIds.length?edition.journal.articleIds.map(id=>store.articles.find(a=>a.id===id)).filter((a):a is StoreData["articles"][number]=>Boolean(a)).slice(0,2):store.articles.slice(0,2);
+ return <div className="container">
+  <EditionOneHero slides={slides}/>
+  <section className="category-section" id="categories" aria-label="دسته‌بندی محصولات">
+   {edition&&<SectionHeading title={edition.categories.title}/>}
+   <div className="category-strip">{categories.map(entry=>{
+    const cat=entry.category!;const photo=entry.image||cat.image;
+    return <Link className="category-tile" href={"/category/"+cat.id} key={cat.id}>
+     <span className="category-tile-label">{cat.name}<ChevronLeft size={16}/></span>
+     <Image src={photo} alt="" width={240} height={120} unoptimized={photo.startsWith("http")}/>
+    </Link>})}</div>
+  </section>
+  <section className="products-section" aria-labelledby="best-sellers-title">
+   <SectionHeading title={edition?.featured.title||"پرفروش‌ترین محصولات"}/>
+   {edition?.featured.description&&<p className="ed1-featured-caption">{edition.featured.description}</p>}
+   <div className="product-grid">{best.map(p=><ProductCard key={p.id} product={p}/>)}</div>
+  </section>
+  {edition&&<section className="promotions-section" aria-label="بنرهای تبلیغاتی">
+   <SectionHeading title="پیشنهادهای ویژه"/>
+   <div className="promo-grid">
+    {edition.campaign.target.kind!=="none"&&<Promotion title={edition.campaign.title} description={edition.campaign.description} image={edition.campaign.imageUrl||"/images/bag.webp"} href={targetUrl(edition.campaign.target,store)} label={edition.campaign.ctaLabel}/>}
+    {edition.story.target.kind!=="none"&&<Promotion title={edition.story.title} description={edition.story.description} image={edition.story.imageUrl||"/images/sneakers.webp"} href={targetUrl(edition.story.target,store)} label={edition.story.ctaLabel}/>}
+   </div>
+  </section>}
+  {!edition&&!store.live&&<section className="promotions-section"><SectionHeading title="محصولات جدید" href="/products?sort=new" linkLabel="مشاهده همه"/><div className="promo-grid">
+   <Promotion title="کیف‌های جدید و خاص" description="مناسب استایل روزمره و رسمی" image="/images/bag.webp" href="/category/bags" label="مشاهده کیف‌ها"/>
+   <Promotion title="جدیدترین مدل‌های کفش" description="ترکیبی از راحتی، کیفیت و استایل روز" image="/images/sneakers.webp" href="/category/shoes" label="مشاهده کفش‌ها"/>
+  </div></section>}
+  {store.banners.length>0&&<section className="promotions-section"><SectionHeading title="بنرهای فروشگاه"/><div className="promo-grid">{store.banners.map(b=>
+   <Promotion key={b.id} title={b.title} description={b.subtitle} image={b.imageUrl||""} href={b.target?targetUrl(b.target,store):b.linkUrl||"/products"} label="مشاهده"/>)}</div></section>}
+  {edition?edition.chapters.map(s=><section className="bottom-promo ed1-managed-chapter" key={s.id}>
+   <div><span>انتخاب ویژه</span><h2>{s.title}</h2><p>{s.description}</p></div>
+   {s.imageUrl&&<Image src={s.imageUrl} alt="" width={240} height={130} unoptimized={s.imageUrl.startsWith("http")}/>}
+  </section>):sections.slice(1).map(s=><section className="bottom-promo" key={s.id}><div><span>فروشگاه</span><h2>{s.title}</h2><p>{s.description}</p></div>{s.imageUrl&&<Image src={s.imageUrl} alt="" width={240} height={130} unoptimized={s.imageUrl.startsWith("http")}/>}</section>)}
+  {edition&&journal.length>0&&<section className="products-section ed1-journal" aria-label="مقالات منتخب">
+   <SectionHeading title={edition.journal.title} href="/blog" linkLabel="همه مقالات"/>
+   <div className="ed1-journal-grid">{journal.map(a=><Link href={"/blog/"+a.slug} key={a.slug} className="ed1-journal-card">
+    {a.coverUrl&&<Image src={a.coverUrl} alt="" width={440} height={215} unoptimized={a.coverUrl.startsWith("http")}/>}
+    <div><h3>{a.title}</h3><p>{a.summary}</p><span>مطالعه مقاله <ChevronLeft size={15}/></span></div>
+   </Link>)}</div>
+  </section>}
+  <section className="benefits" aria-label="مزایای خرید">{benefits.map(item=>{
+   const Icon=benefitIcons[item.icon]||Medal;
+   return <div key={item.id}><Icon/><span><strong>{item.title}</strong><small>{item.description}</small></span></div>;
+  })}</section>
+  <section className="bottom-promo"><div><span>{edition?.footer.eyebrow||"برای انتخاب راحت‌تر"}</span>
+   <h2>{edition?.footer.title||"استایل موردعلاقه‌ات را پیدا کن"}</h2><p>{edition?.footer.bottomNote||"از بین محصولات جدید، انتخابی مناسب سلیقه‌ات داشته باش."}</p></div>
+   <Link href="/products" className="button button-outline">دیدن همه محصولات <ArrowLeft size={17}/></Link>
+  </section>
+ </div>;
+}
