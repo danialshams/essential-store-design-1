@@ -3,7 +3,7 @@ import {test} from "node:test";
 import {readFileSync,existsSync} from "node:fs";
 const load=p=>readFileSync(p,"utf8");
 
-test("The visual Edition 02 administrator and storefront share a Next.js repository",()=>{
+test("The visual Edition 01 administrator and storefront share a Next.js repository",()=>{
  assert.ok(existsSync("src/app/admin/editorial/page.tsx"));
  assert.ok(existsSync("src/app/api/admin/edition-2/route.ts"));
  assert.ok(existsSync("src/app/api/store/bootstrap/route.ts"));
@@ -11,7 +11,7 @@ test("The visual Edition 02 administrator and storefront share a Next.js reposit
  const chrome=load("src/components/StoreChrome.tsx");
  assert.match(chrome,/pathname\.startsWith\("\/admin"\)/);
  assert.match(chrome,/<Header\/>/);
- assert.match(chrome,/SiteMotion/);
+ assert.match(chrome,/<ShopProvider store=\{store\}>/);
  const css=load("src/app/admin/edition-two-admin.css");
  assert.match(css,/\.ed2-part-selector\s*\{[\s\S]*?display:grid/);
  assert.match(css,/grid-template-columns:repeat\(3,minmax\(0,1fr\)\)/);
@@ -20,10 +20,12 @@ test("The visual Edition 02 administrator and storefront share a Next.js reposit
  assert.match(shell,/href="\/" target="_blank"/);
  assert.doesNotMatch(shell,/studio-commerce-admin\.vercel\.app/);
 });
-test("Admin edit/publish is only active when authenticated; preview is explicit",()=>{
+test("Admin edit/publish uses the real database with explicit server-only public prototype switch",()=>{
  const auth=load("src/app/admin/layout.tsx");
  assert.match(auth,/currentAdmin\(\)/);
  assert.match(auth,/NEXT_PUBLIC_STUDIO_DEMO/);
+ assert.match(auth,/publicOpenEditorEnabled/);
+ assert.match(load("src/lib/admin/security.ts"),/TEMP_PUBLIC_ADMIN_EDIT/);
  const cms=load("src/app/api/admin/edition-2/route.ts");
  assert.match(cms,/requireApiAdmin/);
  assert.match(cms,/editorialDraft/);
