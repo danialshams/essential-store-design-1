@@ -24,6 +24,8 @@ test("mobile header has one visible search form, not redundant header icon",()=>
 test("components calling useShop are client boundaries (prevent production SSR crash)",()=>{
  const footer=read("../src/components/Footer.tsx");
  assert.match(footer, /^["']use client["'];/);
+ const chrome=read("../src/components/StoreChrome.tsx");
+ assert.match(chrome, /<ShopProvider store=\{store\}>/);
  const root=read("../src/app/layout.tsx");
- assert.match(root, /<ShopProvider store=\{store\}>/);
+ assert.match(root, /<StoreChrome store=\{store\}>/);
 });
