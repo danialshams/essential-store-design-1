@@ -24,6 +24,7 @@ export async function GET(req:NextRequest){
  initial.categories.items=categories.slice(0,4).map(c=>({categoryId:c.id,imageUrl:c.imageUrl||undefined}));
  initial.hero[0].target={kind:"products"};
  initial.campaign.target=categories[0]?{kind:"category",id:categories[0].id}:{kind:"products"};
+ initial.story.target=categories[1]?{kind:"category",id:categories[1].id}:categories[0]?{kind:"category",id:categories[0].id}:{kind:"products"};
  const published=editionTwoSchema.safeParse(settings.editorialConfig);
  const draft=editionTwoSchema.safeParse(settings.editorialDraft);
  return NextResponse.json({published:published.success?published.data:null,
