@@ -1,16 +1,19 @@
 import {cache} from "react";
+import {isEditionTwo,type EditionTwoContent} from "@/lib/edition-two-content";
+import {unstable_cache} from "next/cache";
 import {categories as demoCategories,demoProducts,IMAGE_FALLBACK,type Product} from "@/lib/catalog";
 
-export type StoreCategory={id:string;name:string;description:string;image:string};
-export type StoreBanner={id:string;title:string;subtitle:string;imageUrl:string|null;linkUrl:string|null};
-export type StorePage={slug:string;title:string;body:string;seoTitle?:string|null;seoDescription?:string|null};
-export type StoreArticle={slug:string;title:string;summary:string;body:string;coverUrl:string|null;createdAt:string};
+export type StoreCategory={id:string;dbId?:string;name:string;description:string;image:string};
+export type StoreBanner={id:string;title:string;subtitle:string;imageUrl:string|null;linkUrl:string|null;target?:import("@/lib/edition-two-content").Destination|null};
+export type StorePage={id?:string;slug:string;title:string;body:string;seoTitle?:string|null;seoDescription?:string|null};
+export type StoreArticle={id?:string;slug:string;title:string;summary:string;body:string;coverUrl:string|null;createdAt:string};
 export type StoreShipping={id:string;title:string;cost:number;freeAbove:number|null;estimatedDays?:string|null};
 export type StoreReview={productId:string;author:string;rating:number;body:string;createdAt:string};
-export type StoreSettings={storeName:string;description:string;logoUrl?:string|null;contactEmail?:string|null;contactPhone?:string|null;address?:string|null;instagram?:string|null;seoTitle?:string|null;seoDescription?:string|null;homeSections?:Array<{id:string;title:string;description:string;imageUrl?:string|null;enabled:boolean;position:number}>};
+export type StoreSettings={storeName:string;description:string;logoUrl?:string|null;contactEmail?:string|null;contactPhone?:string|null;address?:string|null;instagram?:string|null;seoTitle?:string|null;seoDescription?:string|null;editorialConfig?:EditionTwoContent|null;homeSections?:Array<{id:string;title:string;description:string;imageUrl?:string|null;mobileImageUrl?:string|null;secondaryImageUrl?:string|null;ctaLabel?:string;ctaHref?:string;layout?:"split"|"overlap"|"full";animation?:"mask"|"fade"|"slide";enabled:boolean;position:number}>};
 export type StoreData={products:Product[];categories:StoreCategory[];settings:StoreSettings;banners:StoreBanner[];pages:StorePage[];articles:StoreArticle[];shipping:StoreShipping[];reviews:StoreReview[];live:boolean};
 const demo:StoreData={products:demoProducts,categories:demoCategories,settings:{storeName:"دایرا استور",description:"خریدی مطمئن، آسان و لذت‌بخش از مجموعه‌ای متنوع از پوشاک، کیف، کفش و اکسسوری‌های باکیفیت."},banners:[],pages:[],articles:[],shipping:[],reviews:[],live:false};
 const cleanUrl=(url:unknown)=>typeof url==="string"&&(url.startsWith("https://")||url.startsWith("/images/"))?url:null;
+const oldDemoProductImage=new Set<string>([]);
 const money=(value:unknown)=>typeof value==="number"&&Number.isFinite(value)?Math.max(0,Math.round(value)):0;
 const text=(value:unknown,fallback="")=>typeof value==="string"?value:fallback;
 
@@ -22,20 +25,41 @@ type RemoteProduct={id:string;slug:string;name:string;description:string;sku:str
 type ResponseData={mode:string;settings:StoreSettings|null;categories:RemoteCategory[];products:RemoteProduct[];banners:StoreBanner[];
  pages:StorePage[];articles:StoreArticle[];shipping:StoreShipping[];reviews:StoreReview[]};
 
+/** Public catalogue only: a short shared cache avoids a backend round-trip
+ * on every page navigation. Order placement still validates against the server.
+ * Updates from the admin become visible within approximately 15 seconds.
+ */
+const getPublicBootstrap=unstable_cache(async(origin:string):Promise<ResponseData>=>{
+ const response=await fetch(`${origin}/api/store/bootstrap`,{
+  cache:"no-store",signal:AbortSignal.timeout(6000)
+ });
+ if(!response.ok)throw Error(`Upstream catalog ${response.status}`);
+ return await response.json() as ResponseData;
+},["edition01-public-catalogue-v1"],{revalidate:15});
+
+const getLocalBootstrap=unstable_cache(async():Promise<ResponseData>=>{
+  // The storefront and visual administrator live in one Next.js application.
+  // Read the same database without a cross-origin request or shared public key.
+  const {GET}=await import("@/app/api/store/bootstrap/route");
+  const response=await GET();
+  if(!response.ok)throw Error("Local catalog "+response.status);
+  return await response.json() as ResponseData;
+},["edition01-local-public-catalog-v1"],{revalidate:15});
+
 /** Kept per request; no browser CORS, no client secret, and never rewrites demo fixtures. */
 export const loadStore=cache(async():Promise<StoreData>=>{
  const origin=process.env.STOREFRONT_ADMIN_ORIGIN?.trim().replace(/\/$/,"");
- if(!origin)return demo;
+ const local=process.env.STORE_ADMIN_LOCAL==="1"&&Boolean(process.env.DATABASE_URL);
+ if(!origin&&!local)return demo;
  try{
-  const response=await fetch(`${origin}/api/store/bootstrap`,{cache:"no-store",signal:AbortSignal.timeout(6000)});
-  if(!response.ok)throw Error(`Upstream catalog ${response.status}`);
-  const data=await response.json() as ResponseData;
+  const data=local?await getLocalBootstrap():await getPublicBootstrap(origin!);
   if(data.mode!=="live"||!Array.isArray(data.products)||!Array.isArray(data.categories))throw Error("Invalid catalog response");
-  const cats:StoreCategory[]=data.categories.map(c=>({id:c.slug,name:c.name,description:c.description||"",image:cleanUrl(c.imageUrl)||demoCategories.find(x=>x.id===c.slug)?.image||IMAGE_FALLBACK}));
+  const cats:StoreCategory[]=data.categories.map(c=>({id:c.slug,dbId:c.id,name:c.name,description:c.description||"",image:cleanUrl(c.imageUrl)||demoCategories.find(x=>x.id===c.slug)?.image||IMAGE_FALLBACK}));
   const products:Product[]=data.products.map(p=>{
    const original=demoProducts.find(x=>x.slug===p.slug);
-   const imgs=Array.isArray(p.gallery)?p.gallery.map(cleanUrl).filter((x):x is string=>Boolean(x)):[];
-   const cover=cleanUrl(p.coverUrl)||original?.image||IMAGE_FALLBACK;
+   const imgs=Array.isArray(p.gallery)?p.gallery.map(cleanUrl).filter((x):x is string=>typeof x==="string"&&!oldDemoProductImage.has(x)):[];
+   const providedCover=cleanUrl(p.coverUrl);
+   const cover=(providedCover&&!oldDemoProductImage.has(providedCover)?providedCover:null)||original?.image||providedCover||IMAGE_FALLBACK;
    const attrs=p.attributes && typeof p.attributes==="object" && !Array.isArray(p.attributes)?p.attributes as Record<string,unknown>:{};
    return {id:String(p.id),slug:text(p.slug),name:text(p.name),description:text(p.description),
     subtitle:original?.subtitle||"",price:money(p.price),comparePrice:p.comparePrice==null?undefined:money(p.comparePrice),
@@ -46,7 +70,7 @@ export const loadStore=cache(async():Promise<StoreData>=>{
     variants:Array.isArray(p.variants)?p.variants.map(v=>({id:String(v.id),label:text(v.label),sku:text(v.sku),
       price:v.price==null?undefined:money(v.price),inventory:money(v.inventory)})):[]};
   });
-  return {live:true,products,categories:cats,settings:{...demo.settings,...data.settings},
+  return {live:true,products,categories:cats,settings:{...demo.settings,...data.settings,editorialConfig:isEditionTwo(data.settings?.editorialConfig)?data.settings?.editorialConfig:null},
    banners:Array.isArray(data.banners)?data.banners:[],pages:Array.isArray(data.pages)?data.pages:[],
    articles:Array.isArray(data.articles)?data.articles:[],shipping:Array.isArray(data.shipping)?data.shipping:[],
    reviews:Array.isArray(data.reviews)?data.reviews:[]};
