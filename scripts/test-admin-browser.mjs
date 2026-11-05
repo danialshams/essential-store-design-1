@@ -208,8 +208,8 @@ try{
   assert.ok(editor.width<=view.w+5,view.name+": visual editor has horizontal overflow "+JSON.stringify(editor));
   assert.ok(editor.preview>220&&editor.settings>260,view.name+": editor preview and inspector are too narrow "+JSON.stringify(editor));
   await evalJS('document.querySelectorAll(".ed2-part-selector button")[1].click();true');
-  await waitFor(()=>evalJS('document.querySelector(".ed2-inspector-title h2")?.textContent.includes("کالکشن")'),
-    view.name+" category editor");
+  await waitFor(()=>evalJS('document.querySelector(".ed2-inspector-title h2")?.textContent.includes("دسته‌بندی")'),
+    view.name+" category editor (Design 01)");
   await evalJS('document.querySelector(".ed2-part-selector button").click();true');
   await waitFor(()=>evalJS('document.querySelector(".ed2-inspector-title h2")?.textContent.includes("هیرو")'),
     view.name+" hero editor");
