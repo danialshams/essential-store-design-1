@@ -10,7 +10,7 @@ import {editionTwoDefaults,editionTwoTitleFor,type EditionTwoConfig,type EdCatal
 type Part="hero"|"categories"|"featured"|"campaign"|"story"|"chapters"|"journal"|"benefits"|"footer";
 const parts:Part[]=["hero","categories","featured","campaign","story","chapters","journal","benefits","footer"];
 const empty:EdCatalog={products:[],categories:[],articles:[],pages:[]};
-const photo=(url:string)=>url||"https://essential-store-design-2.vercel.app/images/editorial/chapter-detail.webp";
+const photo=(url:string)=>url||"/images/hero-woman.webp";
 function fallbackName(id:string,catalog:EdCatalog){return catalog.categories.find(x=>x.id===id||x.slug===id)?.name||
  ({bags:"کیف",clothing:"پوشاک",shoes:"کفش",accessories:"اکسسوری"} as Record<string,string>)[id]||"کالکشن";}
 function Field({label,value,onChange,multiline=false,placeholder=""}:{label:string;value:string;onChange:(s:string)=>void;multiline?:boolean;placeholder?:string}){
@@ -40,59 +40,57 @@ function Editable({id,selected,select,children,className=""}:{id:Part;selected:P
  </section>;
 }
 function VisualPreview({value,catalog,selected,onSelect,viewport,slideIndex}:{value:EditionTwoConfig;catalog:EdCatalog;selected:Part;onSelect:(id:Part)=>void;viewport:"desktop"|"mobile";slideIndex:number}){
- const slide=value.hero[slideIndex]||value.hero[0];
- const categoryList=value.categories.items;
- const features=(value.featured.productIds.length?value.featured.productIds.map(id=>catalog.products.find(x=>x.id===id)).filter((x):x is EdCatalog["products"][number]=>Boolean(x)):catalog.products).slice(0,4);
- const posts=(value.journal.articleIds.length?value.journal.articleIds.map(id=>catalog.articles.find(x=>x.id===id)).filter((x):x is EdCatalog["articles"][number]=>Boolean(x)):catalog.articles).slice(0,2);
- return <div className={"ed2-preview-screen "+(viewport==="mobile"?"is-mobile":"is-desktop")} dir="rtl">
-  <div className="ed2-site-announcement">{value.announcement||"انتخاب‌های ماندگار"}</div>
-  <div className="ed2-site-header"><span>☰ <small>MENU</small></span><strong>ESSENTIAL</strong><span>⌕ ♡ ◇</span></div>
-  <Editable id="hero" selected={selected} select={onSelect} className="ed2-site-hero">
-   <div className="ed2-site-hero-photo"><img src={photo(viewport==="mobile"?(slide.mobileImageUrl||slide.imageUrl):slide.imageUrl)} alt="" loading="lazy"/>
-    <div className="ed2-hero-number">0{slideIndex+1} / 0{value.hero.length}</div><h2>{slide.title}</h2></div>
-   <div className="ed2-site-hero-caption"><div><span>{slide.eyebrow}</span><p>{slide.description}</p></div><span className="ed2-site-link">{slide.ctaLabel} <ArrowUpLeft size={15}/></span></div>
+ const hero=value.hero[slideIndex]||value.hero[0];
+ const products=(value.featured.productIds.length?value.featured.productIds.map(id=>catalog.products.find(x=>x.id===id)).filter((x):x is EdCatalog["products"][number]=>Boolean(x)):catalog.products).slice(0,4);
+ const articleItems=(value.journal.articleIds.length?value.journal.articleIds.map(id=>catalog.articles.find(x=>x.id===id)).filter((x):x is EdCatalog["articles"][number]=>Boolean(x)):catalog.articles).slice(0,2);
+ return <div className={"ed2-preview-screen ed1-visual-page "+(viewport==="mobile"?"is-mobile":"is-desktop")} dir="rtl">
+  <div className="ed1-mini-announcement"><Truck size={13}/>{value.announcement||"ارسال سریع با روش دلخواه"}</div>
+  <div className="ed1-mini-header"><strong>ESSENTIAL 01</strong><span>خانه　 دسته‌بندی‌ها　 محصولات</span><span>⌕　♧</span></div>
+  <Editable id="hero" selected={selected} select={onSelect} className="ed1-mini-hero-block">
+   <div className="ed1-mini-hero"><div className="ed1-mini-hero-copy">
+    <small>{hero.eyebrow}</small><h2>{hero.title}</h2><p>{hero.description}</p>
+    <span className="ed1-mini-button">{hero.ctaLabel||"مشاهده محصولات"} <ArrowLeft size={15}/></span>
+   </div><div className="ed1-mini-hero-picture"><img src={photo(viewport==="mobile"?hero.mobileImageUrl||hero.imageUrl:hero.imageUrl)} alt=""/></div></div>
   </Editable>
   <Editable id="categories" selected={selected} select={onSelect}>
-   <div className="ed2-editorial-header"><small>EXPLORE THE EDITION / 01</small><h2>{value.categories.title}</h2></div>
-   <div className="ed2-preview-categories">{categoryList.map((item,i)=><div key={i} className="ed2-preview-category">
-    <img src={photo(item.imageUrl||catalog.categories.find(x=>x.id===item.categoryId||x.slug===item.categoryId)?.imageUrl||"")} alt=""/>
-    <span>0{i+1} / CATEGORY</span><strong>{fallbackName(item.categoryId,catalog)}</strong></div>)}</div>
+   <div className="ed1-mini-section-head"><h2>{value.categories.title}</h2><small>دسته‌بندی‌ها</small></div>
+   <div className="ed1-mini-categories">{value.categories.items.map((item,i)=><div key={i}>
+    <img src={photo(item.imageUrl||catalog.categories.find(x=>x.id===item.categoryId)?.imageUrl||"")} alt=""/>
+    <strong>{fallbackName(item.categoryId,catalog)}</strong></div>)}</div>
   </Editable>
   <Editable id="featured" selected={selected} select={onSelect}>
-   <div className="ed2-editorial-header"><small>THE SELECTED PIECES / 02</small><h2>{value.featured.title}</h2><p>{value.featured.description}</p></div>
-   <div className="ed2-preview-products">{features.map(p=><div key={p.id}><div className="ed2-product-photo">{p.imageUrl?<img src={p.imageUrl} alt=""/>:<PackageCheck/>}</div><small>{p.name}</small></div>)}</div>
+   <div className="ed1-mini-section-head"><h2>{value.featured.title}</h2><small>{value.featured.description}</small></div>
+   <div className="ed1-mini-products">{products.map(p=><div key={p.id}>
+    <div>{p.imageUrl?<img src={p.imageUrl} alt=""/>:<PackageCheck size={23}/>}</div><strong>{p.name}</strong></div>)}</div>
   </Editable>
-  <Editable id="campaign" selected={selected} select={onSelect} className="ed2-preview-campaign">
-   <div className="ed2-campaign-photo"><img src={photo(value.campaign.imageUrl)} alt=""/></div>
-   <div className="ed2-campaign-copy"><small>THE ART OF DETAILS / 03</small><h2>{value.campaign.title}</h2><p>{value.campaign.description}</p><span>{value.campaign.ctaLabel} ↗</span></div>
-  </Editable>
-  <Editable id="story" selected={selected} select={onSelect} className="ed2-preview-story">
-   <div className="ed2-story-pictures"><img src={photo(value.story.imageUrl)} alt=""/>{value.story.secondaryImageUrl&&<img className="ed2-story-inset" src={value.story.secondaryImageUrl} alt=""/>}</div>
-   <div className="ed2-story-text"><small>A NOTE ON STYLE / 04</small><h2>{value.story.title}</h2><p>{value.story.description}</p><span>{value.story.ctaLabel} ↗</span></div>
-  </Editable>
+  <div className="ed1-mini-promo-pair">
+   <Editable id="campaign" selected={selected} select={onSelect} className="ed1-mini-promo">
+    <div><h2>{value.campaign.title}</h2><p>{value.campaign.description}</p><small>{value.campaign.ctaLabel} ←</small></div>
+    <img src={photo(value.campaign.imageUrl)} alt=""/>
+   </Editable>
+   <Editable id="story" selected={selected} select={onSelect} className="ed1-mini-promo">
+    <div><h2>{value.story.title}</h2><p>{value.story.description}</p><small>{value.story.ctaLabel} ←</small></div>
+    <img src={photo(value.story.imageUrl)} alt=""/>
+   </Editable>
+  </div>
   <Editable id="chapters" selected={selected} select={onSelect}>
-   <div className="ed2-preview-chapters">{value.chapters.map((chapter,i)=><div key={chapter.id} className="ed2-chapter">
-    <img src={photo(viewport==="mobile"?(chapter.mobileImageUrl||chapter.imageUrl):chapter.imageUrl)} alt=""/>
-    <div><small>CHAPTER 0{i+1}</small><h2>{chapter.title}</h2><p>{chapter.description}</p></div></div>)}</div>
+   <div className="ed1-mini-section-head"><h2>بنرهای تکمیلی</h2><small>بخش‌های پایین صفحه</small></div>
+   <div className="ed1-mini-chapters">{value.chapters.map(c=><div key={c.id}>
+    <div><h2>{c.title}</h2><p>{c.description}</p></div><img src={photo(c.imageUrl)} alt=""/></div>)}</div>
   </Editable>
   <Editable id="journal" selected={selected} select={onSelect}>
-   <div className="ed2-editorial-header"><small>THE JOURNAL / 05</small><h2>{value.journal.title}</h2></div>
-   <div className="ed2-preview-journal">{(posts.length?posts:[{id:"one",name:"هنر انتخاب یک استایل ماندگار",imageUrl:"https://essential-store-design-2.vercel.app/images/editorial/journal-style.webp"},{id:"two",name:"چرا جزئیات مهم‌اند؟",imageUrl:"https://essential-store-design-2.vercel.app/images/editorial/journal-details.webp"}]).map(p=><div key={p.id}>
-    <img src={photo(p.imageUrl||"")} alt=""/><small>THE JOURNAL</small><h3>{p.name}</h3></div>)}</div>
+   <div className="ed1-mini-section-head"><h2>{value.journal.title}</h2><small>مطالب تازه</small></div>
+   <div className="ed1-mini-products">{articleItems.map(p=><div key={p.id}>
+    <div>{p.imageUrl?<img src={p.imageUrl} alt=""/>:<NotebookPen size={23}/>}</div><strong>{p.name}</strong></div>)}</div>
   </Editable>
-  <Editable id="benefits" selected={selected} select={onSelect} className="ed2-preview-benefits">
-   {value.benefits.map(b=><div key={b.id}><BenefitIcon name={b.icon}/><strong>{b.title}</strong><span>{b.description}</span></div>)}
+  <Editable id="benefits" selected={selected} select={onSelect}>
+   <div className="ed1-mini-benefits">{value.benefits.map(b=><div key={b.id}>
+    <BenefitIcon name={b.icon}/><span><strong>{b.title}</strong><small>{b.description}</small></span></div>)}</div>
   </Editable>
-  <Editable id="footer" selected={selected} select={onSelect} className="ed2-preview-footer">
-   <small>{value.footer.eyebrow}</small><h2>{value.footer.title}</h2>
-   <div className="ed2-preview-footer-columns">
-    {value.footerColumns.map(column=><div key={column.id}>
-     <h3>{column.title}</h3>
-     {column.links.filter(link=>link.target.kind!=="none").map(link=><span key={link.id}>{link.label}</span>)}
-    </div>)}
-    <div><h3>در ارتباط باشیم</h3><span>تلفن و اطلاعات تماس فروشگاه</span><span>شبکه‌های اجتماعی</span></div>
-   </div>
-   <strong>ESSENTIAL</strong><small>{value.footer.bottomNote}</small>
+  <Editable id="footer" selected={selected} select={onSelect} className="ed1-mini-footer">
+   <div className="ed1-mini-final"><small>{value.footer.eyebrow}</small><h2>{value.footer.title}</h2><p>{value.footer.bottomNote}</p></div>
+   <div className="ed1-mini-footer-columns"><div><strong>ESSENTIAL 01</strong><p>خرید ساده و مطمئن</p></div>
+    {value.footerColumns.map(c=><div key={c.id}><strong>{c.title}</strong>{c.links.map(l=><small key={l.id}>{l.label}</small>)}</div>)}</div>
   </Editable>
  </div>;
 }
@@ -151,7 +149,7 @@ export function EditionTwoHomeEditor(){
  const photoField=(label:string,url:string,fn:(x:string)=>void)=><MediaField label={label} value={url||""} onChange={fn} catalog={catalog}
   extras={[...value.hero.flatMap(x=>[x.imageUrl,x.mobileImageUrl]),value.campaign.imageUrl,value.story.imageUrl,value.story.secondaryImageUrl||"",...value.chapters.map(x=>x.imageUrl)]}/>;
  return <div className="ed2-editor-page">
-  <div className="ed2-page-heading"><div><small>EDITION 02 / VISUAL CONTENT MANAGER</small><h1>مدیریت صفحه اصلی</h1>
+  <div className="ed2-page-heading"><div><small>EDITION 01 / VISUAL CONTENT MANAGER</small><h1>مدیریت صفحه اصلی</h1>
    <p>روی هر بخش از پیش‌نمایش بزنید و همان قسمت را ویرایش کنید. چیدمان و انیمیشن‌ها ثابت می‌مانند.</p></div>
    <div className="ed2-page-actions"><Link className="ed2-button ed2-button-soft" href="/" target="_blank" rel="noreferrer">مشاهده سایت <ExternalLink size={16}/></Link>
     <button className="ed2-button ed2-button-outline" disabled={saving||publishing||(!dirty&&hasDraft)} onClick={()=>void saveDraft()}>{saving?"در حال ذخیره": "ذخیره پیش‌نویس"} <Save size={16}/></button>
@@ -175,7 +173,7 @@ export function EditionTwoHomeEditor(){
     <div className="ed2-inspector">
      <div className="ed2-inspector-title"><small>تنظیمات بخش</small><h2>{editionTwoTitleFor(selected)}</h2><p>تغییرات را در پیش‌نمایش کنار فرم مشاهده کنید.</p></div>
      {selected==="hero"&&<div className="ed2-inspector-body">
-       <div className="ed2-mini-heading"><strong>اسلایدها</strong><span>{value.hero.length} اسلاید</span></div>
+       <div className="ed2-mini-heading"><strong>تصاویر هیرو</strong><span>{value.hero.length} اسلاید</span></div>
        <div className="ed2-slide-select">{value.hero.map((slide,i)=><button type="button" key={slide.id}
         className={slideIndex===i?"selected":""} onClick={()=>setSlideIndex(i)}><span>0{i+1}</span><img src={photo(slide.imageUrl)} alt=""/><small>{slide.title.split("\n")[0]}</small></button>)}</div>
        <div className="ed2-row-between"><label className="ed2-check"><input type="checkbox" checked={current.enabled} onChange={e=>edit(v=>{v.hero[slideIndex].enabled=e.target.checked})}/> نمایش این اسلاید</label>
@@ -189,7 +187,7 @@ export function EditionTwoHomeEditor(){
        <Field label="متن دکمه" value={current.ctaLabel} onChange={x=>edit(v=>{v.hero[slideIndex].ctaLabel=x})}/>
        {target(current.target,x=>edit(v=>{v.hero[slideIndex].target=x}))}
        <button type="button" className="ed2-button ed2-button-soft ed2-add-full" disabled={value.hero.length>=6}
-        onClick={()=>{edit(v=>v.hero.push({...structuredClone(v.hero[v.hero.length-1]),id:crypto.randomUUID(),title:"اسلاید جدید"}));setSlideIndex(value.hero.length)}}>
+        onClick={()=>{edit(v=>v.hero.push({...structuredClone(v.hero[v.hero.length-1]),id:crypto.randomUUID(),title:"تصویر هیرو جدید"}));setSlideIndex(value.hero.length)}}>
         افزودن اسلاید جدید <Plus size={17}/></button>
       </div>}
      {selected==="categories"&&<div className="ed2-inspector-body">
