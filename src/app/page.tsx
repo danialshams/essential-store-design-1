@@ -127,14 +127,14 @@ story:(<>
 chapters:(<>
 {edition?edition.chapters.map(s=><section className="bottom-promo ed1-managed-chapter" key={s.id}>
    <div><span>انتخاب ویژه</span><h2>{s.title}</h2><p>{s.description}</p></div>
-   {s.imageUrl&&<Image src={s.imageUrl} alt="" width={240} height={130} unoptimized={s.imageUrl.startsWith("http")}/>}
-  </section>):sections.slice(1).map(s=><section className="bottom-promo" key={s.id}><div><span>فروشگاه</span><h2>{s.title}</h2><p>{s.description}</p></div>{s.imageUrl&&<Image src={s.imageUrl} alt="" width={240} height={130} unoptimized={s.imageUrl.startsWith("http")}/>}</section>)}
+   {s.imageUrl&&<Image src={showcasePhoto(s.imageUrl)} alt="" width={240} height={130} unoptimized={showcasePhoto(s.imageUrl).startsWith("http")}/>}
+  </section>):sections.slice(1).map(s=><section className="bottom-promo" key={s.id}><div><span>فروشگاه</span><h2>{s.title}</h2><p>{s.description}</p></div>{s.imageUrl&&<Image src={showcasePhoto(s.imageUrl)} alt="" width={240} height={130} unoptimized={showcasePhoto(s.imageUrl).startsWith("http")}/>}</section>)}
 </>),
 journal:(<>
 {edition&&journal.length>0&&<section className="products-section ed1-journal" aria-label="مقالات منتخب">
    <SectionHeading title={edition.journal.title} href="/blog" linkLabel="همه مقالات"/>
    <div className="ed1-journal-grid">{journal.map(a=><Link href={"/blog/"+a.slug} key={a.slug} className="ed1-journal-card">
-    {a.coverUrl&&<Image src={a.coverUrl} alt="" width={440} height={215} unoptimized={a.coverUrl.startsWith("http")}/>}
+    {a.coverUrl&&<Image src={showcasePhoto(a.coverUrl)} alt="" width={440} height={215} unoptimized={showcasePhoto(a.coverUrl).startsWith("http")}/>}
     <div><h3>{a.title}</h3><p>{a.summary}</p><span>مطالعه مقاله <ChevronLeft size={15}/></span></div>
    </Link>)}</div>
   </section>}
