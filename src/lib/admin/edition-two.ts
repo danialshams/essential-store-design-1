@@ -2,11 +2,12 @@
 export type Destination={kind:"none"|"home"|"products"|"product"|"category"|"page"|"article"|"external";id?:string;url?:string};
 export type EdSlide={id:string;title:string;description:string;eyebrow:string;imageUrl:string;mobileImageUrl:string;ctaLabel:string;target:Destination;enabled:boolean};
 export type EdImageText={title:string;description:string;imageUrl:string;mobileImageUrl?:string;secondaryImageUrl?:string;ctaLabel:string;target:Destination};
+export type EdFestival=EdImageText&{enabled:boolean;eyebrow:string};
 export type EditionTwoConfig={
  version:2;announcement:string;hero:EdSlide[];
  categories:{title:string;items:Array<{categoryId:string;imageUrl?:string}>};
  featured:{title:string;description:string;productIds:string[]};
- campaign:EdImageText;story:EdImageText;
+ campaign:EdImageText;story:EdImageText;festival:EdFestival;
  chapters:Array<{id:string;title:string;description:string;imageUrl:string;mobileImageUrl?:string}>;
  journal:{title:string;articleIds:string[]};
  benefits:Array<{id:string;title:string;description:string;icon:"truck"|"package"|"headphones"|"shield"}>;
@@ -25,6 +26,7 @@ export const editionTwoDefaults:EditionTwoConfig={
  ],
  categories:{title:"دسته‌بندی محصولات",items:[{categoryId:"clothing",imageUrl:photo("category-clothing.webp")},{categoryId:"bags",imageUrl:photo("category-bags.webp")},{categoryId:"shoes",imageUrl:photo("category-shoes.webp")},{categoryId:"accessories",imageUrl:photo("category-accessories.webp")}]},
  featured:{title:"پرفروش‌ترین محصولات",description:"گزیده‌ای از بهترین انتخاب‌ها",productIds:[]},
+ festival:{enabled:true,eyebrow:"SPECIAL WEEK / ESSENTIAL 01",title:"جشنواره انتخاب‌های تازه",description:"منتخب این هفته را ببین و محصول دلخواهت را آسان پیدا کن.",imageUrl:"/images/hero-woman.webp",mobileImageUrl:"/images/hero-woman.webp",ctaLabel:"دیدن پیشنهادها",target:{kind:"products"}},
  campaign:{title:"کیف‌های جدید و خاص",description:"مناسب استایل روزمره و رسمی",imageUrl:"/images/bag.webp",ctaLabel:"مشاهده کیف‌ها",target:category},
  story:{title:"جدیدترین مدل‌های کفش",description:"ترکیبی از راحتی، کیفیت و استایل روز",imageUrl:"/images/sneakers.webp",secondaryImageUrl:"",ctaLabel:"مشاهده کفش‌ها",target:{kind:"category",id:"shoes"}},
  chapters:[
@@ -75,4 +77,4 @@ export function resolveTarget(target:Destination,catalog:EdCatalog):string{
   default:return "#";
  }
 }
-export function editionTwoTitleFor(kind:string){return ({hero:"هیرو",categories:"دسته‌بندی‌ها",featured:"پرفروش‌ترین‌ها",campaign:"بنر کیف",story:"بنر کفش",chapters:"بنرهای پایین",journal:"مقالات",benefits:"مزایا",footer:"فوتر و منو"} as Record<string,string>)[kind]||kind;}
+export function editionTwoTitleFor(kind:string){return ({hero:"هیرو",categories:"دسته‌بندی‌ها",featured:"پرفروش‌ترین‌ها",campaign:"بنر کیف",festival:"جشنواره و کمپین",story:"بنر کفش",chapters:"بنرهای پایین",journal:"مقالات",benefits:"مزایا",footer:"فوتر و منو"} as Record<string,string>)[kind]||kind;}
