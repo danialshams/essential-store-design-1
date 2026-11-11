@@ -9,6 +9,7 @@ import {EditionOneHero,type EssentialOneSlide} from "@/components/EditionOneHero
 import {targetUrl} from "@/lib/edition-two-content";
 import {editionTwoDefaults} from "@/lib/admin/edition-two";
 import {FestivalCountdown} from "@/components/FestivalCountdown";
+import {FestivalEntrance} from "@/components/FestivalEntrance";
 import type {StoreData} from "@/lib/live-store";
 
 const benefitIcons={truck:Truck,package:PackageCheck,headphones:Headphones,shield:ShieldCheck};
@@ -84,6 +85,7 @@ featured:(<>
 </>),
 festival:(<>
 {festival.enabled&&<section className="ed1-sale-festival" id="festival" aria-labelledby="ed1-festival-title">
+ <FestivalEntrance/>
  <div className="ed1-festival-banner">
    <div className="ed1-festival-banner-copy">
      <span className="ed1-festival-pill">جشنواره فروش ویژه <span aria-hidden="true">●</span></span>
