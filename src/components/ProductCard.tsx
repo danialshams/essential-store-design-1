@@ -7,7 +7,7 @@ import type {Product} from "@/lib/catalog";
 import {toman} from "@/lib/catalog";
 import {useShop} from "@/components/ShopProvider";
 export function ProductCard({product,compact=false}:{product:Product;compact?:boolean}){
- const {add,isFavorite,toggleFavorite}=useShop();const router=useRouter();const available=product.inventory>0;
+ const {add,isFavorite,toggleFavorite}=useShop();const router=useRouter();const available=product.variants?.length?product.variants.some(v=>v.inventory>0):product.inventory>0;
  return <article className={`product-card ${compact?"product-card--compact":""}`}>
    <div className="product-image-box">
     <Link href={`/product/${product.slug}`} aria-label={`مشاهده ${product.name}`}><Image src={product.image} alt={product.name} width={660} height={390} unoptimized={product.image.startsWith("http")} className="product-image"/></Link>
