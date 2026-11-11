@@ -71,7 +71,7 @@ export default async function Home(){
       {festival.target.kind!=="none"&&<Link className="ed1-festival-button" href={targetUrl(festival.target,store)}>{festival.ctaLabel||"مشاهده انتخاب‌ها"} <ChevronLeft size={19}/></Link>}
     </div>
     <div className="ed1-festival-image">
-      <Image src={festival.imageUrl||"/images/hero-woman.webp"} alt={festival.title} fill sizes="(max-width: 700px) 100vw, 48vw" unoptimized={festival.imageUrl.startsWith("http")}/>
+      <picture className="ed1-festival-picture"><source media="(max-width:700px)" srcSet={festival.mobileImageUrl||festival.imageUrl||"/images/hero-mobile.webp"}/><Image src={festival.imageUrl||"/images/hero-woman.webp"} alt={festival.title} fill sizes="(max-width: 700px) 100vw, 48vw" unoptimized={festival.imageUrl.startsWith("http")}/></picture>
     </div>
   </section>}
   {edition&&<section className="promotions-section" aria-label="بنرهای تبلیغاتی">
