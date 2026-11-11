@@ -1,3 +1,4 @@
+import {showcasePhoto} from "@/lib/showcase-photos";
 export type Variant={id:string;label:string;sku?:string;price?:number;inventory:number};
 export type Product={
  id:string;slug:string;name:string;subtitle:string;description:string;price:number;
@@ -20,14 +21,14 @@ export const demoProducts:Product[]=[
  {id:"demo-shoes-2",slug:"urban-sneakers",name:"کتانی اسپرت شهری",subtitle:"مینیمال، سبک و راحت",description:"کتانی روزمره با قالب راحت.",price:1890000,category:"shoes",categoryLabel:"کفش",image:"/images/sneakers.webp",gallery:["/images/sneakers.webp"],inventory:11,newArrival:true,sku:"SHO-1006",specs:{"رنگ":"سفید","مدل":"اسپرت"}},
  {id:"demo-shirt-2",slug:"sky-blue-linen-shirt",name:"پیراهن آبی آسمانی",subtitle:"انتخابی ساده برای فصل گرم",description:"پیراهن آبی روشن با بافت نرم.",price:1690000,category:"clothing",categoryLabel:"پوشاک",image:"/images/linen-shirt.webp",gallery:["/images/linen-shirt.webp"],inventory:13,sku:"SHI-1007",specs:{"رنگ":"آبی روشن","جنس":"لینن"}},
  {id:"demo-sunglasses",slug:"classic-sunglasses",name:"عینک آفتابی کلاسیک",subtitle:"طراحی ساده برای روزهای آفتابی",description:"عینک آفتابی با فریم سبک و ظاهر کلاسیک.",price:890000,category:"accessories",categoryLabel:"اکسسوری",image:"/images/sunglasses.webp",gallery:["/images/sunglasses.webp"],inventory:17,sku:"ACC-1008",specs:{"رنگ فریم":"قهوه‌ای","نوع":"آفتابی"}}
-];
+].map(p=>({...p,image:showcasePhoto(p.image),gallery:p.gallery.map(showcasePhoto)}));
 export const getProductBySlug=(slug:string)=>demoProducts.find(product=>product.slug===slug);
 export const getProductById=(id:string)=>demoProducts.find(product=>product.id===id);
 export const findCategory=(slug:string)=>categories.find(category=>category.id===slug);
 export const toman=(amount:number)=>`${Math.round(amount).toLocaleString("fa-IR")} تومان`;
 export const numberFa=(value:number)=>value.toLocaleString("fa-IR");
 export const shippingCost=(subtotal:number)=>subtotal>=3000000?0:85000;
-export const IMAGE_FALLBACK="/images/bag.webp";
+export const IMAGE_FALLBACK=showcasePhoto("/images/bag.webp");
 
 /** Optional read-only adapter for each customer's independent shared admin API. */
 export async function remoteCatalog():Promise<Product[]|null>{
