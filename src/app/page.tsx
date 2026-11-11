@@ -8,6 +8,7 @@ import {SectionHeading} from "@/components/SectionHeading";
 import {EditionOneHero,type EssentialOneSlide} from "@/components/EditionOneHero";
 import {targetUrl} from "@/lib/edition-two-content";
 import {editionTwoDefaults} from "@/lib/admin/edition-two";
+import {FestivalCountdown} from "@/components/FestivalCountdown";
 import type {StoreData} from "@/lib/live-store";
 
 const benefitIcons={truck:Truck,package:PackageCheck,headphones:Headphones,shield:ShieldCheck};
@@ -26,13 +27,18 @@ function Promotion({title,description,image,href,label}:{title:string;descriptio
 export default async function Home(){
  const store:StoreData=await loadStore();
  const edition=store.settings.editorialConfig;
-  const festival=edition?.festival??editionTwoDefaults.festival;
+  const legacyFestival=!edition?.festival?.endsAt;
+ const festival={...editionTwoDefaults.festival,...(edition?.festival||{}),
+  enabled:legacyFestival?true:(edition?.festival?.enabled??true)};
  const discounted=store.products.filter(p=>p.inventory>0&&typeof p.comparePrice==="number"&&p.comparePrice>p.price);
  const saleProducts=(festival.productIds?.length?
   festival.productIds.map(id=>discounted.find(p=>p.id===id)).filter((p):p is StoreData["products"][number]=>Boolean(p)):
-  discounted).slice(0,6);
+  discounted).slice(0,8);
  const allowedOrder=editionTwoDefaults.sectionOrder;
  const sectionOrder=[...new Set([...(edition?.sectionOrder||allowedOrder).filter(id=>allowedOrder.includes(id)),...allowedOrder])];
+ // Homepage always opens on the hero, then the festival is reached by scrolling.
+ for(const id of ["hero","festival"]){const at=sectionOrder.indexOf(id);if(at>=0)sectionOrder.splice(at,1)}
+ sectionOrder.unshift("hero","festival");
 
  const sections=[...(store.settings.homeSections||[])].filter(s=>s.enabled).sort((a,b)=>a.position-b.position);
  const homeHero=sections[0];
@@ -77,12 +83,26 @@ featured:(<>
   </section>
 </>),
 festival:(<>
-{festival.enabled&&<section className="ed1-sale-festival" aria-labelledby="ed1-festival-title">
- <div className="ed1-sale-header">
-   <div><span className="ed1-festival-kicker">{festival.eyebrow||"SPECIAL OFFERS"}</span>
-     <h2 id="ed1-festival-title">{festival.title}</h2><p>{festival.description}</p></div>
-   {festival.target.kind!=="none"&&<Link className="ed1-festival-button" href={targetUrl(festival.target,store)}>{festival.ctaLabel||"دیدن همه محصولات"} <ChevronLeft size={18}/></Link>}
+{festival.enabled&&<section className="ed1-sale-festival" id="festival" aria-labelledby="ed1-festival-title">
+ <div className="ed1-festival-banner">
+   <div className="ed1-festival-banner-copy">
+     <span className="ed1-festival-pill">جشنواره فروش ویژه <span aria-hidden="true">●</span></span>
+     <span className="ed1-festival-kicker">{festival.eyebrow||"SPECIAL OFFERS"}</span>
+     <h2 id="ed1-festival-title">{festival.title}</h2>
+     <p>{festival.description}</p>
+     {festival.showCountdown!==false&&<FestivalCountdown endsAt={festival.endsAt||editionTwoDefaults.festival.endsAt} expiredText={festival.expiredText}/>}
+     {festival.target.kind!=="none"&&<Link className="ed1-festival-button" href={targetUrl(festival.target,store)}>
+       {festival.ctaLabel||"مشاهده محصولات جشنواره"} <ChevronLeft size={18}/>
+     </Link>}
+   </div>
+   <div className="ed1-festival-banner-picture">
+     <picture><source media="(max-width: 760px)" srcSet={festival.mobileImageUrl||festival.imageUrl}/>
+      <img src={festival.imageUrl} alt="تصویر جشنواره فروشگاه" loading="eager" decoding="async"/>
+     </picture>
+     {saleProducts.length>0&&<span className="ed1-festival-discount-badge">تا {Math.max(...saleProducts.map(p=>Math.round((1-p.price/p.comparePrice!)*100))).toLocaleString("fa-IR")}٪ تخفیف</span>}
+   </div>
  </div>
+ <div className="ed1-sale-label"><div><strong>محصولات تخفیف‌دار</strong><span>پیشنهادهای منتخب جشنواره</span></div><span>LIMITED OFFERS</span></div>
  <div className="ed1-sale-products">
    {saleProducts.map(p=><div className="ed1-sale-item" key={p.id}><ProductCard product={p}/></div>)}
    {!saleProducts.length&&<p className="ed1-sale-empty" role="status">فعلاً محصول فعال با تخفیف وجود ندارد؛ با تعیین قیمت قبل از تخفیف در پنل، محصول در این بخش نمایش داده می‌شود.</p>}
