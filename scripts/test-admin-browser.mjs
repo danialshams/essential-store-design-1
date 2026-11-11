@@ -332,7 +332,8 @@ try{
           hero:!!hero,festival:!!festival,festivalImmediatelyAfterHero:festival?.previousElementSibling===hero,
           discountedCards:document.querySelectorAll(".ed1-sale-item").length,
           brokenDiscounts:[...document.querySelectorAll(".ed1-sale-item")].filter(card=>
-             !card.querySelector("del")||!card.querySelector("strong")).length,
+             !card.querySelector(".product-card-prices strong")||
+             (card.querySelector(".discount-tag")&&!card.querySelector(".product-card-prices del"))).length,
           pageText:document.body.innerText.length};
       })()`);
       assert.ok(audit.pageText>150,view.name+": page missing content "+route);

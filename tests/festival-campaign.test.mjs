@@ -27,7 +27,7 @@ test("one optional festival is edited visually, independently enabled/disabled, 
  assert.match(editor,/ed2-section-arrangement-list/);
  assert.match(editor,/onDragStart/);
  assert.match(editor,/reorderSections/);
- assert.match(editor,/محصولات تخفیف‌دار جشنواره/);
+ assert.match(editor,/FestivalProductManager/);
  const publicHome=read("src/app/page.tsx");
  assert.match(publicHome,/festival\.enabled/);
  assert.match(publicHome,/targetUrl\(festival\.target,store\)/);

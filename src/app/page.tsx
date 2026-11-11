@@ -34,10 +34,15 @@ export default async function Home(){
   enabled:legacyFestival?true:(edition?.festival?.enabled??true)};
  const festivalImage=showcasePhoto(festival.imageUrl);
  const festivalMobileImage=showcasePhoto(festival.mobileImageUrl||festival.imageUrl);
- const discounted=store.products.filter(p=>p.inventory>0&&typeof p.comparePrice==="number"&&p.comparePrice>p.price);
- const saleProducts=(festival.productIds?.length?
-  festival.productIds.map(id=>discounted.find(p=>p.id===id)).filter((p):p is StoreData["products"][number]=>Boolean(p)):
-  discounted).slice(0,8);
+ const inStock=store.products.filter(p=>p.inventory>0);
+ const discounted=inStock.filter(p=>typeof p.comparePrice==="number"&&p.comparePrice>p.price);
+ const chosen=festival.productIds?.map(id=>inStock.find(p=>p.id===id)).filter((p):p is StoreData["products"][number]=>Boolean(p))||[];
+ const saleProducts=[
+  ...chosen,...discounted.filter(p=>!chosen.some(s=>s.id===p.id)),
+  ...inStock.filter(p=>!chosen.some(s=>s.id===p.id)&&!discounted.some(d=>d.id===p.id))
+ ].slice(0,12);
+ const bestDiscount=saleProducts.filter(p=>p.comparePrice&&p.comparePrice>p.price)
+  .reduce((best,p)=>Math.max(best,Math.round((1-p.price/p.comparePrice!)*100)),0);
  const allowedOrder=editionTwoDefaults.sectionOrder;
  const sectionOrder=[...new Set([...(edition?.sectionOrder||allowedOrder).filter(id=>allowedOrder.includes(id)),...allowedOrder])];
  // Homepage always opens on the hero, then the festival is reached by scrolling.
@@ -104,7 +109,7 @@ festival:(<>
      <picture><source media="(max-width: 760px)" srcSet={festivalMobileImage}/>
       <img src={festivalImage} alt="تصویر جشنواره فروشگاه" loading="eager" decoding="async"/>
      </picture>
-     {saleProducts.length>0&&<span className="ed1-festival-discount-badge">تا {Math.max(...saleProducts.map(p=>Math.round((1-p.price/p.comparePrice!)*100))).toLocaleString("fa-IR")}٪ تخفیف</span>}
+     {bestDiscount>0&&<span className="ed1-festival-discount-badge">تا {bestDiscount.toLocaleString("fa-IR")}٪ تخفیف</span>}
    </div>
  </div>
  <div className="ed1-sale-label"><div><strong>محصولات تخفیف‌دار</strong><span>پیشنهادهای منتخب جشنواره</span></div><span>LIMITED OFFERS</span></div>

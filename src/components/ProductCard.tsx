@@ -10,7 +10,7 @@ export function ProductCard({product,compact=false}:{product:Product;compact?:bo
  const {add,isFavorite,toggleFavorite}=useShop();const router=useRouter();const available=product.variants?.length?product.variants.some(v=>v.inventory>0):product.inventory>0;
  return <article className={`product-card ${compact?"product-card--compact":""}`}>
    <div className="product-image-box">
-    <Link href={`/product/${product.slug}`} aria-label={`مشاهده ${product.name}`}><Image src={product.image} alt={product.name} width={660} height={390} unoptimized={product.image.startsWith("http")} className="product-image"/></Link>
+    <Link href={`/product/${product.slug}`} aria-label={`مشاهده ${product.name}`}><Image src={product.image} alt={product.name} width={660} height={390} unoptimized={product.image.startsWith("http")} className="product-image" onLoad={event=>{const img=event.currentTarget;if(img.naturalWidth>0&&img.naturalHeight>0)img.closest<HTMLElement>(".product-image-box")?.style.setProperty("--natural-image-ratio",img.naturalWidth+" / "+img.naturalHeight)}}/></Link>
     {product.comparePrice&&product.comparePrice>product.price&&<span className="discount-tag">{Math.round((1-product.price/product.comparePrice)*100).toLocaleString("fa-IR")}٪ تخفیف</span>}
     <button className={`favorite-button ${isFavorite(product.id)?"is-favorite":""}`} aria-label={isFavorite(product.id)?"حذف از علاقه‌مندی‌ها":"افزودن به علاقه‌مندی‌ها"} onClick={()=>toggleFavorite(product.id)}><Heart size={18} fill={isFavorite(product.id)?"currentColor":"none"}/></button>
    </div>
