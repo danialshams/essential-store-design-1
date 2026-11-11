@@ -103,7 +103,7 @@ function VisualPreview({value,catalog,selected,onSelect,viewport,slideIndex}:{va
     <div className="ed2-preview-sale-items">
       {saleItems.map(p=><div className="ed2-preview-sale-item" key={p.id}>
         {p.imageUrl?<img src={photo(p.imageUrl)} alt=""/>:<PackageCheck size={20}/>}
-        <strong>{p.name}</strong><small>{Math.round((1-(p.price||1)/(p.comparePrice||1))*100).toLocaleString("fa-IR")}٪ تخفیف</small>
+        <strong>{p.name}</strong><small>{p.comparePrice&&p.price&&p.comparePrice>p.price?Math.round((1-p.price/p.comparePrice)*100).toLocaleString("fa-IR")+"٪ تخفیف":"منتخب جشنواره"}</small>
       </div>)}
       {!saleItems.length&&<small>محصول تخفیف‌دار فعال ثبت نشده است.</small>}
     </div>
