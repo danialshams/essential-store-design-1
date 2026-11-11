@@ -3,6 +3,7 @@ import {useMemo,useState,type ChangeEvent} from "react";
 import {Image as ImageIcon,Images,UploadCloud,Search,ArrowUpLeft,ExternalLink,Check,Link2,X} from "lucide-react";
 import {ModalPortal} from "@/components/admin/ModalPortal";
 import {adminFetch} from "@/lib/admin/demo-api";
+import {showcasePhoto} from "@/lib/showcase-photos";
 import type {Destination,EdCatalog,EdEntity} from "@/lib/admin/edition-two";
 import {resolveTarget} from "@/lib/admin/edition-two";
 
@@ -44,7 +45,7 @@ export function DestinationPicker({label="مقصد دکمه",value,onChange,cata
   {opened&&<div className="ed2-target-results" role="listbox" aria-label="گزینه‌های مقصد">
    {filtered.length?filtered.map(item=><button key={item.id} role="option" aria-selected={value.id===item.id}
      type="button" onClick={()=>{onChange({kind:value.kind,id:item.id});setQuery("");setOpened(false)}}>
-     {item.imageUrl?<img src={item.imageUrl} alt="" loading="lazy"/>:<span className="ed2-target-placeholder"><Link2 size={17}/></span>}
+     {item.imageUrl?<img src={showcasePhoto(item.imageUrl)} alt="" loading="lazy"/>:<span className="ed2-target-placeholder"><Link2 size={17}/></span>}
      <span>{item.name}<small>{item.slug}</small></span><ArrowUpLeft size={15}/></button>):<div className="ed2-empty-small">موردی پیدا نشد</div>}
   </div>}</div>}
   {value.kind==="external"&&<div className="ed2-field"><label htmlFor="ed2-external-url">آدرس سایت دیگر (HTTPS)</label>
@@ -56,11 +57,12 @@ export function DestinationPicker({label="مقصد دکمه",value,onChange,cata
    <span dir="ltr">{result}</span></p>}
  </div>;
 }
-const editorialPhotos=["/images/hero-woman.webp","/images/hero-mobile.webp","/images/linen-shirt.webp","/images/bag.webp","/images/sneakers.webp","/images/sunglasses.webp","/images/classic-watch.webp"];
+const editorialPhotos=["hero-woman.webp","hero-mobile.webp","bag.webp","sneakers.webp","linen-shirt.webp","sunglasses.webp","classic-watch.webp"]
+ .map(name=>showcasePhoto("/images/"+name));
 export function getMediaOptions(catalog:EdCatalog,extras:string[]=[]){
  const images=[...editorialPhotos,...extras,...catalog.products.map(x=>x.imageUrl||""),
   ...catalog.categories.map(x=>x.imageUrl||""),...catalog.articles.map(x=>x.imageUrl||"")];
- return Array.from(new Set(images.filter(x=>x&&(/^(https:\/\/|\/images\/)/).test(x))));
+ return Array.from(new Set(images.filter(x=>x&&(/^(https:\/\/|\/images\/)/).test(x)).map(showcasePhoto)));
 }
 export function MediaField({label,value,onChange,catalog,extras=[]}:{label:string;value:string;onChange:(value:string)=>void;catalog:EdCatalog;extras?:string[]}){
  const [open,setOpen]=useState(false),[search,setSearch]=useState(""),[busy,setBusy]=useState(false),[error,setError]=useState("");
@@ -91,7 +93,7 @@ export function MediaField({label,value,onChange,catalog,extras=[]}:{label:strin
  }
  return <div className="ed2-field ed2-media-control"><span className="ed2-field-label">{label}</span>
   <button type="button" className="ed2-media-trigger" onClick={()=>{setSearch("");setError("");setOpen(true);void loadMedia()}}>
-   {value?<img src={value} alt="تصویر انتخاب‌شده"/>:<span className="ed2-no-image"><ImageIcon size={25}/></span>}
+   {value?<img src={showcasePhoto(value)} alt="تصویر انتخاب‌شده"/>:<span className="ed2-no-image"><ImageIcon size={25}/></span>}
    <span><strong>{value?"تغییر تصویر":"انتخاب تصویر"}</strong><small>از تصاویر موجود انتخاب کنید یا عکس جدید بارگذاری کنید</small></span>
    <Images size={19}/>
   </button>
@@ -105,7 +107,7 @@ export function MediaField({label,value,onChange,catalog,extras=[]}:{label:strin
     {error&&<div className="ed2-error" role="alert">{error}</div>}
     <div className="ed2-media-grid">{filtered.map(url=><button key={url} className={url===value?"current":""} type="button"
      onClick={()=>{onChange(url);setOpen(false)}} aria-label="انتخاب تصویر" aria-pressed={url===value}>
-     <img src={url} alt="" loading="lazy"/>{url===value&&<span><Check size={18}/></span>}</button>)}</div>
+     <img src={showcasePhoto(url)} alt="" loading="lazy"/>{url===value&&<span><Check size={18}/></span>}</button>)}</div>
     {!filtered.length&&<div className="ed2-empty-small">تصویری پیدا نشد</div>}
    </section>
   </ModalPortal>}
