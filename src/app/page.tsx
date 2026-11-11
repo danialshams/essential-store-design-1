@@ -6,6 +6,7 @@ import {ProductCard} from "@/components/ProductCard";
 import {SectionHeading} from "@/components/SectionHeading";
 import {EditionOneHero,type EssentialOneSlide} from "@/components/EditionOneHero";
 import {targetUrl} from "@/lib/edition-two-content";
+import {editionTwoDefaults} from "@/lib/admin/edition-two";
 import type {StoreData} from "@/lib/live-store";
 
 const benefitIcons={truck:Truck,package:PackageCheck,headphones:Headphones,shield:ShieldCheck};
@@ -24,6 +25,7 @@ function Promotion({title,description,image,href,label}:{title:string;descriptio
 export default async function Home(){
  const store:StoreData=await loadStore();
  const edition=store.settings.editorialConfig;
+  const festival=edition?.festival??editionTwoDefaults.festival;
  const sections=[...(store.settings.homeSections||[])].filter(s=>s.enabled).sort((a,b)=>a.position-b.position);
  const homeHero=sections[0];
  const baseSlide:EssentialOneSlide={id:"fallback",eyebrow:"خریدی متفاوت، ساده و مطمئن",
@@ -60,6 +62,18 @@ export default async function Home(){
    {edition?.featured.description&&<p className="ed1-featured-caption">{edition.featured.description}</p>}
    <div className="product-grid">{best.map(p=><ProductCard key={p.id} product={p}/>)}</div>
   </section>
+
+  {festival.enabled&&<section className="ed1-festival" aria-labelledby="ed1-festival-title">
+    <div className="ed1-festival-copy">
+      <span className="ed1-festival-kicker">{festival.eyebrow}</span>
+      <h2 id="ed1-festival-title">{festival.title}</h2>
+      <p>{festival.description}</p>
+      {festival.target.kind!=="none"&&<Link className="ed1-festival-button" href={targetUrl(festival.target,store)}>{festival.ctaLabel||"مشاهده انتخاب‌ها"} <ChevronLeft size={19}/></Link>}
+    </div>
+    <div className="ed1-festival-image">
+      <Image src={festival.imageUrl||"/images/hero-woman.webp"} alt={festival.title} fill sizes="(max-width: 700px) 100vw, 48vw" unoptimized={festival.imageUrl.startsWith("http")}/>
+    </div>
+  </section>}
   {edition&&<section className="promotions-section" aria-label="بنرهای تبلیغاتی">
    <SectionHeading title="پیشنهادهای ویژه"/>
    <div className="promo-grid">
