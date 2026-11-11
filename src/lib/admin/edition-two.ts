@@ -2,7 +2,7 @@
 export type Destination={kind:"none"|"home"|"products"|"product"|"category"|"page"|"article"|"external";id?:string;url?:string};
 export type EdSlide={id:string;title:string;description:string;eyebrow:string;imageUrl:string;mobileImageUrl:string;ctaLabel:string;target:Destination;enabled:boolean};
 export type EdImageText={title:string;description:string;imageUrl:string;mobileImageUrl?:string;secondaryImageUrl?:string;ctaLabel:string;target:Destination};
-export type EdFestival=EdImageText&{enabled:boolean;eyebrow:string;productIds:string[]};
+export type EdFestival=EdImageText&{enabled:boolean;eyebrow:string;productIds:string[];showCountdown:boolean;endsAt:string;expiredText:string};
 export type EditionTwoConfig={
  version:2;announcement:string;hero:EdSlide[];sectionOrder:string[];
  categories:{title:string;items:Array<{categoryId:string;imageUrl?:string}>};
@@ -26,7 +26,7 @@ export const editionTwoDefaults:EditionTwoConfig={
  ],
  categories:{title:"دسته‌بندی محصولات",items:[{categoryId:"clothing",imageUrl:photo("category-clothing.webp")},{categoryId:"bags",imageUrl:photo("category-bags.webp")},{categoryId:"shoes",imageUrl:photo("category-shoes.webp")},{categoryId:"accessories",imageUrl:photo("category-accessories.webp")}]},
  featured:{title:"پرفروش‌ترین محصولات",description:"گزیده‌ای از بهترین انتخاب‌ها",productIds:[]},
- festival:{enabled:true,productIds:[],eyebrow:"SPECIAL WEEK / ESSENTIAL 01",title:"جشنواره تخفیف‌های منتخب",description:"منتخب این هفته را ببین و محصول دلخواهت را آسان پیدا کن.",imageUrl:"/images/hero-woman.webp",mobileImageUrl:"/images/hero-woman.webp",ctaLabel:"دیدن پیشنهادها",target:{kind:"products"}},
+ festival:{enabled:true,productIds:[],showCountdown:true,endsAt:"2026-12-31T20:29:59.000Z",expiredText:"زمان این جشنواره به پایان رسیده است",eyebrow:"SPECIAL WEEK / ESSENTIAL 01",title:"جشنواره تخفیف‌های منتخب",description:"منتخب این هفته را ببین و محصول دلخواهت را آسان پیدا کن.",imageUrl:"/images/hero-woman.webp",mobileImageUrl:"/images/hero-woman.webp",ctaLabel:"دیدن پیشنهادها",target:{kind:"products"}},
  campaign:{title:"کیف‌های جدید و خاص",description:"مناسب استایل روزمره و رسمی",imageUrl:"/images/bag.webp",ctaLabel:"مشاهده کیف‌ها",target:category},
  story:{title:"جدیدترین مدل‌های کفش",description:"ترکیبی از راحتی، کیفیت و استایل روز",imageUrl:"/images/sneakers.webp",secondaryImageUrl:"",ctaLabel:"مشاهده کفش‌ها",target:{kind:"category",id:"shoes"}},
  chapters:[
