@@ -14,7 +14,7 @@ export type StoreSettings={storeName:string;description:string;logoUrl?:string|n
 export type StoreData={products:Product[];categories:StoreCategory[];settings:StoreSettings;banners:StoreBanner[];pages:StorePage[];articles:StoreArticle[];shipping:StoreShipping[];reviews:StoreReview[];live:boolean};
 const demo:StoreData={products:demoProducts,categories:demoCategories,settings:{storeName:"دایرا استور",description:"خریدی مطمئن، آسان و لذت‌بخش از مجموعه‌ای متنوع از پوشاک، کیف، کفش و اکسسوری‌های باکیفیت."},banners:[],pages:[],articles:[],shipping:[],reviews:[],live:false};
 const cleanUrl=(url:unknown)=>typeof url==="string"&&(url.startsWith("https://")||url.startsWith("/images/"))?url:null;
-const oldDemoProductImage=new Set<string>([,"/images/products/bag-main.webp","/images/products/sneakers-main.webp","/images/products/shirt-blue.webp","/images/products/watch-main.webp","/images/products/bag-everyday.webp","/images/products/sneakers-urban.webp","/images/products/shirt-beige.webp","/images/products/sunglasses-main.webp"]);
+const oldDemoProductImage=new Set<string>(["/images/products/bag-main.webp","/images/products/sneakers-main.webp","/images/products/shirt-blue.webp","/images/products/watch-main.webp","/images/products/bag-everyday.webp","/images/products/sneakers-urban.webp","/images/products/shirt-beige.webp","/images/products/sunglasses-main.webp"]);
 const money=(value:unknown)=>typeof value==="number"&&Number.isFinite(value)?Math.max(0,Math.round(value)):0;
 const text=(value:unknown,fallback="")=>typeof value==="string"?value:fallback;
 
