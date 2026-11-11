@@ -104,6 +104,7 @@ function VisualPreview({value,catalog,selected,onSelect,viewport,slideIndex}:{va
       {saleItems.map(p=><div className="ed2-preview-sale-item" key={p.id}>
         {p.imageUrl?<img src={photo(p.imageUrl)} alt=""/>:<PackageCheck size={20}/>}
         <strong>{p.name}</strong><small>{p.comparePrice&&p.price&&p.comparePrice>p.price?Math.round((1-p.price/p.comparePrice)*100).toLocaleString("fa-IR")+"٪ تخفیف":"منتخب جشنواره"}</small>
+        <div className="ed2-preview-sale-prices">{p.comparePrice&&p.price&&p.comparePrice>p.price&&<s>{p.comparePrice.toLocaleString("fa-IR")} تومان</s>}<b>{(p.price||0).toLocaleString("fa-IR")} تومان</b></div>
       </div>)}
       {!saleItems.length&&<small>محصول تخفیف‌دار فعال ثبت نشده است.</small>}
     </div>
