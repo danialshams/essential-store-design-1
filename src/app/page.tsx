@@ -30,7 +30,7 @@ export default async function Home(){
  const discounted=store.products.filter(p=>p.inventory>0&&typeof p.comparePrice==="number"&&p.comparePrice>p.price);
  const saleProducts=(festival.productIds?.length?
   festival.productIds.map(id=>discounted.find(p=>p.id===id)).filter((p):p is StoreData["products"][number]=>Boolean(p)):
-  discounted).slice(0,6);
+  discounted).slice(0,8);
  const allowedOrder=editionTwoDefaults.sectionOrder;
  const sectionOrder=[...new Set([...(edition?.sectionOrder||allowedOrder).filter(id=>allowedOrder.includes(id)),...allowedOrder])];
 
