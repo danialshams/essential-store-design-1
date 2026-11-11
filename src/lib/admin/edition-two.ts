@@ -2,9 +2,9 @@
 export type Destination={kind:"none"|"home"|"products"|"product"|"category"|"page"|"article"|"external";id?:string;url?:string};
 export type EdSlide={id:string;title:string;description:string;eyebrow:string;imageUrl:string;mobileImageUrl:string;ctaLabel:string;target:Destination;enabled:boolean};
 export type EdImageText={title:string;description:string;imageUrl:string;mobileImageUrl?:string;secondaryImageUrl?:string;ctaLabel:string;target:Destination};
-export type EdFestival=EdImageText&{enabled:boolean;eyebrow:string};
+export type EdFestival=EdImageText&{enabled:boolean;eyebrow:string;productIds:string[]};
 export type EditionTwoConfig={
- version:2;announcement:string;hero:EdSlide[];
+ version:2;announcement:string;hero:EdSlide[];sectionOrder:string[];
  categories:{title:string;items:Array<{categoryId:string;imageUrl?:string}>};
  featured:{title:string;description:string;productIds:string[]};
  campaign:EdImageText;story:EdImageText;festival:EdFestival;
@@ -20,13 +20,13 @@ const photo=(file:string)=>origin+({"chapter-detail.webp":"hero-woman.webp","sto
 const products:Destination={kind:"products"};
 const category:Destination={kind:"category",id:"bags"};
 export const editionTwoDefaults:EditionTwoConfig={
- version:2,announcement:"ارسال رایگان برای خریدهای بالای ۳ میلیون تومان",
+ version:2,sectionOrder:["hero","festival","categories","featured","campaign","story","chapters","journal","benefits"],announcement:"ارسال رایگان برای خریدهای بالای ۳ میلیون تومان",
  hero:[
   {id:"hero-1",title:"فروشگاه ساده، سریع و حرفه‌ای",description:"خریدی مطمئن، آسان و لذت‌بخش از مجموعه‌ای متنوع از پوشاک، کیف، کفش و اکسسوری‌های باکیفیت.",eyebrow:"خریدی متفاوت، ساده و مطمئن",imageUrl:"/images/hero-woman.webp",mobileImageUrl:"/images/hero-mobile.webp",ctaLabel:"مشاهده محصولات",target:{kind:"products"},enabled:true}
  ],
  categories:{title:"دسته‌بندی محصولات",items:[{categoryId:"clothing",imageUrl:photo("category-clothing.webp")},{categoryId:"bags",imageUrl:photo("category-bags.webp")},{categoryId:"shoes",imageUrl:photo("category-shoes.webp")},{categoryId:"accessories",imageUrl:photo("category-accessories.webp")}]},
  featured:{title:"پرفروش‌ترین محصولات",description:"گزیده‌ای از بهترین انتخاب‌ها",productIds:[]},
- festival:{enabled:true,eyebrow:"SPECIAL WEEK / ESSENTIAL 01",title:"جشنواره انتخاب‌های تازه",description:"منتخب این هفته را ببین و محصول دلخواهت را آسان پیدا کن.",imageUrl:"/images/hero-woman.webp",mobileImageUrl:"/images/hero-woman.webp",ctaLabel:"دیدن پیشنهادها",target:{kind:"products"}},
+ festival:{enabled:true,productIds:[],eyebrow:"SPECIAL WEEK / ESSENTIAL 01",title:"جشنواره تخفیف‌های منتخب",description:"منتخب این هفته را ببین و محصول دلخواهت را آسان پیدا کن.",imageUrl:"/images/hero-woman.webp",mobileImageUrl:"/images/hero-woman.webp",ctaLabel:"دیدن پیشنهادها",target:{kind:"products"}},
  campaign:{title:"کیف‌های جدید و خاص",description:"مناسب استایل روزمره و رسمی",imageUrl:"/images/bag.webp",ctaLabel:"مشاهده کیف‌ها",target:category},
  story:{title:"جدیدترین مدل‌های کفش",description:"ترکیبی از راحتی، کیفیت و استایل روز",imageUrl:"/images/sneakers.webp",secondaryImageUrl:"",ctaLabel:"مشاهده کفش‌ها",target:{kind:"category",id:"shoes"}},
  chapters:[
@@ -63,7 +63,7 @@ export const editionTwoDefaults:EditionTwoConfig={
   {id:"nav-journal",label:"ژورنال",target:{kind:"page",id:"blog"}}
  ]
 };
-export type EdEntity={id:string;name:string;slug:string;imageUrl?:string;status?:string};
+export type EdEntity={id:string;name:string;slug:string;imageUrl?:string;status?:string;price?:number;comparePrice?:number|null;inventory?:number};
 export type EdCatalog={products:EdEntity[];categories:EdEntity[];articles:EdEntity[];pages:EdEntity[]};
 export function resolveTarget(target:Destination,catalog:EdCatalog):string{
  switch(target.kind){
@@ -77,4 +77,4 @@ export function resolveTarget(target:Destination,catalog:EdCatalog):string{
   default:return "#";
  }
 }
-export function editionTwoTitleFor(kind:string){return ({hero:"هیرو",categories:"دسته‌بندی‌ها",featured:"پرفروش‌ترین‌ها",campaign:"بنر کیف",festival:"جشنواره و کمپین",story:"بنر کفش",chapters:"بنرهای پایین",journal:"مقالات",benefits:"مزایا",footer:"فوتر و منو"} as Record<string,string>)[kind]||kind;}
+export function editionTwoTitleFor(kind:string){return ({hero:"هیرو",categories:"دسته‌بندی‌ها",featured:"پرفروش‌ترین‌ها",campaign:"بنر کیف",festival:"جشنواره تخفیف‌ها",story:"بنر کفش",chapters:"بنرهای پایین",journal:"مقالات",benefits:"مزایا",footer:"فوتر و منو"} as Record<string,string>)[kind]||kind;}

@@ -20,7 +20,7 @@ export function EditionOneHero({slides}:{slides:EssentialOneSlide[]}){
    <p>{slide.description}</p>
    <div className="hero-actions">
     <Link className="button button-primary" href={slide.ctaHref}>{slide.ctaLabel||"مشاهده محصولات"} <ShoppingCart size={18}/></Link>
-    <Link className="button button-outline" href="/products#categories">دسته‌بندی‌ها <LayoutGrid size={17}/></Link>
+    <Link className="button button-outline" href="/#categories">دسته‌بندی‌ها <LayoutGrid size={17}/></Link>
    </div>
    {slides.length>1&&<div className="ed1-slide-dots" aria-label="انتخاب تصویر هیرو">{slides.map((item,i)=>
     <button type="button" key={item.id} aria-label={"نمایش اسلاید "+(i+1)} aria-pressed={i===index} className={i===index?"active":""} onClick={()=>setIndex(i)}/>)}</div>}
