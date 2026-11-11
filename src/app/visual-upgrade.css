@@ -41,3 +41,23 @@
 @keyframes ed1FestivalRise{to{opacity:1;transform:translateY(0)}}
 @media(max-width:760px){#main-content>.container>.hero{min-height:calc(100svh - 95px)!important}#main-content>.container>.hero .hero-photo{min-height:0!important}.ed1-festival-banner{display:flex;flex-direction:column-reverse;min-height:0}.ed1-festival-banner-picture{height:clamp(220px,64vw,350px)}.ed1-festival-banner-copy{padding:27px 22px 32px}.ed1-festival-discount-badge{width:84px;height:84px;font-size:14px;right:17px;top:16px}.ed1-sale-festival{padding:12px!important}.ed1-sale-label>span{display:none}.ed1-festival-banner-copy h2{font-size:34px!important}.ed1-sale-festival .ed2-festival-clock-unit{min-height:55px}}
 @media(prefers-reduced-motion:reduce){.festival-motion-ready .ed1-festival-banner-copy>*,.festival-motion-ready .ed1-festival-banner-picture{animation:none!important;clip-path:none!important;opacity:1!important;transform:none!important}}
+
+/* WYSIWYG editor mirrors the published banner and its clock. */
+.ed1-preview-festival.ed2-preview-section{display:flex!important;flex-direction:column!important;align-items:stretch;gap:0;background:#edf5ff;border-radius:12px;overflow:hidden}
+.ed1-preview-campaign-banner{display:grid;grid-template-columns:1fr .88fr;width:100%;min-height:270px;background:#14528a;color:white}
+.ed1-preview-campaign-copy{display:flex;align-items:flex-start;justify-content:center;flex-direction:column;padding:clamp(15px,2.5vw,28px);min-width:0}
+.ed1-preview-sale-pill{padding:6px 10px;border:1px solid #ffffff70;background:#ffffff22;border-radius:30px;font-size:10px;color:#fff}
+.ed1-preview-campaign-copy small{color:#c5e9ff;font-size:9px;display:block;margin:10px 0 3px}
+.ed1-preview-campaign-copy h2{font-size:clamp(19px,2.5vw,30px);color:#fff;margin:4px 0;line-height:1.35}
+.ed1-preview-campaign-copy p{font-size:10px;color:#d6eaff;line-height:1.7;margin:0 0 9px}
+.ed1-preview-sale-cta{font-size:10px;font-weight:800;color:#0a548d;background:#fff;padding:8px 12px;margin-top:8px}
+.ed1-preview-campaign-image{position:relative;min-height:270px;background:#d8e8f7}
+.ed1-preview-campaign-image img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.ed1-preview-festival .ed2-preview-sale-items{width:100%;padding:12px;grid-template-columns:repeat(4,minmax(0,1fr))}
+.ed1-preview-campaign-copy .ed2-festival-timer{width:100%;margin:6px 0!important}
+.ed1-preview-campaign-copy .ed2-festival-timer-caption{font-size:9px;color:#d9efff}
+.ed1-preview-campaign-copy .ed2-festival-clock{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}
+.ed1-preview-campaign-copy .ed2-festival-clock-unit{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:43px;border:1px solid #ffffff40;background:#ffffff16;color:white}
+.ed1-preview-campaign-copy .ed2-festival-clock-unit strong{font-size:15px}
+.ed1-preview-campaign-copy .ed2-festival-clock-unit small{font-size:8px;margin:0}
+@media(max-width:680px){.ed1-preview-campaign-banner{grid-template-columns:1fr}.ed1-preview-campaign-image{order:-1;min-height:175px}.ed1-preview-festival .ed2-preview-sale-items{grid-template-columns:repeat(2,minmax(0,1fr))}}
