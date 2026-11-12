@@ -40,9 +40,10 @@ try{
  if(!bin)throw Error("Chromium/Google Chrome unavailable on runner");
  chrome=spawn(bin,["--headless=new","--no-sandbox","--disable-gpu","--disable-dev-shm-usage",
    "--no-first-run","--no-default-browser-check","--disable-extensions",
+    "--disable-background-networking","--disable-component-update",
    "--remote-debugging-port=0","--user-data-dir="+profile,"about:blank"],{stdio:"ignore"});
  const debugFile=join(profile,"DevToolsActivePort");
- await waitFor(()=>existsSync(debugFile),"Chromium DevTools port",20000);
+ await waitFor(()=>existsSync(debugFile),"Chromium DevTools port",65000);
  const debugPort=Number(readFileSync(debugFile,"utf8").split("\n")[0]);
  const target=await fetch(`http://127.0.0.1:${debugPort}/json/new?about:blank`,{method:"PUT"}).then(r=>r.json());
  const ws=new WebSocket(target.webSocketDebuggerUrl);
