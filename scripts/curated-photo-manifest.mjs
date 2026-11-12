@@ -32,7 +32,7 @@ export const entries=[
   ],
   [
     "linen-shirt.webp",
-    "photo-1503342217505-b0a15ec3261c",
+    "photo-1596755094514-f87e34085b2c",
     "linen-shirt.webp",
     1100,
     1364
@@ -67,7 +67,7 @@ export const entries=[
   ],
   [
     "products/shirt-blue.webp",
-    "photo-1539008835657-9e8e9680c956",
+    "photo-1602810318383-e386cc2a3ccf",
     "linen-shirt.webp",
     1100,
     1364
