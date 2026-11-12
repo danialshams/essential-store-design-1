@@ -11,16 +11,16 @@ import {join,dirname} from "node:path";
 const realPhotoIds={
   "bag.webp": 36364967,
   "sneakers.webp": 7193626,
-  "linen-shirt.webp": 5996399,
+  "linen-shirt.webp": 22441317,
   "sunglasses.webp": 36824973,
   "classic-watch.webp": 20022436,
   "products/bag-main.webp": 36364968,
   "products/sneakers-main.webp": 1456733,
-  "products/shirt-blue.webp": 8053645,
+  "products/shirt-blue.webp": 9558723,
   "products/watch-main.webp": 35164843,
   "products/bag-everyday.webp": 36356649,
   "products/sneakers-urban.webp": 1461048,
-  "products/shirt-beige.webp": 5996399,
+  "products/shirt-beige.webp": 22441317,
   "products/sunglasses-main.webp": 8360305
 };
 const root=process.cwd(),photos={},queue=[...entries];
@@ -33,7 +33,10 @@ async function worker(){
   const stockId=realPhotoIds[key];
   const legacyPath="/images/curated/"+key.replaceAll("/","-");
   const oldRecolorPath="/images/palette-cool-v1/"+key.replaceAll("/","-");
-  const finalPath=stockId?"/images/real-photo-v2/"+key.replaceAll("/","-").replace(/\.webp$/,".jpg"):legacyPath;
+  const refreshedShirts=new Set(["linen-shirt.webp","products/shirt-blue.webp","products/shirt-beige.webp"]);
+// Changed sources get a fresh URL; old cached assets stay available for historical product links.
+  const edition=refreshedShirts.has(key)?"v3":"v2";
+  const finalPath=stockId?"/images/real-photo-"+edition+"/"+key.replaceAll("/","-").replace(/\.webp$/,".jpg"):legacyPath;
   // Both the canonical template URL and any previously published recolored URL resolve to a REAL photograph.
   photos["/images/"+key]=finalPath;
   photos[legacyPath]=finalPath;

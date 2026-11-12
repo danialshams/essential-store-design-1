@@ -62,7 +62,10 @@ export const loadStore=cache(async():Promise<StoreData>=>{
    const original=demoProducts.find(x=>x.slug===p.slug);
    const imgs=Array.isArray(p.gallery)?p.gallery.map(cleanUrl).filter((x):x is string=>typeof x==="string"&&!oldDemoProductImage.has(x)):[];
    const providedCover=cleanUrl(p.coverUrl);
-   const cover=(providedCover&&!oldDemoProductImage.has(providedCover)?showcasePhoto(providedCover):null)||original?.image||showcasePhoto(providedCover)||IMAGE_FALLBACK;
+   // Only this historical DEMO SKU was seeded with another product's navy photo.
+    // A merchant-uploaded custom image is always preserved.
+    const seededWrongSkyShirt=p.slug==="sky-blue-linen-shirt"&&providedCover==="/images/linen-shirt.webp";
+    const cover=(providedCover&&!seededWrongSkyShirt&&!oldDemoProductImage.has(providedCover)?showcasePhoto(providedCover):null)||original?.image||showcasePhoto(providedCover)||IMAGE_FALLBACK;
    const attrs=p.attributes && typeof p.attributes==="object" && !Array.isArray(p.attributes)?p.attributes as Record<string,unknown>:{};
    return {id:String(p.id),slug:text(p.slug),name:text(p.name),description:text(p.description),
     subtitle:original?.subtitle||"",price:money(p.price),comparePrice:p.comparePrice==null?undefined:money(p.comparePrice),
