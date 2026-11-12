@@ -35,6 +35,10 @@ jobs:
       - run: npm run build
       - name: Verify isolated real PostgreSQL checkout and CMS publication
         run: node scripts/test-admin-integration.mjs
+      - name: Populate isolated CI showroom with real discounted festival products
+        env:
+          TEMP_PUBLIC_ADMIN_EDIT: "1"
+        run: node scripts/seed-festival-demo.mjs
       - name: Browser QA for real responsive administration UI
         env:
           NEXT_PUBLIC_STUDIO_DEMO: "1"

@@ -101,7 +101,7 @@ festival:(<>
      <h2 id="ed1-festival-title">{festival.title}</h2>
      <p>{festival.description}</p>
      {festival.showCountdown!==false&&<FestivalCountdown endsAt={festival.endsAt||editionTwoDefaults.festival.endsAt} expiredText={festival.expiredText}/>}
-     {festival.target.kind!=="none"&&<Link className="ed1-festival-button" href={targetUrl(festival.target,store)}>
+     {festival.target.kind!=="none"&&<Link className="ed1-festival-button" href={festival.target.kind==="products"?"#festival-products":targetUrl(festival.target,store)}>
        {festival.ctaLabel||"مشاهده محصولات جشنواره"} <ChevronLeft size={18}/>
      </Link>}
    </div>
@@ -112,10 +112,10 @@ festival:(<>
      {bestDiscount>0&&<span className="ed1-festival-discount-badge">تا {bestDiscount.toLocaleString("fa-IR")}٪ تخفیف</span>}
    </div>
  </div>
- <div className="ed1-sale-label"><div><strong>محصولات تخفیف‌دار</strong><span>پیشنهادهای منتخب جشنواره</span></div><span>LIMITED OFFERS</span></div>
- <div className="ed1-sale-products">
+ <div className="ed1-sale-label"><div><strong>محصولات جشنواره</strong><span className="ed1-sale-header-count">{saleProducts.length.toLocaleString("fa-IR")} محصول منتخب</span></div><span>LIMITED OFFERS</span></div>
+ <div className="ed1-sale-products" id="festival-products" data-festival-product-count={saleProducts.length} aria-label={`فهرست ${saleProducts.length.toLocaleString("fa-IR")} محصول جشنواره`}>
    {saleProducts.map(p=><div className="ed1-sale-item" key={p.id}><ProductCard product={p}/></div>)}
-   {!saleProducts.length&&<p className="ed1-sale-empty" role="status">فعلاً محصول فعال با تخفیف وجود ندارد؛ با تعیین قیمت قبل از تخفیف در پنل، محصول در این بخش نمایش داده می‌شود.</p>}
+   {!saleProducts.length&&<p className="ed1-sale-empty" role="status">فعلاً محصول فعالی برای جشنواره وجود ندارد. از پنل فروشگاه محصول جدید ایجاد یا محصول موجود را فعال کنید.</p>}
  </div>
 </section>}
 </>),
