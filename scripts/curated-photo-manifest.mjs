@@ -11,7 +11,7 @@ export const entries=[
   ],
   [
     "hero-mobile.webp",
-    "photo-1503341504253-dff4815485f1",
+    "photo-1509631179647-0177331693ae",
     "hero-mobile.webp",
     1100,
     1452
