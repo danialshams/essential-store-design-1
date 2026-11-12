@@ -53,6 +53,12 @@ for file in paths:
         new[:,:,0]=np.where(warm,146+(H/38)*8,H)
         new[:,:,1]=np.where(warm,np.clip(76+S*.24,65,145),S)
         mask=np.where(warm,.91*central*skin_protection,mask)
+        # Purple garments are not part of the cool blue showroom:
+        # turn the actual indigo/purple shirt into a clean dusty blue.
+        violet=(H>172)&(H<247)&(S>42)&(file.name=="products-shirt-blue.webp")
+        new[:,:,0]=np.where(violet,152,new[:,:,0])
+        new[:,:,1]=np.where(violet,107,new[:,:,1])
+        mask=np.maximum(mask,np.where(violet,.97*central,0))
         # Desaturated silver and white products keep their clean white
         # highlights with a slight cool-toned material shadow.
         neutral=(S<54)&(V>115)&(V<235)
