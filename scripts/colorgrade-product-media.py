@@ -43,7 +43,7 @@ for file in paths:
     if args.palette=="cool":
         # Brown/tan/orange materials become muted sky blue, dusty blue
         # or midnight slate blue, retaining the original material highlights.
-        warm=(((H<38)|(H>246)) & (S>31) & (V>38))
+        warm=(((H<38)|(H>205)) & (S>31) & (V>38))
         # Shift natural brown material without painting faces pure blue:
         # face area in editorial images is softly protected.
         skin_protection=np.ones((h,w),dtype=np.float32)
@@ -61,10 +61,10 @@ for file in paths:
         mask=np.maximum(mask,np.where(neutral,.20*central,0))
         # Very dark leather can read cold graphite / navy without
         # flattening the fabric grain and contrast.
-        charcoal=(S<65)&(V>45)&(V<105)&product_photo
+        charcoal=(S<112)&(V>19)&(V<175)&("bag" in file.name)
         new[:,:,0]=np.where(charcoal,156,new[:,:,0])
-        new[:,:,1]=np.where(charcoal,72,new[:,:,1])
-        mask=np.maximum(mask,np.where(charcoal,.28*central,0))
+        new[:,:,1]=np.where(charcoal,105,new[:,:,1])
+        mask=np.maximum(mask,np.where(charcoal,.68*central,0))
     else:
         # Remove unrelated bright blue clothing, shoes and handbags from
         # the taupe / charcoal luxury product collection.
