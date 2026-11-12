@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import {ChevronLeft,Truck,ShieldCheck,Headphones,Medal,PackageCheck,ArrowLeft} from "lucide-react";
 import {loadStore} from "@/lib/live-store";
+import {seoMeta,websiteSchema,jsonLd} from "@/lib/seo";
 import {ProductCard} from "@/components/ProductCard";
 import {SectionHeading} from "@/components/SectionHeading";
 import {EditionOneHero,type EssentialOneSlide} from "@/components/EditionOneHero";
@@ -25,6 +26,11 @@ function Promotion({title,description,image,href,label}:{title:string;descriptio
   <div><h3>{title}</h3><p>{description}</p><span>{label} <ChevronLeft size={14}/></span></div>
   {image&&<Image src={showcasePhoto(image)} alt="" width={410} height={200} unoptimized={showcasePhoto(image).startsWith("http")}/>}
  </Link>;
+}
+export async function generateMetadata(){
+ const store=await loadStore();
+ return seoMeta(store,"/",{title:store.settings.seoTitle||store.settings.storeName,
+  description:store.settings.seoDescription||store.settings.description});
 }
 export default async function Home(){
  const store:StoreData=await loadStore();
@@ -152,6 +158,7 @@ benefits:(<>
 </>),
 };
 return <div className="container">
+ <script type="application/ld+json" dangerouslySetInnerHTML={{__html:jsonLd(websiteSchema(store))}}/>
  {sectionOrder.map(id=><Fragment key={id}>{homepageSections[id]}</Fragment>)}
  {store.banners.length>0&&<section className="promotions-section"><SectionHeading title="بنرهای فروشگاه"/><div className="promo-grid">{store.banners.map(b=>
    <Promotion key={b.id} title={b.title} description={b.subtitle} image={b.imageUrl||""} href={b.target?targetUrl(b.target,store):b.linkUrl||"/products"} label="مشاهده"/>)}</div></section>}
