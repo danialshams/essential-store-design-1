@@ -274,7 +274,7 @@ try{
     "/admin/articles","/admin/banners","/admin/categories","/admin/coupons",
     "/admin/shipping","/admin/reviews","/admin/customers","/admin/payments"]){
     await send("Page.navigate",{url:appURL+route});
-    await waitFor(()=>evalJS('!!document.querySelector("main h1")'),view.name+" route "+route,22000);
+    await waitFor(()=>evalJS("location.pathname==="+JSON.stringify(route)+" && document.readyState==='complete' && !!document.querySelector('.ed2-admin main h1')"),view.name+" route "+route,22000);
     if(view.w<=600){
      // Chromium can reset page-level emulation during repeated hard navigations.
      // Reapply the physical device viewport after navigation, as on real mobile.
@@ -295,7 +295,8 @@ try{
      page:document.documentElement.scrollWidth,
      viewport:window.innerWidth,
      hasMenu:!!document.querySelector(".ed2-sidebar"),
-     content:document.querySelector("main")?.getBoundingClientRect().width
+     content:document.querySelector("main")?.getBoundingClientRect().width,
+     offenders:[...document.querySelectorAll(".ed2-admin *")].filter(el=>el.getBoundingClientRect().right>innerWidth+6||el.getBoundingClientRect().left<-6).slice(0,6).map(el=>({tag:el.tagName,class:String(el.className).slice(0,60),right:Math.round(el.getBoundingClientRect().right),left:Math.round(el.getBoundingClientRect().left)}))
     }))()`);
     assert.ok(width.hasMenu&&width.content>250,view.name+": route missing layout "+route);
     assert.ok(width.page<=view.w+5,
