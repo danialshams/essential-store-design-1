@@ -11,13 +11,13 @@ const fixtures=[
  ["festival-demo-tailored-coat","پالتو زنانه خوش‌دوخت","clothing",3850000,5200000,16,"/images/hero-woman.webp"],
  ["festival-demo-classic-handbag","کیف دستی چرمی کلاسیک","bags",2980000,3850000,13,"/images/products/bag-main.webp"],
  ["festival-demo-white-sneakers","کتانی سفید لوکس","shoes",2150000,2750000,19,"/images/products/sneakers-main.webp"],
- ["festival-demo-linen-set","ست پوشاک لینن","clothing",2490000,3120000,17,"/images/products/shirt-beige.webp"],
+ ["festival-demo-linen-set","پیراهن لینن آبی مردانه","clothing",2490000,3120000,17,"/images/products/shirt-beige.webp"],
  ["festival-demo-leather-tote","کیف دوشی روزمره","bags",2350000,3100000,21,"/images/products/bag-everyday.webp"],
  ["festival-demo-city-shoes","کتانی شهری اسپرت","shoes",1980000,2550000,24,"/images/products/sneakers-urban.webp"],
  ["festival-demo-classic-watch","ساعت مچی کلاسیک","accessories",3290000,4120000,15,"/images/products/watch-main.webp"],
  ["festival-demo-sunglasses","عینک آفتابی مینیمال","accessories",995000,1430000,26,"/images/products/sunglasses-main.webp"],
- ["festival-demo-evening-style","پیراهن زنانه مجلسی","clothing",2900000,3700000,12,"/images/linen-shirt.webp"],
- ["festival-demo-beige-outfit","پوشاک بژ روزمره","clothing",1890000,2490000,20,"/images/products/shirt-blue.webp"],
+ ["festival-demo-evening-style","پیراهن سرمه‌ای مردانه","clothing",2900000,3700000,12,"/images/linen-shirt.webp"],
+ ["festival-demo-beige-outfit","پیراهن آبی روزمره","clothing",1890000,2490000,20,"/images/products/shirt-blue.webp"],
  ["festival-demo-compact-bag","کیف دستی کوچک","bags",1590000,2180000,23,"/images/bag.webp"],
  ["festival-demo-sport-shoe","کفش اسپرت راحتی","shoes",1740000,2290000,18,"/images/sneakers.webp"]
 ];
