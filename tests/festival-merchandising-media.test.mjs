@@ -3,12 +3,21 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 const read=p=>readFileSync(p,"utf8");
 
-test("homepage festival has a full eligible catalog, without fake discount percentages",()=>{
- const page=read("src/app/page.tsx");
- assert.match(page,/const inStock=store\.products\.filter\(p=>p\.inventory>0\)/);
- assert.match(page,/\.slice\(0,12\)/);
- assert.match(page,/festival\.productIds\?\.map\(id=>inStock\.find/);
- assert.match(page,/discounted\.some\(d=>d\.id===p\.id\)/);
+test("festival includes only genuine discounted in-stock products and has full dedicated archive",()=>{
+ const catalogue=read("src/lib/luxury-catalog.ts");
+ const homepage=read("src/components/LuxuryHome.tsx");
+ const archive=read("src/app/festival/page.tsx");
+ const filters=read("src/components/LuxuryFestivalCollection.tsx");
+ assert.match(catalogue,/p\.inventory>0/);
+ assert.match(catalogue,/p\.comparePrice>p\.price/);
+ assert.match(catalogue,/festival\.productIds|config\?\.productIds/);
+ assert.match(catalogue,/\[\.\.\.selected,\.\.\.rest\]/);
+ assert.match(homepage,/sale\.slice\(0,4\)/);
+ assert.match(homepage,/href="\/festival"/);
+ assert.match(archive,/festivalProducts\(store\)/);
+ assert.match(archive,/LuxuryFestivalCollection products=\{items\}/);
+ assert.match(filters,/بیشترین تخفیف/);
+ assert.match(filters,/جستجو در محصولات جشنواره/);
 });
 test("admin can select existing or create a real saved sale product",()=>{
  const manager=read("src/components/admin/FestivalProductManager.tsx");
