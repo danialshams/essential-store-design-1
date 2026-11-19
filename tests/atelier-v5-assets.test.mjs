@@ -18,7 +18,7 @@ test("production build must generate 24 local portfolio photos without external 
   assert.match(p.scripts.build,/prepare-atelier-v4-media\.mjs/);
   const s=txt("scripts/prepare-atelier-v4-media.mjs");
   assert.match(s,/atelier-v4-sheet-/);
-  assert.match(s,/n\+21/);
+  assert.match(s,/const n=i\+21/);
   assert.doesNotMatch(s,/images\.unsplash\.com/);
   for(let i=21;i<=32;i++){
     const stem="public/images/atelier-v4-item-"+i;
