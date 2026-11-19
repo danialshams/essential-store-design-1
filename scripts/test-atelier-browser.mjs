@@ -81,6 +81,7 @@ try {
     await send("Emulation.setDeviceMetricsOverride", {width,height,deviceScaleFactor:1,mobile:width<700,screenWidth:width,screenHeight:height});
     await send("Page.navigate",{url:origin+"/"});
     await waitFor(() => evaluate('!!document.querySelector(".atelier-intro")'), name + " intro");
+    await waitFor(() => evaluate('Number(getComputedStyle(document.querySelector(".atelier-intro")).zIndex) > Number(getComputedStyle(document.querySelector(".site-header")).zIndex)'), name + " fully styled overlay", 12000);
     const overlay = await evaluate('({z:Number(getComputedStyle(document.querySelector(".atelier-intro")).zIndex), header:Number(getComputedStyle(document.querySelector(".site-header")).zIndex)})');
     assert.ok(overlay.z > overlay.header, name+" loader must cover header");
     await waitFor(() => evaluate('!!document.querySelector(".atelier-intro--turn")'), name+" corner-curl start",14000);
