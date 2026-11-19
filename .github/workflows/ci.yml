@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
       - name: Prepare locally served editorial assets
-        run: node scripts/prepare-atelier-media.mjs
+        run: node scripts/prepare-atelier-media.mjs && node scripts/prepare-atelier-v3-media.mjs
       - name: Source tests
         run: npm test
       - name: TypeScript
