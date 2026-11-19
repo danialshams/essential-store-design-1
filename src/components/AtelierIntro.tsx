@@ -69,13 +69,14 @@ export function AtelierIntro() {
       return;
     }
     const rect = root.getBoundingClientRect();
-    const startX = rect.left + 7;
+    const startX = rect.left + Math.max(7, Math.round(rect.width * .012));
     const startY = rect.top + Math.max(8, rect.height * 0.018);
+    const mobilePointer = window.matchMedia("(pointer: coarse)").matches ? "touch" : "mouse";
     let frame = 0;
     let active = true;
     const dispatch = (type: string, x: number, y: number, buttons: number) => {
       root.dispatchEvent(new PointerEvent(type, {
-        bubbles: true, pointerId: 173, pointerType: "mouse", isPrimary: true,
+        bubbles: true, pointerId: 173, pointerType: mobilePointer, isPrimary: true,
         button: 0, buttons, clientX: x, clientY: y,
       }));
     };
