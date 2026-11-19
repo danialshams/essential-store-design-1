@@ -1,6 +1,6 @@
 import {loadStore} from "@/lib/live-store";
 import {seoMeta,websiteSchema,jsonLd} from "@/lib/seo";
-import {LuxuryHome} from "@/components/LuxuryHome";
+import {AtelierHome} from "@/components/AtelierHome";
 
 export async function generateMetadata(){
  const store=await loadStore();
@@ -13,6 +13,6 @@ export default async function Home(){
  const store=await loadStore();
  return <>
   <script type="application/ld+json" dangerouslySetInnerHTML={{__html:jsonLd(websiteSchema(store))}}/>
-  <LuxuryHome store={store}/>
+  <AtelierHome store={store}/>
  </>;
 }
