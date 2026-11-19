@@ -225,7 +225,14 @@ body:has(.luxury-festival-page) .copyright{background:#05111e!important;color:#8
 .luxury-festival-page .atelier-tile-off{background:#071827e0;color:#f2f1ed}
 
 /* The navigation never shows behind the intro text or before the paper turn is complete. */
-body:has(.atelier-intro) .site-header,body:has(.atelier-intro) .mobile-bottom-nav{visibility:hidden!important;pointer-events:none!important}
+body:has(.atelier-intro) .site-header,body:has(.atelier-intro) .mobile-bottom-nav{
+ visibility:hidden;
+ animation:atelierChromeRecovery 0s linear 5.55s forwards
+}
+@keyframes atelierChromeRecovery{to{visibility:visible}}
+@media(prefers-reduced-motion:reduce){
+ body:has(.atelier-intro) .site-header,body:has(.atelier-intro) .mobile-bottom-nav{visibility:visible!important;animation:none!important}
+}
 
 /* Editorial footer: the page finishes as a publication, not as a default shop template. */
 .atelier-footer{margin:0!important;padding:0!important;background:#071827!important;color:#cfd8df!important;overflow:hidden}
