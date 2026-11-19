@@ -163,3 +163,7 @@ body:has(.luxury-home) .mobile-bottom-nav,body:has(.luxury-festival-page) .mobil
 .luxury-festival-results{color:#607b8f;font-size:12px;margin:0 0 22px}
 .luxury-reset{display:inline-flex;align-items:center;gap:9px;border:1px solid #567490;color:#0e2943;background:transparent;padding:11px 17px;margin-top:10px}
 @media(max-width:760px){.luxury-festival-controls{flex-direction:column;align-items:stretch}.luxury-festival-search{max-width:none}.luxury-festival-sort{justify-content:space-between}.luxury-festival-filters{flex-wrap:nowrap;overflow-x:auto;padding-bottom:9px;scrollbar-width:thin}.luxury-festival-filters button{white-space:nowrap;padding-inline:14px}}
+
+/* Failsafe: a stalled hydration may never leave the visitor behind the intro. */
+.luxury-intro{animation:luxuryIntroSafetyExit 0s linear 4.5s forwards}
+@keyframes luxuryIntroSafetyExit{to{visibility:hidden;pointer-events:none}}
