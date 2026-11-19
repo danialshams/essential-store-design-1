@@ -143,9 +143,9 @@ body:has(.atelier-home) .copyright{background:#05111e!important;border-top:1px s
 .atelier-reveal-sheet{height:100%;width:100%;background:transparent!important}
 .atelier-intro-copy{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:17px;color:#f2f1ed;pointer-events:none;transition:opacity .28s ease,transform .28s ease}
 .atelier-intro-title{font:400 clamp(27px,5.2vw,78px)/1.2 Georgia,"Times New Roman",serif;letter-spacing:.16em;white-space:nowrap;display:flex;justify-content:center}
-.atelier-intro-title span{display:inline-block;opacity:0;filter:blur(18px);transform:translateX(12px);animation:atelierLetter 1.05s cubic-bezier(.22,.8,.2,1) forwards}
-.atelier-intro-caption{color:#a9bdce;font:10px Arial,sans-serif;letter-spacing:.31em;opacity:0;animation:atelierCaption .75s ease 1.12s forwards}
-.atelier-intro-rule{display:block;width:min(270px,55vw);height:1px;background:#cad5e1;transform:scaleX(0);transform-origin:right;transition:transform .68s cubic-bezier(.22,.8,.2,1);box-shadow:0 0 10px #cad5e178}
+.atelier-intro-title span{display:inline-block;opacity:0;filter:blur(18px);transform:translateX(12px);animation:atelierLetter .78s cubic-bezier(.22,.8,.2,1) forwards}
+.atelier-intro-caption{color:#a9bdce;font:10px Arial,sans-serif;letter-spacing:.31em;opacity:0;animation:atelierCaption .56s ease 1.4s forwards}
+.atelier-intro-rule{display:block;width:min(270px,55vw);height:1px;background:#cad5e1;transform:scaleX(0);transform-origin:right;transition:transform .57s cubic-bezier(.22,.8,.2,1);box-shadow:0 0 10px #cad5e178}
 .atelier-intro--line .atelier-intro-rule,.atelier-intro--turn .atelier-intro-rule{transform:scaleX(1)}
 .atelier-intro--turn{background:transparent}
 .atelier-intro--turn .atelier-intro-copy{opacity:0;transform:translateY(-12px)}
