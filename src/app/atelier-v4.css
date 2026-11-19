@@ -1,0 +1,149 @@
+/* ATELIER IV: paper-curl synchronous header, cinematic mobile navigation, zero-crop editorial images */
+body:has(.atelier-home) .atelier-hero { background:#071827!important; }
+body:has(.atelier-home) .atelier-hero-photo,
+body:has(.atelier-home) .atelier-hero-photo picture {overflow:hidden!important;isolation:isolate;}
+body:has(.atelier-home) .atelier-hero-image {
+  width:100%!important;height:100%!important;object-fit:cover!important;
+  object-position:center top!important;transform:none!important;
+}
+/* The loading sheet is opaque while characters are assembled. During its turn,
+   the header is ALREADY painted beneath it; it emerges with the curl,
+   rather than waiting for the loader DOM to unmount. */
+body:has(.atelier-intro--letters) .site-header,
+body:has(.atelier-intro--line) .site-header {
+  visibility:hidden!important;pointer-events:none!important;
+}
+body:has(.atelier-intro--turn) .site-header {
+  visibility:visible!important;opacity:1!important;
+  pointer-events:none!important;animation:none!important;
+  transition:none!important;
+}
+body:not(:has(.atelier-intro)) .site-header {visibility:visible!important;}
+/* Drawer keeps the shop's luxury language on all storefront routes. */
+body:has(.site-header) .mobile-menu-layer {
+  z-index:9900;
+  isolation:isolate;
+}
+body:has(.site-header) .mobile-menu-backdrop {
+  background:rgba(2,9,19,.8)!important;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  animation:atelierVeil .43s ease-out both;
+}
+body:has(.site-header) .mobile-drawer {
+  --drawer-gold:#a9c2d6;
+  width:min(410px,90vw);
+  padding:calc(27px + env(safe-area-inset-top)) clamp(18px,5vw,32px) calc(28px + env(safe-area-inset-bottom));
+  border:0!important;
+  border-left:1px solid rgba(202,221,235,.24)!important;
+  border-radius:0!important;
+  color:#f2f1ed!important;
+  background:
+    radial-gradient(ellipse 82% 34% at 108% 2%,rgba(81,131,172,.2),transparent 73%),
+    linear-gradient(158deg,#10283d 0%,#071827 51%,#030d18 100%)!important;
+  box-shadow:-25px 0 85px rgba(0,0,0,.55)!important;
+  animation:atelierDrawerEnter .62s cubic-bezier(.2,.78,.19,1) both!important;
+  overscroll-behavior:contain;
+  scrollbar-color:#527089 transparent;
+}
+body:has(.site-header) .mobile-drawer:before {
+  content:"ATELIER / THE EDITION";
+  display:block;
+  color:#839eb5;
+  font:10px/1.6 Arial,sans-serif;
+  letter-spacing:.2em;
+  direction:ltr;text-align:left;
+  margin-bottom:24px;
+}
+body:has(.site-header) .mobile-drawer-top {
+  border-bottom:1px solid rgba(207,216,223,.22)!important;
+  padding:0 0 22px!important;
+  margin-bottom:24px;
+}
+body:has(.site-header) .mobile-drawer .brand,
+body:has(.site-header) .mobile-drawer .brand strong,
+body:has(.site-header) .mobile-drawer .brand-icon {
+  color:#f2f1ed!important;
+  font-weight:500!important;
+}
+body:has(.site-header) .mobile-drawer .brand strong {
+  letter-spacing:0!important;
+  font-size:20px!important;
+}
+body:has(.site-header) .mobile-drawer .icon-action {
+  color:#f2f1ed!important;
+  background:rgba(255,255,255,.035)!important;
+  width:43px;height:43px;
+  border:1px solid rgba(207,216,223,.35)!important;
+  border-radius:50%!important;
+  transition:transform .3s,border-color .3s,background .3s;
+}
+body:has(.site-header) .mobile-drawer .icon-action:hover {
+  background:rgba(207,216,223,.16)!important;
+  border-color:#cfd8df!important;
+  transform:rotate(90deg);
+}
+body:has(.site-header) .mobile-drawer nav {
+  display:flex!important;
+  flex-direction:column;
+  align-items:stretch;
+  gap:0!important;
+  counter-reset:atelierItem;
+  padding:0 0 22px!important;
+}
+body:has(.site-header) .mobile-drawer nav a {
+  counter-increment:atelierItem;
+  position:relative;
+  display:flex!important;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  color:#f2f1ed!important;
+  background:transparent!important;
+  border-bottom:1px solid rgba(207,216,223,.13)!important;
+  border-radius:0!important;
+  font-size:clamp(15px,4.6vw,20px)!important;
+  font-weight:450!important;
+  padding:19px 6px!important;
+  letter-spacing:0!important;
+  transition:color .35s,background .35s,padding .35s;
+}
+body:has(.site-header) .mobile-drawer nav a:before {
+  content:counter(atelierItem,decimal-leading-zero);
+  font:10px Arial,sans-serif;
+  letter-spacing:.16em;
+  color:#809db6;
+  order:2;
+  margin-inline-start:15px;
+}
+body:has(.site-header) .mobile-drawer nav a:hover,
+body:has(.site-header) .mobile-drawer nav a:focus-visible {
+  color:#fff!important;
+  background:linear-gradient(90deg,transparent,rgba(171,199,220,.13))!important;
+  padding-inline-start:12px!important;
+}
+body:has(.site-header) .mobile-drawer nav a:nth-child(-n+8) {
+  animation:atelierDrawerItem .7s cubic-bezier(.19,.75,.19,1) both;
+  animation-delay:calc(.08s * (var(--i,1)));
+}
+body:has(.site-header) .mobile-drawer .drawer-foot {
+  display:flex!important;
+  gap:12px;
+  color:#a4bed2!important;
+  margin-top:auto!important;
+  font-size:12px!important;
+  padding:22px 0 4px!important;
+  border-top:1px solid rgba(207,216,223,.22);
+}
+body:has(.site-header) .mobile-drawer .drawer-foot svg {color:#cfd8df;}
+@keyframes atelierVeil{from{opacity:0}to{opacity:1}}
+@keyframes atelierDrawerEnter{from{transform:translateX(105%);opacity:.65}to{transform:translateX(0);opacity:1}}
+@keyframes atelierDrawerItem{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:760px){
+  body:has(.atelier-home) .atelier-hero-image {object-position:center top!important;}
+  body:has(.site-header) .mobile-drawer{width:min(410px,93vw);}
+}
+@media(prefers-reduced-motion:reduce){
+  body:has(.site-header) .mobile-drawer,
+  body:has(.site-header) .mobile-menu-backdrop,
+  body:has(.site-header) .mobile-drawer nav a{animation:none!important;}
+}
