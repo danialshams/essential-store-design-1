@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "node scripts/prepare-curated-media.mjs && prisma generate && node scripts/ensure-seo-schema.mjs && node scripts/seed-festival-demo.mjs && next build",
+    "dev": "node scripts/prepare-luxury-media.mjs && next dev",
+    "build": "node scripts/prepare-curated-media.mjs && node scripts/prepare-luxury-media.mjs && prisma generate && node scripts/ensure-seo-schema.mjs && node scripts/seed-festival-demo.mjs && next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "test": "node --test tests/*.test.mjs",
