@@ -6,10 +6,10 @@ test('v3 home uses unique editorial shots for each gallery and frame-specific im
   const code=source('src/components/AtelierHome.tsx');
   const tile=source('src/components/AtelierTile.tsx');
   assert.match(code,/allocateEditorialMedia/);
-  assert.match(code,/atelier-v3-hero-desktop/);
-  assert.match(code,/atelier-v3-hero-mobile/);
-  assert.match(code,/atelier-v3-campaign/);
-  assert.match(code,/atelier-v3-editorial/);
+  assert.match(code,/atelier-v4-hero-desktop/);
+  assert.match(code,/atelier-v4-hero-mobile/);
+  assert.match(code,/atelier-v4-campaign/);
+  assert.match(code,/atelier-v4-editorial/);
   assert.match(tile,/editorialImage/);
   assert.match(tile,/\-wide\.webp/);
 });
