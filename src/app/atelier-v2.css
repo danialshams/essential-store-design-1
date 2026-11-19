@@ -206,3 +206,20 @@ body:has(.atelier-home) .copyright{background:#05111e!important;border-top:1px s
 }
 @media(max-width:370px){.atelier-hero-index{display:none}.atelier-hero-copy h1{font-size:40px}.atelier-sale-grid{gap:8px}.atelier-campaign-art{height:310px}.atelier-section-head{flex-direction:column}.atelier-section-head>a{align-self:flex-start}}
 @media(prefers-reduced-motion:reduce){.atelier-intro{display:none!important}.atelier-home *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* Festival archive uses the same gallery language rather than reverting to the previous theme. */
+body:has(.luxury-festival-page) .site-header{background:#071827!important;border-color:#cfd8df33!important}
+body:has(.luxury-festival-page) .site-header .brand,
+body:has(.luxury-festival-page) .site-header .brand strong,
+body:has(.luxury-festival-page) .site-header .icon-action,
+body:has(.luxury-festival-page) .site-header .desktop-links>a{color:#f2f1ed!important}
+body:has(.luxury-festival-page) .site-footer{margin-top:0!important;border-top:0!important;background:#071827!important;color:#cfd8df!important}
+body:has(.luxury-festival-page) .site-footer h4{color:#f2f1ed!important}
+body:has(.luxury-festival-page) .copyright{background:#05111e!important;color:#8eabba!important}
+.luxury-festival-page{background:#f2f1ed!important}
+.luxury-festival-page .luxury-festival-page-head{background:#071827!important}
+.luxury-festival-page .luxury-product-grid{gap:clamp(12px,2vw,26px)}
+.luxury-festival-page .atelier-tile-photo{aspect-ratio:4/5;flex:none;min-height:0}
+.luxury-festival-page .atelier-tile-caption{min-height:94px}
+.luxury-festival-page .atelier-tile-names>a{color:#071827}
+.luxury-festival-page .atelier-tile-off{background:#071827e0;color:#f2f1ed}
