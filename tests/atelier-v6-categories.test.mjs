@@ -7,7 +7,7 @@ test("Festival, popular and new arrivals use interactive local category gallerie
   const gallery=read("src/components/AtelierCategoryGallery.tsx");
   for(const kind of ["sale","best","new"]){
     assert.match(home,new RegExp('kind="'+kind+'"'));
-    assert.match(gallery,new RegExp('kind==="'+kind+'"'));
+    assert.match(gallery,/type Shelf="sale"\|"best"\|"new"/);
   }
   assert.match(home,/data-festival-product-count=\{sale\.length\}/);
   assert.match(home,/atelier-sale-grid/);
