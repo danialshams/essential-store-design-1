@@ -4,23 +4,27 @@ import { ArrowDown, ArrowUpLeft } from "lucide-react";
 import type { StoreData } from "@/lib/live-store";
 import { AtelierTile } from "@/components/AtelierTile";
 import { AtelierMotion } from "@/components/AtelierMotion";
-import { FestivalCountdown } from "@/components/FestivalCountdown";
+import { AtelierCountdown } from "@/components/AtelierCountdown";
 import { festivalProducts, popularProducts, recentProducts } from "@/lib/luxury-catalog";
 import { editionTwoDefaults } from "@/lib/admin/edition-two";
+import { allocateEditorialMedia } from "@/lib/atelier-v3-media";
 import { legacyTemplatePhoto, showcasePhoto } from "@/lib/showcase-photos";
 
 export function AtelierHome({ store }: { store: StoreData }) {
   const edition = store.settings.editorialConfig;
   const configuredHero = edition?.hero?.find((item) => item.enabled);
-  const customHero = Boolean(configuredHero?.imageUrl && !legacyTemplatePhoto(configuredHero.imageUrl) && !configuredHero.imageUrl.includes("/images/luxury-"));
-  const heroDesktop = customHero ? showcasePhoto(configuredHero?.imageUrl) : "/images/atelier-hero-desktop.webp";
-  const heroMobile = customHero ? showcasePhoto(configuredHero?.mobileImageUrl || configuredHero?.imageUrl) : "/images/atelier-hero-mobile.webp";
+  const customHero = Boolean(configuredHero?.imageUrl && !legacyTemplatePhoto(configuredHero.imageUrl) &&
+    !configuredHero.imageUrl.includes("/images/luxury-") && !configuredHero.imageUrl.includes("/images/atelier-"));
+  const heroDesktop = customHero ? showcasePhoto(configuredHero?.imageUrl) : "/images/atelier-v3-hero-desktop.webp";
+  const heroMobile = customHero ? showcasePhoto(configuredHero?.mobileImageUrl || configuredHero?.imageUrl) : "/images/atelier-v3-hero-mobile.webp";
   const festival = edition?.festival ?? editionTwoDefaults.festival;
-  const customFestival = Boolean(festival.imageUrl && !legacyTemplatePhoto(festival.imageUrl) && !festival.imageUrl.includes("/images/luxury-"));
-  const festivalImage = customFestival ? showcasePhoto(festival.imageUrl) : "/images/atelier-festival.webp";
+  const customFestival = Boolean(festival.imageUrl && !legacyTemplatePhoto(festival.imageUrl) &&
+    !festival.imageUrl.includes("/images/luxury-") && !festival.imageUrl.includes("/images/atelier-"));
+  const festivalImage = customFestival ? showcasePhoto(festival.imageUrl) : "/images/atelier-v3-campaign.webp";
   const sale = festivalProducts(store);
   const best = popularProducts(store);
   const newest = recentProducts(store);
+  const [saleMedia,bestMedia,newMedia]=allocateEditorialMedia([sale.slice(0,4),best,newest]);
 
   return <div className="atelier-home" dir="rtl">
     <AtelierMotion />
@@ -61,7 +65,7 @@ export function AtelierHome({ store }: { store: StoreData }) {
           <h2>فرصت کوتاه.<br /><em>انتخاب ماندگار.</em></h2>
           <p>{festival.description || "منتخبی از محصولات با قیمت‌های ویژه، برای سلیقه‌هایی که به جزئیات توجه می‌کنند."}</p>
           {festival.showCountdown !== false && <div className="atelier-countdown">
-            <FestivalCountdown endsAt={festival.endsAt || editionTwoDefaults.festival.endsAt}
+            <AtelierCountdown endsAt={festival.endsAt || editionTwoDefaults.festival.endsAt}
               expiredText={festival.expiredText} />
           </div>}
           <Link className="atelier-filled-cta" href="/festival">مشاهده تمام محصولات جشنواره <ArrowUpLeft size={18} /></Link>
@@ -76,7 +80,7 @@ export function AtelierHome({ store }: { store: StoreData }) {
         <div className="atelier-sale-grid" data-festival-product-count={sale.length}>
           {sale.slice(0, 4).map((product, index) =>
             <div className="luxury-product-wrap luxury-sale-item" key={product.id}>
-              <AtelierTile product={product} shape={index === 0 ? "portrait" : "standard"} index={index} />
+              <AtelierTile product={product} editorialImage={saleMedia[index]} shape={index === 0 ? "portrait" : "standard"} index={index} />
             </div>
           )}
         </div>
@@ -96,7 +100,7 @@ export function AtelierHome({ store }: { store: StoreData }) {
         <div className="atelier-best-gallery">
           {best.map((product, index) =>
             <AtelierTile key={product.id} product={product}
-              shape={index === 0 ? "feature" : index === 2 ? "landscape" : "portrait"} index={index} />
+              shape={index === 0 ? "feature" : index === 2 ? "landscape" : "portrait"} editorialImage={bestMedia[index]} index={index} />
           )}
         </div>
       </div>
@@ -114,7 +118,7 @@ export function AtelierHome({ store }: { store: StoreData }) {
         </header>
         <div className="atelier-new-gallery">
           <div className="atelier-new-editorial" data-cine-reveal data-cine-photo>
-            <Image src="/images/atelier-scene-a.webp" alt="ژورنال تصویری کالکشن جدید" fill
+            <Image src="/images/atelier-v3-editorial.webp" alt="ژورنال تصویری کالکشن جدید" fill
               sizes="(max-width:760px) 100vw, 40vw" />
             <div><span>DAIRA / NEW SEASON</span>
               <strong>THE NEW<br />PERSPECTIVE</strong>
@@ -122,7 +126,7 @@ export function AtelierHome({ store }: { store: StoreData }) {
             </div>
           </div>
           <div className="atelier-new-products">
-            {newest.map((product, index) => <AtelierTile key={product.id} product={product} index={index} />)}
+            {newest.map((product, index) => <AtelierTile key={product.id} product={product} editorialImage={newMedia[index]} index={index} />)}
           </div>
         </div>
       </div>

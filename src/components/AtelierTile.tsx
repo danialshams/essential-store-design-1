@@ -13,10 +13,10 @@ type Shape = "standard" | "feature" | "portrait" | "landscape";
  * variant, price, availability and purchase target all stay live.
  */
 const stagedImages:Record<string,string[]> = {
-  bags:["/images/atelier-bag-a.webp","/images/atelier-bag-b.webp"],
-  shoes:["/images/atelier-shoe-a.webp","/images/atelier-shoe-b.webp","/images/atelier-shoe-c.webp","/images/atelier-shoe-d.webp"],
-  clothing:["/images/atelier-shirt-a.webp","/images/atelier-shirt-b.webp","/images/atelier-clothing-c.webp"],
-  accessories:["/images/atelier-watch-a.webp","/images/atelier-watch-b.webp","/images/atelier-sunglasses.webp"],
+  bags:["/images/atelier-v3-item-01.webp","/images/atelier-v3-item-02.webp","/images/atelier-v3-item-03.webp","/images/atelier-v3-item-04.webp"],
+  shoes:["/images/atelier-v3-item-05.webp","/images/atelier-v3-item-06.webp","/images/atelier-v3-item-07.webp","/images/atelier-v3-item-08.webp","/images/atelier-v3-item-19.webp"],
+  clothing:["/images/atelier-v3-item-09.webp","/images/atelier-v3-item-10.webp","/images/atelier-v3-item-11.webp","/images/atelier-v3-item-12.webp","/images/atelier-v3-item-17.webp","/images/atelier-v3-item-18.webp"],
+  accessories:["/images/atelier-v3-item-13.webp","/images/atelier-v3-item-14.webp","/images/atelier-v3-item-15.webp","/images/atelier-v3-item-16.webp","/images/atelier-v3-item-20.webp"],
 };
 function editorialPhoto(product:Product):string{
   const source=product.image || "";
@@ -30,12 +30,14 @@ function editorialPhoto(product:Product):string{
 }
 
 /** This is a gallery tile, deliberately independent from the original ProductCard. */
-export function AtelierTile({ product, shape = "standard", index = 0 }: { product: Product; shape?: Shape; index?: number }) {
+export function AtelierTile({ product, shape = "standard", index = 0, editorialImage }: { product: Product; shape?: Shape; index?: number; editorialImage?: string }) {
   const router = useRouter();
   const { add, isFavorite, toggleFavorite } = useShop();
   const available = product.variants?.length ? product.variants.some((v) => v.inventory > 0) : product.inventory > 0;
   const sale = Boolean(product.comparePrice && product.comparePrice > product.price);
-  const imageSrc=editorialPhoto(product);
+  const selected=editorialImage||editorialPhoto(product);
+  const imageSrc=shape==="landscape" && selected.startsWith("/images/atelier-v3-item-")
+    ?selected.replace(/\.webp$/,"-wide.webp"):selected;
   return <article className={"atelier-tile atelier-tile--" + shape} data-cine-reveal data-cine-tile style={{ "--tile-index": index } as React.CSSProperties}>
     <div className="atelier-tile-photo">
       <Link href={"/product/" + product.slug} aria-label={"مشاهده " + product.name}>

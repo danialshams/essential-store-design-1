@@ -1,0 +1,75 @@
+/* Cinematic Edition III: precision image framing / typographic rhythm / palette*/
+body:has(.atelier-home){--atelier-header-h:82px;--atelier-midnight:#071827;--atelier-sapphire:#173b59;--atelier-steel:#597b97;--atelier-silver:#cfd8df;--atelier-ivory:#f2f1ed}
+body:has(.atelier-home) main#main-content{padding-top:0!important}
+.atelier-hero{margin-top:var(--atelier-header-h)!important;height:calc(100svh - var(--atelier-header-h))!important;min-height:calc(620px - var(--atelier-header-h))!important;max-height:none!important;overflow:hidden!important}
+.atelier-hero-photo,.atelier-hero-photo picture{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;overflow:hidden!important}
+.atelier-hero-image{object-fit:cover!important;object-position:center center!important;transform:none!important;max-width:none!important;width:100%!important;height:100%!important}
+.atelier-hero-inner{width:min(1420px,calc(100% - 90px));justify-content:center;align-items:stretch}
+.atelier-hero-copy{width:min(46%,660px);max-width:660px;margin-right:0;margin-left:auto;text-align:center!important;padding-top:0!important;align-self:flex-start}
+.atelier-hero-copy h1{line-height:1.34!important}
+.atelier-hero-copy p{max-width:490px;margin-inline:auto!important}
+.atelier-hero-copy .atelier-outline-cta{margin-inline:auto!important}
+.atelier-hero-index{top:28px!important}
+.atelier-festival{background:var(--atelier-midnight)}
+.atelier-campaign{background:var(--atelier-sapphire)}
+.atelier-campaign-art{overflow:hidden!important}
+.atelier-campaign-art img{object-fit:cover!important;width:100%!important;height:100%!important;max-width:none!important;transform:none!important}
+.atelier-campaign-copy{align-items:center!important;justify-content:center!important;text-align:center!important}
+.atelier-campaign-copy h2,.atelier-campaign-copy p{text-align:center!important;margin-inline:auto!important}
+.atelier-campaign-copy.atelier-filled-cta{margin-inline:auto}
+.atelier-campaign-count{align-self:center}
+.atelier-countdown{width:min(460px,100%)!important;margin-inline:auto!important}
+.atelier-timer{display:flex;flex-direction:column;align-items:stretch;width:100%;gap:15px}
+.atelier-timer-label{font-size:12px;letter-spacing:.02em;color:#cfd8df;text-align:center}
+.atelier-timer-grid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:10px!important;width:100%;direction:rtl}
+.atelier-timer-unit{box-sizing:border-box;min-width:0;min-height:92px;border:1px solid #cfd8df55;background:#ffffff09;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:8px!important;padding:14px 4px!important;text-align:center!important}
+.atelier-timer-digit{display:block!important;white-space:nowrap;font-variant-numeric:tabular-nums;line-height:1.05!important;font-family:inherit;font-size:clamp(20px,2.6vw,34px)!important;font-weight:500!important;color:var(--atelier-ivory)!important;text-align:center!important}
+.atelier-timer-caption{display:block!important;text-align:center!important;font-size:11px!important;font-weight:400!important;color:#b9cedd!important;line-height:1.5!important}
+.atelier-timer-ended{text-align:center;color:#cfd8df}
+.atelier-section-head,.atelier-gallery-head{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:22px!important;text-align:center!important}
+.atelier-section-head>div,.atelier-gallery-head>div{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center!important}
+.atelier-section-head h2,.atelier-gallery-headh3,.atelier-overline{text-align:center!important}
+.atelier-section-head>a,.atelier-gallery-head>a{align-self:center!important}
+.atelier-section-tag{justify-content:center!important;gap:24px!important;text-align:center!important}
+.atelier-tile-photo,.atelier-new-editorial{overflow:hidden!important;contain:paint}
+.atelier-tile-photo>a,.atelier-tile-photo img,.atelier-new-editorial img{max-width:none!important;transform:none!important}
+.atelier-tile-photo img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+.atelier-tile-photo>a:hover img{transform:none!important}
+.atelier-new-editorial img{height:100%!important;width:100%!important;object-fit:cover!important;object-position:center!important}
+.atelier-new-editorial:hover img{transform:none!important}
+.atelier-new{background:var(--atelier-silver)}
+.atelier-best{background:var(--atelier-ivory)}
+.atelier-home+.atelier-footer,body:has(.atelier-home) .atelier-footer,body:has(.atelier-home) .site-footer{margin-top:0!important}
+@media(max-width:760px){
+ body:has(.atelier-home){--atelier-header-h:64px}
+ .atelier-hero{height:calc(100svh - 64px)!important;min-height:calc(600px - 64px)!important}
+ .atelier-hero-photo img{object-fit:cover!important}
+ .atelier-hero-copy{width:min(100%,460px);margin-inline:auto!important;text-align:center!important;padding:0 4px 66px!important;align-self:center}
+ .atelier-hero-inner{justify-content:flex-end;align-items:center;width:calc(100% - 30px)}
+ .atelier-hero-shade{background:linear-gradient(0deg,#071827ea 0%,#071827ad 25%,transparent 65%)!important}
+ .atelier-hero-copy h1{font-size:clamp(38px,8.8vw,59px)!important;line-height:1.28!important}
+ .atelier-hero-copy p{font-size:12px}
+ .atelier-campaign-art{min-height:0!important;height:clamp(330px,100vw,550px)!important}
+ .atelier-campaign-copy{padding:38px 20px 44px!important}
+ .atelier-countdown{width:100%!important}
+ .atelier-timer-grid{gap:6px!important}
+.atelier-timer-unit{min-height:77px;padding:9px 2px!important;gap:6px!important}
+ .atelier-timer-digit{font-size:clamp(18px,5.2vw,27px)!important}
+ .atelier-timer-caption{font-size:10px!important}
+ .atelier-section-head,.atelier-gallery-head{gap:18px!important}
+ .atelier-section-head h2{font-size:clamp(33px,7.2vw,52px)!important}
+ .atelier-section-head>a,.atelier-gallery-head>a{align-self:center!important}
+ .atelier-tile-caption{gap:6px!important}
+ .atelier-new-editorial{height:470px!important}
+}
+@media(max-width:360px){.atelier-hero-copy{padding-bottom:52px!important}.atelier-hero-copy h1{font-size:36px!important}.atelier-campaign-copy h2{font-size:31px!important}}
+@media(prefers-reduced-motion:reduce){.atelier-home [data-cine-reveal],.atelier-home [data-cine-photo]{clip-path:none!important;opacity:1!important;transform:none!important}}
+
+/* The existing FestivalCountdown component: strict number-over-label stacking */
+.atelier-countdown .ed2-festival-timer{width:100%;display:block!important}
+.atelier-countdown .ed2-festival-timer-caption{display:block!important;color:#cfd8df!important;text-align:center!important;margin-bottom:14px!important;font-size:12px!important}
+.atelier-countdown .ed2-festival-clock{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:9px!important;direction:rtl!important}
+.atelier-countdown .ed2-festival-clock-unit{box-sizing:border-box!important;min-width:0!important;min-height:93px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:7px!important;text-align:center!important;border:1px solid #cfd8df55!important;background:#ffffff09!important;padding:12px 4px!important;border-radius:0!important}
+.atelier-countdown .ed2-festival-clock-unitstrong{display:block!important;white-space:nowrap!important;font-variant-numeric:tabular-nums!important;font-size:clamp(21px,2.6vw,34px)!important;line-height:1.1!important;font-weight:500!important;color:#f2f1ed!important}
+.atelier-countdown .ed2-festival-clock-unit small{display:block!important;text-align:center!important;white-space:nowrap!important;font-size:11px!important;font-weight:400!important;line-height:1.5!important;color:#bed0dd!important}
+@media(max-width:760px){.atelier-countdown .ed2-festival-clock{gap:6px!important}.atelier-countdown .ed2-festival-clock-unit{min-height:77px!important;padding:9px 2px!important}.atelier-countdown .ed2-festival-clock-unit strong{font-size:clamp(18px,5.1vw,27px)!important}.atelier-countdown .ed2-festival-clock-unit small{font-size:10px!important}}

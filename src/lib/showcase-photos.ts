@@ -34,21 +34,21 @@ const previouslyExternal:Record<string,string>={
  "photo-1620799140188-3b2a02fd9a77":"/images/linen-shirt.webp"
 };
 const luxuryTemplateMap:Record<string,string>={
- "/images/hero-woman.webp":"/images/atelier-hero-desktop.webp",
- "/images/hero-mobile.webp":"/images/atelier-hero-mobile.webp",
- "/images/bag.webp":"/images/atelier-bag-a.webp",
- "/images/sneakers.webp":"/images/atelier-shoe-a.webp",
- "/images/linen-shirt.webp":"/images/atelier-shirt-a.webp",
- "/images/classic-watch.webp":"/images/atelier-watch-a.webp",
- "/images/sunglasses.webp":"/images/atelier-sunglasses.webp",
- "/images/products/shirt-blue.webp":"/images/atelier-shirt-b.webp",
- "/images/products/bag-main.webp":"/images/atelier-bag-b.webp",
- "/images/products/bag-everyday.webp":"/images/atelier-bag-a.webp",
- "/images/products/sneakers-main.webp":"/images/atelier-shoe-b.webp",
- "/images/products/sneakers-urban.webp":"/images/atelier-accessory.webp",
- "/images/products/shirt-beige.webp":"/images/atelier-clothing-c.webp",
- "/images/products/watch-main.webp":"/images/atelier-watch-b.webp",
- "/images/products/sunglasses-main.webp":"/images/atelier-sunglasses.webp"
+ "/images/hero-woman.webp":"/images/atelier-v3-hero-desktop.webp",
+ "/images/hero-mobile.webp":"/images/atelier-v3-hero-mobile.webp",
+ "/images/bag.webp":"/images/atelier-v3-item-01.webp",
+ "/images/sneakers.webp":"/images/atelier-v3-item-05.webp",
+ "/images/linen-shirt.webp":"/images/atelier-v3-item-09.webp",
+ "/images/classic-watch.webp":"/images/atelier-v3-item-13.webp",
+ "/images/sunglasses.webp":"/images/atelier-v3-item-15.webp",
+ "/images/products/shirt-blue.webp":"/images/atelier-v3-item-10.webp",
+ "/images/products/bag-main.webp":"/images/atelier-v3-item-02.webp",
+ "/images/products/bag-everyday.webp":"/images/atelier-v3-item-01.webp",
+ "/images/products/sneakers-main.webp":"/images/atelier-v3-item-06.webp",
+ "/images/products/sneakers-urban.webp":"/images/atelier-v3-item-16.webp",
+ "/images/products/shirt-beige.webp":"/images/atelier-v3-item-11.webp",
+ "/images/products/watch-main.webp":"/images/atelier-v3-item-14.webp",
+ "/images/products/sunglasses-main.webp":"/images/atelier-v3-item-15.webp"
 };
 export function showcasePhoto(raw:string|null|undefined):string{
  if(!raw)return "";

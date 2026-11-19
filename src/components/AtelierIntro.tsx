@@ -15,7 +15,12 @@ export function AtelierIntro() {
   const book = useRef<GrabfoldBookHandle>(null);
   const started = useRef(false);
   const previousOverflow = useRef("");
-  const finish = () => { played = true; document.body.style.overflow = previousOverflow.current; setPhase("done"); };
+  const finish = () => {
+    played = true;
+    document.body.style.overflow = previousOverflow.current;
+    setPhase("done");
+    window.dispatchEvent(new Event("atelier:intro-complete"));
+  };
   const renderer = useMemo(
     () => texture ? webglFold({ texture: () => texture, radius: 0.17, segments: 64, cache: 2 }) : null,
     [texture],
@@ -25,6 +30,7 @@ export function AtelierIntro() {
     if (played || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       played = true;
       setPhase("done");
+      window.dispatchEvent(new Event("atelier:intro-complete"));
       return;
     }
     previousOverflow.current = document.body.style.overflow;
@@ -47,11 +53,7 @@ export function AtelierIntro() {
 
     const a = window.setTimeout(() => setPhase("line"), 1400);
     const b = window.setTimeout(() => setPhase("turn"), 2050);
-    const failsafe = window.setTimeout(() => {
-      played = true;
-      setPhase("done");
-      document.body.style.overflow = previousOverflow.current;
-    }, 5500);
+    const failsafe = window.setTimeout(finish, 5500);
     return () => {
       clearTimeout(a);
       clearTimeout(b);
