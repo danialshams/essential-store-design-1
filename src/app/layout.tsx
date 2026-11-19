@@ -11,6 +11,7 @@ import "./luxury-home.css";
 import "./atelier-v2.css";
 import "./atelier-v3-polish.css";
 import "./atelier-v4.css";
+import "./atelier-v5-space.css";
 export async function generateMetadata():Promise<Metadata>{
  const store=await loadStore();
  const base=seoMeta(store,"/",{title:store.settings.seoTitle||store.settings.storeName,

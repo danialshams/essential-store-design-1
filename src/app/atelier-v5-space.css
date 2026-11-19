@@ -1,0 +1,75 @@
+/* ATELIER V / editorial breathing room
+   This layer intentionally only changes spacing and presentation on the homepage.
+   Preserve the midnight blue (#071827), sapphire (#173b59) and soft ivory
+   from Editions III/IV; avoid UI/card proliferation. */
+@media(min-width:761px) {
+  body:has(.atelier-home) .atelier-festival {
+    padding-block:clamp(136px,10.5vw,196px) clamp(152px,11.5vw,218px)!important;
+  }
+  body:has(.atelier-home) .atelier-section-tag {
+    margin-bottom:clamp(38px,4.5vw,70px)!important;
+    max-width:1350px;
+    letter-spacing:.035em;
+    opacity:.88;
+  }
+  body:has(.atelier-home) .atelier-campaign {
+    min-height:clamp(670px,57vw,800px);
+  }
+  body:has(.atelier-home) .atelier-campaign-copy {
+    padding-inline:clamp(55px,7.2vw,145px)!important;
+  }
+  body:has(.atelier-home) .atelier-gallery-head {
+    padding-top:clamp(96px,8.5vw,155px)!important;
+    padding-bottom:42px!important;
+  }
+  body:has(.atelier-home) .atelier-sale-grid {
+    gap:clamp(25px,3vw,48px)!important;
+  }
+  body:has(.atelier-home) .atelier-best {
+    padding-block:clamp(160px,12vw,230px) clamp(170px,12.5vw,240px)!important;
+  }
+  body:has(.atelier-home) .atelier-new {
+    padding-top:clamp(150px,11vw,215px)!important;
+  }
+  body:has(.atelier-home) .atelier-section-head {
+    margin-block:clamp(48px,5.6vw,90px) clamp(63px,7.5vw,110px)!important;
+    gap:27px!important;
+  }
+  body:has(.atelier-home) .atelier-best-gallery {
+    gap:clamp(25px,2.8vw,44px)!important;
+  }
+  body:has(.atelier-home) .atelier-new-gallery {
+    gap:clamp(36px,4.2vw,70px)!important;
+    padding-bottom:clamp(140px,11vw,205px)!important;
+  }
+  body:has(.atelier-home) .atelier-new-products {
+    gap:clamp(22px,2.6vw,40px)!important;
+  }
+  body:has(.atelier-home) .atelier-tile-caption {
+    padding-top:22px!important;
+    padding-bottom:17px!important;
+  }
+  body:has(.atelier-home) .atelier-shell {
+    width:min(1320px,calc(100% - 120px));
+  }
+  body:has(.atelier-home) .atelier-section-head h2 {
+    max-width:840px;
+  }
+}
+@media(max-width:760px) {
+  body:has(.atelier-home) .atelier-festival {padding-block:95px 110px!important;}
+  body:has(.atelier-home) .atelier-campaign-copy {padding-block:55px 67px!important;}
+  body:has(.atelier-home) .atelier-gallery-head {padding-block:65px 32px!important;}
+  body:has(.atelier-home) .atelier-sale-grid {gap:28px 15px!important;}
+  body:has(.atelier-home) .atelier-best {padding-block:110px 132px!important;}
+  body:has(.atelier-home) .atelier-new {padding-top:111px!important;}
+  body:has(.atelier-home) .atelier-section-head {margin-block:40px 50px!important;gap:22px!important;}
+  body:has(.atelier-home) .atelier-best-gallery {gap:29px 15px!important;}
+  body:has(.atelier-home) .atelier-new-gallery {gap:38px!important;padding-bottom:115px!important;}
+  body:has(.atelier-home) .atelier-new-products {gap:29px 15px!important;}
+  body:has(.atelier-home) .atelier-tile-caption {padding-top:16px!important;padding-bottom:14px!important;}
+  body:has(.atelier-home) .atelier-section-tag {margin-bottom:33px!important;}
+}
+@media(prefers-reduced-motion:reduce){
+ body:has(.atelier-home) .atelier-tile img{transition:none!important;}
+}

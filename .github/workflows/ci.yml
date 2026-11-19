@@ -20,7 +20,7 @@ jobs:
           ls -lah public/images/atelier-v3* || true
           wc -c public/images/atelier-v3* || true
       - name: Prepare locally served editorial assets
-        run: node scripts/prepare-atelier-media.mjs && node scripts/prepare-atelier-v3-media.mjs
+        run: node scripts/prepare-atelier-media.mjs && node scripts/prepare-atelier-v3-media.mjs && node scripts/prepare-atelier-v4-media.mjs
       - name: Source tests
         run: npm test
       - name: TypeScript

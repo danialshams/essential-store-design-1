@@ -33,7 +33,7 @@ export function AtelierHome({ store }: { store: StoreData }) {
         <picture>
           <source media="(max-width: 760px)" srcSet={heroMobile} />
           <Image src={heroDesktop} alt="کمپین جدید پوشاک و اکسسوری" fill priority
-            sizes="100vw" unoptimized={heroDesktop.startsWith("http")} className="atelier-hero-image" />
+            sizes="100vw" unoptimized className="atelier-hero-image" />
         </picture>
       </div>
       <div className="atelier-hero-shade" />
@@ -57,7 +57,7 @@ export function AtelierHome({ store }: { store: StoreData }) {
       <div className="atelier-campaign">
         <div className="atelier-campaign-art" data-cine-reveal data-cine-photo>
           <Image src={festivalImage} alt="کمپین ویژه جشنواره" fill
-            sizes="(max-width:760px) 100vw, 52vw" unoptimized={festivalImage.startsWith("http")} />
+            sizes="(max-width:760px) 100vw, 52vw" unoptimized />
           <span className="atelier-campaign-mark">PRIVATE / 01</span>
         </div>
         <div className="atelier-campaign-copy" data-cine-reveal>
@@ -118,7 +118,7 @@ export function AtelierHome({ store }: { store: StoreData }) {
         </header>
         <div className="atelier-new-gallery">
           <div className="atelier-new-editorial" data-cine-reveal data-cine-photo>
-            <Image src="/images/atelier-v4-editorial.webp" alt="ژورنال تصویری کالکشن جدید" fill
+            <Image src="/images/atelier-v4-editorial.webp" alt="ژورنال تصویری کالکشن جدید" unoptimized fill
               sizes="(max-width:760px) 100vw, 40vw" />
             <div><span>DAIRA / NEW SEASON</span>
               <strong>THE NEW<br />PERSPECTIVE</strong>

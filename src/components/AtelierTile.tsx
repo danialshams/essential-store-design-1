@@ -43,7 +43,7 @@ export function AtelierTile({ product, shape = "standard", index = 0, editorialI
       <Link href={"/product/" + product.slug} aria-label={"مشاهده " + product.name}>
         <Image src={imageSrc} alt={imageSrc===product.image?(product.seoImageAlt||product.name):("تصویر ژورنالی دسته "+product.categoryLabel)} fill
           sizes={shape === "feature" ? "(max-width:760px) 100vw, 50vw" : "(max-width:760px) 48vw, 26vw"}
-          className="atelier-tile-img" unoptimized={imageSrc.startsWith("http")} />
+          className="atelier-tile-img" unoptimized={imageSrc.startsWith("http") || imageSrc.startsWith("/images/atelier-")} />
         <span className="atelier-tile-photo-shade" />
       </Link>
       {sale && <span className="atelier-tile-off">{Math.round((1 - product.price / product.comparePrice!) * 100).toLocaleString("fa-IR")}٪ OFF</span>}

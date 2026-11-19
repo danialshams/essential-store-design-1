@@ -161,7 +161,7 @@ try {
     await evaluate("window.scrollTo(0,0);true");
     await delay(180);
     await capture(name, true);
-    await waitFor(()=>evaluate('[...document.querySelectorAll(".atelier-home img")].filter(i=>(i.currentSrc||i.src).includes("atelier-v3-")).every(i=>i.complete&&i.naturalWidth>0)'),name+" all locally served WebP photos decoded",18000);
+    await waitFor(()=>evaluate('[...document.querySelectorAll(".atelier-home img")].filter(i=>(i.currentSrc||i.src).includes("/images/atelier-")).length>=12 && [...document.querySelectorAll(".atelier-home img")].filter(i=>(i.currentSrc||i.src).includes("/images/atelier-")).every(i=>i.complete&&i.naturalWidth>0)'),name+" every local v3/v4 hero and gallery WebP decoded",22000);
     await send("Page.navigate",{url:origin+"/festival"});
     await waitFor(() => evaluate('!!document.querySelector(".luxury-festival-page")'),name+" festival route");
     assert.ok(await evaluate('document.querySelectorAll(".luxury-festival-filters button").length>1'),name+" festival filters");

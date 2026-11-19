@@ -32,5 +32,8 @@ test("new editorial gallery sources expand to 32 distinct slots, keeping merchan
  assert.match(media,/new Set<number>/);
  assert.match(media,/if\(!bundled&&p\)return p/);
  assert.match(prep,/atelier-v4-item-/);
- assert.ok((prep.match(/photo-\d+-[a-z0-9]+/g)||[]).length>=12);
+ assert.match(prep,/atelier-v4-sheet-1\.webp/);
+ assert.match(prep,/atelier-v4-sheet-2\.webp/);
+ assert.match(prep,/atelier-v4-sheet-3\.webp/);
+ assert.doesNotMatch(prep,/images\.unsplash\.com/);
 });
