@@ -75,7 +75,7 @@ export function LuxuryHome({store}:{store:StoreData}){
     <div className="luxury-product-grid luxury-festival-products">{sale.slice(0,4).map(p=><div className="luxury-product-wrap" key={p.id} data-lux-reveal><ProductCard product={p}/></div>)}{sale.length===0&&<p className="luxury-empty">جشنواره فعلاً محصول تخفیف‌دار فعالی ندارد.</p>}</div>
    </div>
   </section>}
-  <ShopShelf title="محبوب‌ترین انتخاب‌ها" eyebrow="02 — BEST SELLERS" description="آن‌هایی که همیشه بیشتر از بقیه انتخاب می‌شوند." items={top} href="/products?sort=popular" variant="best"/>
+  <ShopShelf title="پرفروش‌ترین محصولات" eyebrow="02 — BEST SELLERS" description="آن‌هایی که همیشه بیشتر از بقیه انتخاب می‌شوند." items={top} href="/products?sort=popular" variant="best"/>
   <ShopShelf title="تازه از راه رسیده" eyebrow="03 — NEW ARRIVALS" description="تازه‌ترین محصولات، برای نگاهی تازه به استایل." items={fresh} href="/products?sort=new" variant="new"/>
   <section className="luxury-outro" data-lux-reveal><div className="luxury-inner"><span>THE ART OF EVERYDAY STYLE</span><h2>هر انتخاب،<br/>امضای توست.</h2><Link href="/products">دیدن تمام محصولات <ArrowUpLeft size={20}/></Link></div></section>
  </div>;
