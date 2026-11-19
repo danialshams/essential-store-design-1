@@ -311,7 +311,7 @@ try{
   if(view.name==="desktop"||view.name==="mobile"){
     // End-to-end cross-page audit: page health, real sale prices, menu and
     // viewport overflow, beyond the isolated visual admin drawer.
-    const storefrontRoutes=["/","/products","/category/bags","/product/minimal-leather-bag","/cart"];
+    const storefrontRoutes=["/","/festival","/products","/category/bags","/product/minimal-leather-bag","/cart"];
     for(const route of storefrontRoutes){
       await send("Page.navigate",{url:appURL+route});
       await waitFor(()=>evalJS("document.readyState==='complete' && document.querySelector('main, .ed-home, .container')!==null"),
@@ -329,11 +329,11 @@ try{
           return rect.width>16&&rect.height>16&&rect.bottom>=-40&&rect.top<=innerHeight+80&&img.currentSrc;
         });
         const broken=visible.filter(img=>img.complete&&img.naturalWidth===0).map(img=>img.currentSrc);
-        const festival=document.querySelector(".ed1-sale-festival"),hero=document.querySelector(".hero");
+        const festival=document.querySelector(".luxury-festival"),hero=document.querySelector(".luxury-hero");
         return {width:document.documentElement.scrollWidth,viewport:innerWidth,broken,
           hero:!!hero,festival:!!festival,festivalImmediatelyAfterHero:festival?.previousElementSibling===hero,
-          discountedCards:document.querySelectorAll(".ed1-sale-item").length,
-          brokenDiscounts:[...document.querySelectorAll(".ed1-sale-item")].filter(card=>
+          discountedCards:document.querySelectorAll(".luxury-sale-item").length,
+          brokenDiscounts:[...document.querySelectorAll(".luxury-sale-item")].filter(card=>
              !card.querySelector(".product-card-prices strong")||
              (card.querySelector(".discount-tag")&&!card.querySelector(".product-card-prices del"))).length,
           pageText:document.body.innerText.length};
@@ -344,7 +344,7 @@ try{
       if(route==="/"){
         assert.ok(audit.hero&&audit.festival&&audit.festivalImmediatelyAfterHero,
           view.name+": festival must be visibly directly BELOW hero "+JSON.stringify(audit));
-        assert.ok(audit.discountedCards>=8,view.name+": festival must display at least eight real product cards, got "+audit.discountedCards);
+        assert.ok(audit.discountedCards===4,view.name+": festival must display four premium offer cards, got "+audit.discountedCards);
         assert.equal(audit.brokenDiscounts,0,view.name+": festival product hides original/current price");
         const shot=await send("Page.captureScreenshot",{format:"png",captureBeyondViewport:false});
         writeFileSync(join(outputDir,view.name+"-storefront-home.png"),Buffer.from(shot.data,"base64"));
@@ -353,21 +353,21 @@ try{
         await sleep(1850);
         const merch=await evalJS(`(() => {
           const grid=document.querySelector("#festival-products");
-          const cards=Array.from(grid?.querySelectorAll(".ed1-sale-item")||[]);
+          const cards=Array.from(grid?.querySelectorAll(".luxury-sale-item")||[]);
           const media=cards[0]?.querySelector(".product-image-box");
           const style=media?getComputedStyle(media):null;
           const rect=media?.getBoundingClientRect();
-          const header=document.querySelector(".ed1-sale-header-count");
+          const header=document.querySelector(".luxury-fest-count");
           return {count:cards.length,attribute:Number(grid?.dataset.festivalProductCount),
            bg:style?.backgroundColor||"",ratio:rect?.width&&rect?.height?rect.width/rect.height:0,
            header:header?.textContent||"",width:grid?.getBoundingClientRect().width||0,
            pageWidth:document.documentElement.scrollWidth,viewport:innerWidth};
         })()`);
-        assert.ok(merch.count>=8&&merch.attribute===merch.count,
-         view.name+": festival grid must contain eight or more visible product cards "+JSON.stringify(merch));
-        assert.ok(merch.header.includes(merch.count.toLocaleString("fa-IR")),
+        assert.ok(merch.count===Math.min(4,merch.attribute)&&merch.attribute>=merch.count,
+         view.name+": festival grid must present four highlights from a full eligible sale catalog "+JSON.stringify(merch));
+        assert.ok(merch.header.includes(merch.attribute.toLocaleString("fa-IR")),
          view.name+": the festival product count is missing from the heading "+JSON.stringify(merch));
-        assert.equal(merch.bg,"rgb(234, 243, 255)",
+        assert.equal(merch.bg,"rgb(220, 231, 240)",
          view.name+": the product image frame is not using this store's blue theme");
         assert.ok(merch.ratio>.77&&merch.ratio<.83,
          view.name+": product photo card ratio is unstable "+JSON.stringify(merch));
