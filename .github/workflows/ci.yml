@@ -14,6 +14,8 @@ jobs:
           node-version: 22
       - name: Install dependencies
         run: npm install --no-audit --no-fund
+      - name: Prepare locally served editorial assets
+        run: node scripts/prepare-atelier-media.mjs
       - name: Source tests
         run: npm test
       - name: TypeScript
