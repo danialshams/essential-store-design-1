@@ -55,11 +55,11 @@ export function showcasePhoto(raw:string|null|undefined):string{
   try{
    const url=new URL(raw);
    const known=previouslyExternal[url.pathname.slice(1)];
-   if(known)return generatedShowcasePhotos[known]||known;
+   if(known)return luxuryTemplateMap[known]||generatedShowcasePhotos[known]||known;
   }catch{return raw}
  }
  const original=generatedShowcasePhotos[key]||bundled[key]||key;
- const mapped=key.replace(/^\\/images\\/real-photo-v\\d+\\//,"/images/").replace(/\\.webp\\.jpg$/,".webp");
+ const mapped=key.startsWith("/images/real-photo-")?"/images/"+key.slice(key.lastIndexOf("/")+1).replace(".webp.jpg",".webp"):key;
  return luxuryTemplateMap[key]||luxuryTemplateMap[mapped]||original;
 }
 export const legacyTemplatePhoto=(raw:string|null|undefined):boolean=>{
