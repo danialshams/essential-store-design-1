@@ -226,3 +226,45 @@ body:has(.luxury-festival-page) .copyright{background:#05111e!important;color:#8
 
 /* The navigation never shows behind the intro text or before the paper turn is complete. */
 body:has(.atelier-intro) .site-header,body:has(.atelier-intro) .mobile-bottom-nav{visibility:hidden!important;pointer-events:none!important}
+
+/* Editorial footer: the page finishes as a publication, not as a default shop template. */
+.atelier-footer{margin:0!important;padding:0!important;background:#071827!important;color:#cfd8df!important;overflow:hidden}
+.atelier-footer-topline{border-top:1px solid #cfd8df51;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:31px 0 36px}
+.atelier-footer-topline>span{font:11px/1.5 Arial,sans-serif;letter-spacing:.2em;color:#9bb0c2}
+.atelier-footer-topline>a{display:inline-flex;align-items:center;gap:9px;color:#b1c7d8;font-size:12px;text-decoration:none;transition:color .3s,gap .3s}
+.atelier-footer-topline>a:hover{gap:14px;color:#fff}
+.atelier-footer-wordmark{display:grid;grid-template-columns:minmax(0,1fr) minmax(230px,290px);align-items:end;gap:24px;padding-bottom:65px}
+.atelier-footer-wordmark>strong{font:400 clamp(110px,13.7vw,244px)/.82 Georgia,"Times New Roman",serif;letter-spacing:-.077em;direction:ltr;color:#f2f1ed;display:block;justify-self:end;padding-left:.07em}
+.atelier-footer-wordmark>div{display:flex;align-items:flex-start;flex-direction:column;gap:19px;padding-bottom:6px;color:#c7d7e2}
+.atelier-footer-wordmark>div>span{font-size:clamp(17px,1.55vw,22px);line-height:1.8;letter-spacing:-.025em}
+.atelier-footer-wordmark>div>a{display:inline-flex;gap:12px;align-items:center;color:#f2f1ed;border-bottom:1px solid #f2f1ed92;padding-bottom:9px;font-size:13px;transition:gap .3s}
+.atelier-footer-wordmark>div>a:hover{gap:19px}
+.atelier-footer-divider{height:1px;background:#cfd8df43}
+.atelier-footer-grid{display:grid;grid-template-columns:minmax(260px,1.65fr) repeat(3,minmax(130px,1fr));gap:clamp(24px,3.5vw,70px);padding:57px 0 94px}
+.atelier-footer-label{display:block;font:10px/1.5 Arial,sans-serif;letter-spacing:.17em;color:#8ba7bb!important;direction:ltr;text-align:right;margin-bottom:20px}
+.atelier-footer-about h3{font-size:20px;color:#f2f1ed;font-weight:460;line-height:1.6;margin:0 0 15px}
+.atelier-footer-about>p{font-size:13px;line-height:2.25;color:#9bb2c5;max-width:340px;margin:0}
+.atelier-footer-links{display:flex;flex-direction:column;align-items:flex-start;gap:13px}
+.atelier-footer-links .atelier-footer-label{margin-bottom:8px}
+.atelier-footer-links a{font-size:12px;color:#cfd8df;text-decoration:none;transition:color .3s,transform .3s}
+.atelier-footer-links a:hover{color:#fff;transform:translateX(-3px)}
+.atelier-footer-contact>p{font-size:12px;display:flex;align-items:start;gap:10px;color:#cfd8df;line-height:2;direction:rtl;margin:0 0 12px;overflow-wrap:anywhere}
+.atelier-footer-contact svg{color:#779bb6;flex-shrink:0;margin-top:5px}
+.atelier-footer-bottom{border-top:1px solid #cfd8df24;background:#04111e;padding:22px 0;color:#8ca6b9;font-size:11px}
+.atelier-footer-bottom>.atelier-shell{display:flex;justify-content:space-between;gap:22px;align-items:center}
+.atelier-footer-bottom>.atelier-shell>span:last-child{font:10px/1.5 Arial,sans-serif;letter-spacing:.13em;direction:ltr}
+@media(max-width:1100px){.atelier-footer-wordmark{grid-template-columns:1fr 200px}.atelier-footer-wordmark>strong{font-size:clamp(95px,12vw,150px)}.atelier-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:42px}}
+@media(max-width:760px){
+ .atelier-footer-topline{padding:26px 0 43px}
+ .atelier-footer-topline>span{font-size:8px;letter-spacing:.1em}
+ .atelier-footer-wordmark{grid-template-columns:1fr;gap:31px;padding-bottom:55px}
+ .atelier-footer-wordmark>strong{font-size:clamp(73px,22vw,138px);justify-self:stretch;text-align:center}
+ .atelier-footer-wordmark>div{gap:14px}
+ .atelier-footer-wordmark>div>span{font-size:20px}
+ .atelier-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:25px;row-gap:40px;padding:44px 0 61px}
+ .atelier-footer-about{grid-column:1/-1}
+ .atelier-footer-about h3{font-size:19px}
+ .atelier-footer-contact{grid-column:1/-1}
+ .atelier-footer-bottom>.atelier-shell{flex-direction:column;align-items:flex-start;gap:8px}
+ .atelier-footer-bottom{padding:21px 0 85px;font-size:10px}
+}
