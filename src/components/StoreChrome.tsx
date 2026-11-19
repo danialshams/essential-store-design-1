@@ -5,6 +5,7 @@ import {ShopProvider} from "@/components/ShopProvider";
 import {Header} from "@/components/Header";
 import {BottomNav} from "@/components/BottomNav";
 import {Footer} from "@/components/Footer";
+import {AtelierFooter} from "@/components/AtelierFooter";
 import {SupportChat} from "@/components/SupportChat";
 import {AtelierIntro} from "@/components/AtelierIntro";
 import type {StoreData} from "@/lib/live-store";
@@ -13,5 +14,5 @@ import type {StoreData} from "@/lib/live-store";
 export function StoreChrome({children,store}:{children:ReactNode;store:StoreData}){
  const pathname=usePathname()||"/";
  if(pathname.startsWith("/admin")||pathname==="/login")return <>{children}</>;
- return <ShopProvider store={store}>{pathname==="/"?<AtelierIntro/>:null}<Header/><main id="main-content">{children}</main><Footer/><BottomNav/><SupportChat/></ShopProvider>;
+ return <ShopProvider store={store}>{pathname==="/"?<AtelierIntro/>:null}<Header/><main id="main-content">{children}</main>{pathname==="/"?<AtelierFooter/>:<Footer/>}<BottomNav/><SupportChat/></ShopProvider>;
 }
