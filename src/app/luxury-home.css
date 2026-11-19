@@ -150,3 +150,16 @@ body:has(.luxury-home) .mobile-bottom-nav,body:has(.luxury-festival-page) .mobil
 }
 @media(max-width:390px){.luxury-hero-text{right:17px;left:17px;bottom:90px}.luxury-hero-text h1{font-size:42px}.luxury-section-head{flex-direction:column;gap:12px}.luxury-shelf{padding-block:56px}.luxury-product-grid{gap:8px}.luxury-festival-media{height:270px}}
 @media(prefers-reduced-motion:reduce){.luxury-home *, .luxury-intro *, .luxury-festival-page *{scroll-behavior:auto!important;animation:none!important;transition:none!important}.luxury-intro{display:none!important}}
+
+/* Searchable, filterable festival product archive */
+.luxury-festival-controls{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}
+.luxury-festival-search{display:flex;align-items:center;gap:11px;background:white;border:1px solid #d3e0eb;padding:0 17px;min-height:48px;flex:1;max-width:450px;color:#59738a}
+.luxury-festival-search input{min-width:0;flex:1;width:100%;border:0;outline:0;background:transparent;color:#0e2843;font-size:13px}
+.luxury-festival-sort{display:flex;align-items:center;gap:10px;background:white;border:1px solid #d3e0eb;padding:0 14px;min-height:48px;font-size:12px;color:#53687e}
+.luxury-festival-sort select{min-width:120px;border:0;outline:0;color:#0f2944;background:white;font-size:12px;cursor:pointer}
+.luxury-festival-filters{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:13px}
+.luxury-festival-filters button{border:1px solid #becedb;background:transparent;color:#24425f;padding:9px 18px;border-radius:2px;font-size:12px;transition:background .25s,color .25s}
+.luxury-festival-filters button.active{background:#071b33;border-color:#071b33;color:white}
+.luxury-festival-results{color:#607b8f;font-size:12px;margin:0 0 22px}
+.luxury-reset{display:inline-flex;align-items:center;gap:9px;border:1px solid #567490;color:#0e2943;background:transparent;padding:11px 17px;margin-top:10px}
+@media(max-width:760px){.luxury-festival-controls{flex-direction:column;align-items:stretch}.luxury-festival-search{max-width:none}.luxury-festival-sort{justify-content:space-between}.luxury-festival-filters{flex-wrap:nowrap;overflow-x:auto;padding-bottom:9px;scrollbar-width:thin}.luxury-festival-filters button{white-space:nowrap;padding-inline:14px}}
