@@ -45,8 +45,8 @@ export function AtelierIntro() {
     }
     setTexture(c);
 
-    const a = window.setTimeout(() => setPhase("line"), 1120);
-    const b = window.setTimeout(() => setPhase("turn"), 1860);
+    const a = window.setTimeout(() => setPhase("line"), 1400);
+    const b = window.setTimeout(() => setPhase("turn"), 2050);
     const failsafe = window.setTimeout(() => {
       played = true;
       setPhase("done");
@@ -145,7 +145,7 @@ export function AtelierIntro() {
     </div>
     <div className="atelier-intro-copy">
       <div className="atelier-intro-title" dir="ltr">{[...TITLE].map((letter, index) =>
-        <span key={index} style={{ animationDelay: (TITLE.length - 1 - index) * 72 + "ms" }}>
+        <span key={index} style={{ animationDelay: (TITLE.length - 1 - index) * 54 + "ms" }}>
           {letter === " " ? "\u00a0" : letter}
         </span>
       )}</div>
