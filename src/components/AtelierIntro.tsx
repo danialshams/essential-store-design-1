@@ -83,6 +83,15 @@ export function AtelierIntro() {
     // Grabfold right binding maps the visual left edge to the free paper corner.
     // Moving the held corner right and down produces a diagonal curl and reveals the actual hero beneath it.
     dispatch("pointerdown", startX, startY, 1);
+    // Grabfold's synthetic pointer capture is unreliable in mobile emulation.
+    // If no corner drag becomes active, use its supported WebGL turn API,
+    // keeping a real curved sheet instead of a broken/static loader.
+    const mobileFallback = window.setTimeout(() => {
+      if (root.dataset.dragging !== "true" && root.dataset.turning !== "true" && book.current?.canNext()) {
+        root.dataset.atelierFallback = "webgl";
+        void book.current.next().catch(() => {});
+      }
+    }, 540);
     const start = performance.now();
     const duration = 1700;
     const animate = (now: number) => {
@@ -102,7 +111,7 @@ export function AtelierIntro() {
       window.setTimeout(() => finish(), 350);
     };
     frame = requestAnimationFrame(animate);
-    return () => { active = false; cancelAnimationFrame(frame); };
+    return () => { active = false; clearTimeout(mobileFallback); cancelAnimationFrame(frame); };
   }, [phase]);
 
   if (phase === "done") return null;
