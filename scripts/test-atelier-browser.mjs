@@ -112,6 +112,8 @@ try {
         overflow:document.documentElement.scrollWidth-window.innerWidth,
         footerGap:Math.round(document.querySelector(".site-footer").getBoundingClientRect().top-host.getBoundingClientRect().bottom),
         heroFit:getComputedStyle(document.querySelector(".atelier-hero-image")).objectFit,
+        heroTop:Math.round(document.querySelector(".atelier-hero").getBoundingClientRect().top),
+        headerBottom:Math.round(document.querySelector(".site-header").getBoundingClientRect().bottom),
         sales:document.querySelectorAll(".atelier-sale-grid .atelier-tile").length,
         best:document.querySelectorAll(".atelier-best-gallery .atelier-tile").length,
         newest:document.querySelectorAll(".atelier-new-products .atelier-tile").length,
@@ -121,7 +123,8 @@ try {
     assert.notEqual(data.scroll,"hidden",name+" scrolling must unlock");
     assert.ok(data.overflow <= 1,name+" must not scroll horizontally: "+data.overflow);
     assert.equal(data.footerGap,0,name+" must not have a gap above the footer");
-    assert.equal(data.heroFit,"contain",name+" hero must show complete composition");
+    assert.equal(data.heroFit,"cover",name+" hero image must fit its exact viewport frame");
+    assert.ok(Math.abs(data.heroTop-data.headerBottom) <= 2,name+" hero must start precisely beneath header: "+JSON.stringify(data));
     assert.equal(data.whiteCards,0,name+" must not render legacy cards");
     assert.equal(data.sales,4,name+" must show four featured sale items");
     assert.ok(data.best>0 && data.newest>0,name+" must render two product galleries");
@@ -135,6 +138,7 @@ try {
     await evaluate("window.scrollTo(0,0);true");
     await delay(180);
     await capture(name, true);
+    await waitFor(()=>evaluate('[...document.querySelectorAll(".atelier-home img")].filter(i=>(i.currentSrc||i.src).includes("atelier-v3-")).every(i=>i.complete&&i.naturalWidth>0)'),name+" all locally served WebP photos decoded",18000);
     await send("Page.navigate",{url:origin+"/festival"});
     await waitFor(() => evaluate('!!document.querySelector(".luxury-festival-page")'),name+" festival route");
     assert.ok(await evaluate('document.querySelectorAll(".luxury-festival-filters button").length>1'),name+" festival filters");
