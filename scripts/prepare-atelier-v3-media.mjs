@@ -8,7 +8,7 @@ await mkdir(root,{recursive:true});
 const sources=["atelier-v3-hero-desktop.webp","atelier-v3-hero-mobile.webp","atelier-v3-campaign.webp","atelier-v3-editorial.webp","atelier-v3-products-a.webp","atelier-v3-products-b.webp"];
 for(const name of sources){
  const p=path.join(root,name);
- try{if((awaitstat(p)).size<25000)throw Error("Too small");}
+ try{if((await stat(p)).size<25000)throw Error("Too small");}
  catch(e){throw Error("Required original WebP campaign asset is missing or damaged: "+name)}
 }
 const exists=async(file)=>{try{return (await stat(path.join(root,file))).size>9000}catch{return false}};

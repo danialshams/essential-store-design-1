@@ -18,7 +18,7 @@ export function AtelierCountdown({endsAt,expiredText="زمان این جشنوا
   const d=remaining===null?null:Math.floor(remaining/86400);
   const h=remaining===null?null:Math.floor(remaining%86400/3600);
   const m=remaining===null?null:Math.floor(remaining%3600/60);
-  consts=remaining===null?null:remaining%60;
+  const s=remaining===null?null:remaining%60;
   const groups=[{id:"days",value:d,label:"روز"},{id:"hours",value:h,label:"ساعت"},{id:"minutes",value:m,label:"دقیقه"},{id:"seconds",value:s,label:"ثانیه"}];
   return <div className="atelier-timer" role="timer" aria-label="زمان باقی‌مانده تا پایان جشنواره" aria-live="off">
     <span className="atelier-timer-label">فرصت باقی‌مانده</span>

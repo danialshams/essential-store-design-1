@@ -5,7 +5,7 @@ const source=path=>readFileSync(path,'utf8');
 test('v3 home uses unique editorial shots for each gallery and frame-specific image sources',()=>{
   const code=source('src/components/AtelierHome.tsx');
   const tile=source('src/components/AtelierTile.tsx');
-assert.match(code,/allocateEditorialMedia/);
+  assert.match(code,/allocateEditorialMedia/);
   assert.match(code,/atelier-v3-hero-desktop/);
   assert.match(code,/atelier-v3-hero-mobile/);
   assert.match(code,/atelier-v3-campaign/);

@@ -22,7 +22,7 @@ export function AtelierMotion(){
           if(hero){
             gsap.fromTo(hero,{clipPath:"inset(0% 100% 0% 0%)"},{clipPath:"inset(0% 0% 0% 0%)",duration:1.65,ease:"power3.inOut",clearProps:"clipPath"});
           }
-if(heroCopy){
+          if(heroCopy){
             const elements=heroCopy.querySelectorAll(":scope > *");
             gsap.fromTo(elements,{opacity:0,y:24,filter:"blur(9px)"},{opacity:1,y:0,filter:"blur(0px)",duration:1.05,ease:"power3.out",stagger:.13,delay:.45,clearProps:"opacity,transform,filter"});
           }
@@ -47,7 +47,7 @@ if(heroCopy){
     };
     if(!document.querySelector(".atelier-intro"))void reveal();
     window.addEventListener("atelier:intro-complete",reveal,{once:true});
-    //Failsafe for a loader that completes via CSS rather than the custom event.
+    // Failsafe for a loader that completes via CSS rather than the custom event.
     const safety=window.setTimeout(()=>{if(!started)void reveal()},5700);
     return()=>{cancelled=true;window.clearTimeout(safety);window.removeEventListener("atelier:intro-complete",reveal);context?.revert()};
   },[]);
