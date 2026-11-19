@@ -14,6 +14,8 @@ export function AtelierIntro() {
   const [texture, setTexture] = useState<HTMLCanvasElement | null>(null);
   const book = useRef<GrabfoldBookHandle>(null);
   const started = useRef(false);
+  const previousOverflow = useRef("");
+  const finish = () => { played = true; document.body.style.overflow = previousOverflow.current; setPhase("done"); };
   const renderer = useMemo(
     () => texture ? webglFold({ texture: () => texture, radius: 0.17, segments: 64, cache: 2 }) : null,
     [texture],
@@ -25,7 +27,7 @@ export function AtelierIntro() {
       setPhase("done");
       return;
     }
-    const previousOverflow = document.body.style.overflow;
+    previousOverflow.current = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     setRatio(window.innerWidth / window.innerHeight);
 
@@ -48,13 +50,13 @@ export function AtelierIntro() {
     const failsafe = window.setTimeout(() => {
       played = true;
       setPhase("done");
-      document.body.style.overflow = previousOverflow;
+      document.body.style.overflow = previousOverflow.current;
     }, 5500);
     return () => {
       clearTimeout(a);
       clearTimeout(b);
       clearTimeout(failsafe);
-      document.body.style.overflow = previousOverflow;
+      document.body.style.overflow = previousOverflow.current;
     };
   }, []);
 
@@ -63,7 +65,7 @@ export function AtelierIntro() {
     started.current = true;
     const root = document.querySelector<HTMLElement>(".atelier-grabfold .grabfold");
     if (!root) {
-      window.setTimeout(() => { played = true; setPhase("done"); }, 900);
+      window.setTimeout(() => finish(), 900);
       return;
     }
     const rect = root.getBoundingClientRect();
@@ -96,7 +98,7 @@ export function AtelierIntro() {
       dispatch("pointerup", x, y, 0);
       // If a particular device cannot support Grabfold's WebGL renderer,
       // do not leave the page frozen behind the loader.
-      window.setTimeout(() => { played = true; setPhase("done"); }, 350);
+      window.setTimeout(() => finish(), 350);
     };
     frame = requestAnimationFrame(animate);
     return () => { active = false; cancelAnimationFrame(frame); };
