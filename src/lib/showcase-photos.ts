@@ -41,7 +41,14 @@ const luxuryTemplateMap:Record<string,string>={
  "/images/linen-shirt.webp":"/images/luxury-clothing.webp",
  "/images/classic-watch.webp":"/images/luxury-watch.webp",
  "/images/sunglasses.webp":"/images/luxury-sunglasses.webp",
- "/images/products/shirt-blue.webp":"/images/luxury-clothing.webp"
+ "/images/products/shirt-blue.webp":"/images/luxury-clothing.webp",
+ "/images/products/bag-main.webp":"/images/luxury-bag.webp",
+ "/images/products/bag-everyday.webp":"/images/luxury-bag.webp",
+ "/images/products/sneakers-main.webp":"/images/luxury-shoe.webp",
+ "/images/products/sneakers-urban.webp":"/images/luxury-shoe.webp",
+ "/images/products/shirt-beige.webp":"/images/luxury-clothing.webp",
+ "/images/products/watch-main.webp":"/images/luxury-watch.webp",
+ "/images/products/sunglasses-main.webp":"/images/luxury-sunglasses.webp"
 };
 export function showcasePhoto(raw:string|null|undefined):string{
  if(!raw)return "";
