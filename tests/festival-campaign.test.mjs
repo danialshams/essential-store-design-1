@@ -16,7 +16,7 @@ test("festival has matching admin types, Zod persistence, API target validation 
  assert.match(api,/editorialConfig/);
  assert.match(api,/config\.festival\.productIds/);
 });
-test("one optional festival is edited visually, independently enabled/disabled, with accessible publish notice",()=>{
+test("festival remains editable through the visual admin and its live campaign data powers the new home",()=>{
  const editor=read("src/components/admin/EditionTwoHomeEditor.tsx");
  assert.match(editor,/id="festival" rank=\{sectionRank\("festival"\)\} selected=\{selected\}/);
  assert.match(editor,/selected==="festival"/);
@@ -28,18 +28,27 @@ test("one optional festival is edited visually, independently enabled/disabled, 
  assert.match(editor,/onDragStart/);
  assert.match(editor,/reorderSections/);
  assert.match(editor,/FestivalProductManager/);
- const publicHome=read("src/app/page.tsx");
- assert.match(publicHome,/festival\.enabled/);
- assert.match(publicHome,/targetUrl\(festival\.target,store\)/);
- assert.match(publicHome,/saleProducts/);
- assert.match(publicHome,/comparePrice/);
- assert.match(publicHome,/sectionOrder\.map\(id=><Fragment/);
- assert.match(read("src/app/layout.tsx"),/festival\.css/);
+ const home=read("src/components/LuxuryHome.tsx"),page=read("src/app/page.tsx");
+ assert.match(page,/LuxuryHome store=\{store\}/);
+ assert.match(home,/fest\.enabled!==false/);
+ assert.match(home,/fest\.endsAt/);
+ assert.match(home,/festivalProducts\(store\)/);
+ assert.match(home,/href="\/festival"/);
+ assert.match(home,/data-festival-product-count=\{sale\.length\}/);
+ assert.match(read("src/app/layout.tsx"),/luxury-home\.css/);
 });
-test("festival design language differs between the two independently deployed stores",()=>{
- const home=read("src/app/page.tsx"),css=read("src/app/festival.css");
- assert.match(home,/ed1-sale-festival/);
- assert.match(css,/ed1-sale-festival/);
- assert.match(css,/@media\(max-width:/);
+test("Luxury home has an independent responsive sapphire campaign and 3D folding loader",()=>{
+ const home=read("src/components/LuxuryHome.tsx"),css=read("src/app/luxury-home.css");
+ const intro=read("src/components/LuxuryIntro.tsx");
+ assert.match(home,/luxury-festival-feature/);
+ assert.match(home,/luxury-hero/);
+ assert.match(home,/recentProducts\(store\)/);
+ assert.match(home,/popularProducts\(store\)/);
+ assert.match(css,/\.luxury-festival/);
+ assert.match(css,/\.luxury-intro--fold/);
+ assert.match(css,/@keyframes luxuryFoldLeft/);
+ assert.match(css,/@keyframes luxuryFoldRight/);
+ assert.match(css,/@media\(max-width:760px\)/);
  assert.match(css,/prefers-reduced-motion/);
+ assert.match(intro,/setPhase\("fold"\)/);
 });
