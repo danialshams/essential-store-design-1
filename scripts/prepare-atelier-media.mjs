@@ -84,6 +84,21 @@ async function compose(file, width, height, imageWidth, imageHeight, left, top, 
     ]).webp({ quality: 89, effort: 5 }).toFile(path.join(dir, file));
   console.log("[DAIRA Atelier] " + file);
 }
-await compose("atelier-hero-desktop.webp", 1920, 1080, 1020, 1080, 0, 0, false);
-await compose("atelier-hero-mobile.webp", 920, 1640, 920, 1460, 0, 0, true);
+const heroBase = path.join(dir, "atelier-hero-cinema.webp");
+if (!(await exists("atelier-hero-cinema.webp"))) {
+  throw Error("Bundled original hero campaign missing; do not fall back to an old hero image");
+}
+if (!(await exists("atelier-hero-desktop.webp"))) {
+  await sharp(heroBase).resize(1920, 1080, { fit: "cover", position: "centre" })
+    .webp({ quality: 88, effort: 5 }).toFile(path.join(dir, "atelier-hero-desktop.webp"));
+}
+if (!(await exists("atelier-hero-mobile.webp"))) {
+  const original = await sharp(heroBase).metadata();
+  const cropWidth = Math.min(695, original.width);
+  const portrait = await sharp(heroBase).extract({ left: 0, top: 0, width: cropWidth, height: original.height })
+    .resize(920, 1110, { fit: "contain", background: "#071827" }).toBuffer();
+  await sharp({ create: { width: 920, height: 1640, channels: 4, background: "#071827" } })
+    .composite([{ input: portrait, left: 0, top: 0 }])
+    .webp({ quality: 86, effort: 5 }).toFile(path.join(dir, "atelier-hero-mobile.webp"));
+}
 await compose("atelier-festival.webp", 1220, 1300, 920, 1300, 150, 0, true);
