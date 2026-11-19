@@ -58,10 +58,11 @@ export function AtelierMotion(){
       }
     };
     if(!document.querySelector(".atelier-intro"))void reveal();
+    window.addEventListener("atelier:intro-turn",reveal,{once:true});
     window.addEventListener("atelier:intro-complete",reveal,{once:true});
     // Failsafe for a loader that completes via CSS rather than the custom event.
     const safety=window.setTimeout(()=>{if(!started)void reveal()},5700);
-    return()=>{cancelled=true;window.clearTimeout(safety);window.removeEventListener("atelier:intro-complete",reveal);context?.revert();cleanupHeader()};
+    return()=>{cancelled=true;window.clearTimeout(safety);window.removeEventListener("atelier:intro-turn",reveal);window.removeEventListener("atelier:intro-complete",reveal);context?.revert();cleanupHeader()};
   },[]);
   return null;
 }
