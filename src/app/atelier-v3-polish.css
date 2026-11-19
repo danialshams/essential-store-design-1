@@ -41,8 +41,8 @@ body:has(.atelier-home) main#main-content{padding-top:0!important}
 .atelier-best{background:var(--atelier-ivory)}
 .atelier-home+.atelier-footer,body:has(.atelier-home) .atelier-footer,body:has(.atelier-home) .site-footer{margin-top:0!important}
 @media(max-width:760px){
- body:has(.atelier-home){--atelier-header-h:64px}
- .atelier-hero{height:calc(100svh - 64px)!important;min-height:calc(600px - 64px)!important}
+ body:has(.atelier-home){--atelier-header-h:118px} /* header includes visible mobile search drawer */
+ .atelier-hero{height:calc(100svh - var(--atelier-header-h))!important;min-height:calc(600px - var(--atelier-header-h))!important}
  .atelier-hero-photo img{object-fit:cover!important}
  .atelier-hero-copy{width:min(100%,460px);margin-inline:auto!important;text-align:center!important;padding:0 4px 66px!important;align-self:center}
  .atelier-hero-inner{justify-content:flex-end;align-items:center;width:calc(100% - 30px)}
