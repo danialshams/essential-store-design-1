@@ -60,25 +60,9 @@ await Promise.all(library.map(async ([file, photoId]) => {
 const source = await download("photo-1771072426488-87e6bbcc0cf7", 1200, 1800);
 const masterWidth = 1050;
 const masterHeight = 1500;
-const { data: pixels, info } = await sharp(source)
-  .resize(masterWidth, masterHeight, { fit: "cover", position: "attention" })
-  .removeAlpha().raw().toBuffer({ resolveWithObject: true });
-for (let y = Math.floor(masterHeight * .20); y < masterHeight; y++) {
-  for (let x = 0; x < masterWidth; x++) {
-    const idx = (y * masterWidth + x) * info.channels;
-    const r = pixels[idx], g = pixels[idx+1], b = pixels[idx+2];
-    // Only the highly saturated yellow/gold clothing, not the face, skin or background.
-    const chroma = Math.max(r,g,b) - Math.min(r,g,b);
-    const gold = r > 90 && g > 65 && r > b * 1.6 && g > b * 1.42 && chroma > 58 && r >= g * .94;
-    if (!gold) continue;
-    const luminance = r * .30 + g * .55 + b * .15;
-    pixels[idx] = Math.max(12, Math.round(luminance * .20));
-    pixels[idx+1] = Math.max(25, Math.round(luminance * .34));
-    pixels[idx+2] = Math.max(40, Math.round(luminance * .58));
-  }
-}
-const portrait = await sharp(pixels, { raw: { width: masterWidth, height: masterHeight, channels: info.channels } })
-  .webp({ quality: 87 }).toBuffer();
+// Keep true skin and fabric colors: the earlier selective blue conversion created artifacts.
+// The dark original portrait is gently blended into a navy stage instead.
+const portrait = await sharp(source).resize(masterWidth,masterHeight,{fit:"cover",position:"attention"}).webp({quality:87}).toBuffer();
 
 function gradient(width, height, mobile) {
   const direction = mobile ? 'x1="0" y1="0" x2="0" y2="1"' : 'x1="0" y1="0" x2="1" y2="0"';
