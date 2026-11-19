@@ -15,12 +15,12 @@ export function AtelierHome({ store }: { store: StoreData }) {
   const configuredHero = edition?.hero?.find((item) => item.enabled);
   const customHero = Boolean(configuredHero?.imageUrl && !legacyTemplatePhoto(configuredHero.imageUrl) &&
     !configuredHero.imageUrl.includes("/images/luxury-") && !configuredHero.imageUrl.includes("/images/atelier-"));
-  const heroDesktop = customHero ? showcasePhoto(configuredHero?.imageUrl) : "/images/atelier-v3-hero-desktop.webp";
-  const heroMobile = customHero ? showcasePhoto(configuredHero?.mobileImageUrl || configuredHero?.imageUrl) : "/images/atelier-v3-hero-mobile.webp";
+  const heroDesktop = customHero ? showcasePhoto(configuredHero?.imageUrl) : "/images/atelier-v4-hero-desktop.webp";
+  const heroMobile = customHero ? showcasePhoto(configuredHero?.mobileImageUrl || configuredHero?.imageUrl) : "/images/atelier-v4-hero-mobile.webp";
   const festival = edition?.festival ?? editionTwoDefaults.festival;
   const customFestival = Boolean(festival.imageUrl && !legacyTemplatePhoto(festival.imageUrl) &&
     !festival.imageUrl.includes("/images/luxury-") && !festival.imageUrl.includes("/images/atelier-"));
-  const festivalImage = customFestival ? showcasePhoto(festival.imageUrl) : "/images/atelier-v3-campaign.webp";
+  const festivalImage = customFestival ? showcasePhoto(festival.imageUrl) : "/images/atelier-v4-campaign.webp";
   const sale = festivalProducts(store);
   const best = popularProducts(store);
   const newest = recentProducts(store);
@@ -118,7 +118,7 @@ export function AtelierHome({ store }: { store: StoreData }) {
         </header>
         <div className="atelier-new-gallery">
           <div className="atelier-new-editorial" data-cine-reveal data-cine-photo>
-            <Image src="/images/atelier-v3-editorial.webp" alt="ژورنال تصویری کالکشن جدید" fill
+            <Image src="/images/atelier-v4-editorial.webp" alt="ژورنال تصویری کالکشن جدید" fill
               sizes="(max-width:760px) 100vw, 40vw" />
             <div><span>DAIRA / NEW SEASON</span>
               <strong>THE NEW<br />PERSPECTIVE</strong>
