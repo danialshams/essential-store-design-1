@@ -2,6 +2,7 @@
 import {useMemo,useState} from "react";
 import {Search,SlidersHorizontal,RotateCcw} from "lucide-react";
 import {AtelierTile} from "@/components/AtelierTile";
+import {allocateEditorialMedia} from "@/lib/atelier-v3-media";
 import type {Product} from "@/lib/catalog";
 
 type Sort="discount"|"low"|"high"|"new";
@@ -15,6 +16,7 @@ export function LuxuryFestivalCollection({products}:{products:Product[]}){
   return products.filter(p=>(!category||p.category===category)&&(!query||[p.name,p.subtitle,p.categoryLabel].join(" ").toLocaleLowerCase("fa").includes(query)))
     .slice().sort((a,b)=>sort==="low"?a.price-b.price:sort==="high"?b.price-a.price:sort==="new"?Number(Boolean(b.newArrival))-Number(Boolean(a.newArrival)):((b.comparePrice||b.price)-b.price)/(b.comparePrice||b.price)-((a.comparePrice||a.price)-a.price)/(a.comparePrice||a.price));
  },[products,search,category,sort]);
+ const galleryMedia=useMemo(()=>allocateEditorialMedia([list])[0],[list]);
  const clear=()=>{setSearch("");setCategory("");setSort("discount")};
  return <>
   <div className="luxury-festival-controls" aria-label="فیلتر محصولات جشنواره">
@@ -26,6 +28,6 @@ export function LuxuryFestivalCollection({products}:{products:Product[]}){
    {categories.map(([key,name])=><button type="button" key={key} aria-pressed={category===key} className={category===key?"active":""} onClick={()=>setCategory(key)}>{name}</button>)}
   </div>
   <p className="luxury-festival-results">{list.length.toLocaleString("fa-IR")} محصول پیدا شد</p>
-  {list.length?<div className="luxury-product-grid">{list.map(p=><div className="luxury-product-wrap" key={p.id}><AtelierTile product={p}/></div>)}</div>:<div className="luxury-empty-state"><p>محصولی با این مشخصات پیدا نشد.</p><button className="luxury-reset" type="button" onClick={clear}>پاک کردن فیلترها <RotateCcw size={16}/></button></div>}
+  {list.length?<div className="luxury-product-grid">{list.map((p,index)=><div className="luxury-product-wrap" key={p.id}><AtelierTile product={p} editorialImage={galleryMedia[index]}/></div>)}</div>:<div className="luxury-empty-state"><p>محصولی با این مشخصات پیدا نشد.</p><button className="luxury-reset" type="button" onClick={clear}>پاک کردن فیلترها <RotateCcw size={16}/></button></div>}
  </>;
 }
