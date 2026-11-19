@@ -28,14 +28,14 @@ test("festival remains editable through the visual admin and its live campaign d
  assert.match(editor,/onDragStart/);
  assert.match(editor,/reorderSections/);
  assert.match(editor,/FestivalProductManager/);
- const home=read("src/components/LuxuryHome.tsx"),page=read("src/app/page.tsx");
- assert.match(page,/LuxuryHome store=\{store\}/);
- assert.match(home,/fest\.enabled!==false/);
- assert.match(home,/fest\.endsAt/);
+ const home=read("src/components/AtelierHome.tsx"),page=read("src/app/page.tsx");
+ assert.match(page,/AtelierHome store=\{store\}/);
+ assert.match(home,/festival\.enabled !== false/);
+ assert.match(home,/festival\.endsAt/);
  assert.match(home,/festivalProducts\(store\)/);
  assert.match(home,/href="\/festival"/);
  assert.match(home,/data-festival-product-count=\{sale\.length\}/);
- assert.match(read("src/app/layout.tsx"),/luxury-home\.css/);
+ assert.match(read("src/app/layout.tsx"),/atelier-v2\.css/);
 });
 test("Luxury home has an independent responsive sapphire campaign and 3D folding loader",()=>{
  const home=read("src/components/LuxuryHome.tsx"),css=read("src/app/luxury-home.css");
