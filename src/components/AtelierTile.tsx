@@ -20,8 +20,8 @@ const stagedImages:Record<string,string[]> = {
 };
 function editorialPhoto(product:Product):string{
   const source=product.image || "";
-  const isBundledDemo=source.startsWith("/images/")||
-    /^https?:\\/\\/essential-store-design-1(?:-[^/]*)?\\.vercel\\.app\\/images\\//.test(source);
+  const isBundledDemo=source.startsWith("/images/") ||
+    (source.includes("essential-store-design-1") && source.includes("/images/"));
   if(!isBundledDemo)return source;
   const choices=stagedImages[product.category]||[];
   if(!choices.length)return source;
