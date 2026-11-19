@@ -7,6 +7,7 @@ import "./festival.css";
 import "./visual-upgrade.css";
 import "./product-theme-polish.css";
 import "./engagement.css";
+import "./luxury-home.css";
 export async function generateMetadata():Promise<Metadata>{
  const store=await loadStore();
  const base=seoMeta(store,"/",{title:store.settings.seoTitle||store.settings.storeName,
@@ -14,6 +15,6 @@ export async function generateMetadata():Promise<Metadata>{
  // Child routes override noindex explicitly after checking published content.
  return {...base,alternates:undefined,robots:{index:false,follow:false}};
 }
-export const viewport:Viewport={width:"device-width",initialScale:1,themeColor:"#ffffff"};
+export const viewport:Viewport={width:"device-width",initialScale:1,themeColor:"#071b33"};
 export const dynamic="force-dynamic";
 export default async function RootLayout({children}:{children:React.ReactNode}){const store=await loadStore();return <html lang="fa" dir="rtl"><body><StoreChrome store={store}>{children}</StoreChrome></body></html>}
