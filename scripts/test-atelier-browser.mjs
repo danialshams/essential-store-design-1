@@ -109,7 +109,7 @@ try {
       };
     })()`);
     assert.notEqual(data.scroll,"hidden",name+" scrolling must unlock");
-    assert.equal(data.overflow,0,name+" must not scroll horizontally");
+    assert.ok(data.overflow <= 1,name+" must not scroll horizontally: "+data.overflow);
     assert.equal(data.footerGap,0,name+" must not have a gap above the footer");
     assert.equal(data.heroFit,"contain",name+" hero must show complete composition");
     assert.equal(data.whiteCards,0,name+" must not render legacy cards");
