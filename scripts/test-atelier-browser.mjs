@@ -126,6 +126,13 @@ try {
     assert.equal(data.heroFit,"cover",name+" hero image must fit its exact viewport frame");
     assert.ok(Math.abs(data.heroTop-data.headerBottom) <= 2,name+" hero must start precisely beneath header: "+JSON.stringify(data));
     assert.equal(data.whiteCards,0,name+" must not render legacy cards");
+    const header=await evaluate('(()=>{const h=document.querySelector(".site-header"),b=h.querySelector(".brand");const st=getComputedStyle(h);return {visibility:st.visibility,opacity:Number(st.opacity),position:st.position,headerHeight:h.getBoundingClientRect().height,brandHeight:b.getBoundingClientRect().height,brandVisibility:getComputedStyle(b).visibility}})()');
+    assert.equal(header.visibility,"visible",name+" header must reappear after intro");
+    assert.equal(header.brandVisibility,"visible",name+" logo and brand must be visible after intro");
+    assert.ok(header.brandHeight>15,name+" visible header brand must have layout");
+    assert.ok(header.opacity>.9,name+" header must not stay transparent");
+    await capture(name+"-viewport");
+
     assert.equal(data.sales,4,name+" must show four featured sale items");
     assert.ok(data.best>0 && data.newest>0,name+" must render two product galleries");
     // Exercise GSAP scroll triggers before photographing the complete editorial gallery.
