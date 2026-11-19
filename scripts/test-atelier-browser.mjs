@@ -131,6 +131,7 @@ try {
     assert.equal(header.brandVisibility,"visible",name+" logo and brand must be visible after intro");
     assert.ok(header.brandHeight>15,name+" visible header brand must have layout");
     assert.ok(header.opacity>.9,name+" header must not stay transparent");
+    await waitFor(()=>evaluate('getComputedStyle(document.querySelector(".atelier-hero-photo")).clipPath==="none"'),name+" hero reveal must finish before viewport screenshot",7000);
     await capture(name+"-viewport");
 
     assert.equal(data.sales,4,name+" must show four featured sale items");
