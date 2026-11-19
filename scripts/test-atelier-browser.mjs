@@ -86,6 +86,10 @@ try {
     await waitFor(() => evaluate('Number(getComputedStyle(document.querySelector(".atelier-intro")).zIndex) > Number(getComputedStyle(document.querySelector(".site-header")).zIndex)'), name + " fully styled overlay", 12000);
     const overlay = await evaluate('({z:Number(getComputedStyle(document.querySelector(".atelier-intro")).zIndex), header:Number(getComputedStyle(document.querySelector(".site-header")).zIndex)})');
     assert.ok(overlay.z > overlay.header, name+" loader must cover header");
+    // The header should be visible through the opening curl, rather than appearing late.
+    await waitFor(() => evaluate('!!document.querySelector(".atelier-intro--turn")'), name+" curl frame",14000);
+    const duringTurn=await evaluate('getComputedStyle(document.querySelector(".site-header")).visibility');
+    assert.equal(duringTurn,"visible",name+" header must be painted under the opening sheet");
     await waitFor(() => evaluate('!!document.querySelector(".atelier-intro--turn")'), name+" corner-curl start",14000);
     let dragged = false, canvas = false, turning = false;
     const curlSamples=[];
@@ -126,6 +130,17 @@ try {
     assert.equal(data.heroFit,"cover",name+" hero image must fit its exact viewport frame");
     assert.ok(Math.abs(data.heroTop-data.headerBottom) <= 2,name+" hero must start precisely beneath header: "+JSON.stringify(data));
     assert.equal(data.whiteCards,0,name+" must not render legacy cards");
+    const gallerySources=await evaluate('Array.from(document.querySelectorAll(".atelier-home .atelier-tile img")).map(img=>img.getAttribute("src")||"")');
+    assert.equal(new Set(gallerySources).size,gallerySources.length,name+" visible home product images must never repeat");
+    if(width<761){
+      await evaluate('document.querySelector(".hamburger").click();true');
+      await waitFor(()=>evaluate('!!document.querySelector(".mobile-drawer")'),name+" new mobile navigation",7000);
+      const drawer=await evaluate('(()=>{const el=document.querySelector(".mobile-drawer"),css=getComputedStyle(el);return {bg:css.backgroundImage,color:css.color}})()');
+      assert.match(drawer.bg,/gradient/,name+" drawer should use a sapphire gradient, not a white panel");
+      assert.notEqual(drawer.color,"rgb(0, 0, 0)",name+" drawer text must use light editorial contrast");
+      await capture(name+"-nav");
+      await evaluate('document.querySelector(".mobile-drawer-top button").click();true');
+    }
     const header=await evaluate('(()=>{const h=document.querySelector(".site-header"),b=h.querySelector(".brand");const st=getComputedStyle(h);return {visibility:st.visibility,opacity:Number(st.opacity),position:st.position,headerHeight:h.getBoundingClientRect().height,brandHeight:b.getBoundingClientRect().height,brandVisibility:getComputedStyle(b).visibility}})()');
     assert.equal(header.visibility,"visible",name+" header must reappear after intro");
     assert.equal(header.brandVisibility,"visible",name+" logo and brand must be visible after intro");
