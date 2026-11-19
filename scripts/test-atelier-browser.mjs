@@ -99,7 +99,7 @@ try {
     }
     assert.ok(canvas,name+" loader must render the WebGL curling paper");
     if(!dragged)console.error("ATELIER_CURL_DIAGNOSTIC "+name+" "+JSON.stringify(curlSamples));
-    assert.ok(dragged||turning,name+" WebGL page must turn (corner interaction): "+JSON.stringify(curlSamples.slice(-2)));
+    assert.ok(dragged,name+" WebGL fold must begin as a top-corner drag, not a center-edge fallback: "+JSON.stringify(curlSamples.slice(-2)));
     if(name==="desktop")await capture("curl-desktop");
     await waitFor(() => evaluate('!document.querySelector(".atelier-intro")'), name+" loader completion",9000);
     const data=await evaluate(`(() => {
