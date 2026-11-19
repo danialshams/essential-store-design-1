@@ -21,6 +21,7 @@ for (const [file,min] of [
   ["atelier-hero-cinema.webp",10000],
   ["atelier-gallery-sheet-1.webp",25000],
   ["atelier-gallery-sheet-2.webp",25000],
+  ["atelier-gallery-sheet-3.webp",25000],
 ]) {
   if (!(await validate(file,min))) throw Error("[atelier] Required original photograph missing: " + file);
 }
@@ -28,15 +29,17 @@ for (const [file,min] of [
 const library = [
   ["atelier-bag-a.webp",1,"BL"],
   ["atelier-bag-b.webp",2,"BL"],
-  ["atelier-shoe-a.webp",1,"BR"],
-  ["atelier-shoe-b.webp",2,"BR"],
+  ["atelier-shoe-a.webp",3,"TL"],
+  ["atelier-shoe-b.webp",3,"TR"],
+  ["atelier-shoe-c.webp",1,"BR"],
+  ["atelier-shoe-d.webp",2,"BR"],
   ["atelier-shirt-a.webp",2,"BR"],
   ["atelier-shirt-b.webp",1,"BR"],
   ["atelier-clothing-c.webp",2,"TL"],
   ["atelier-clothing-d.webp",1,"TL"],
-  ["atelier-watch-a.webp",1,"BR"],
+  ["atelier-watch-a.webp",3,"BL"],
   ["atelier-watch-b.webp",2,"BR"],
-  ["atelier-sunglasses.webp",1,"BL"],
+  ["atelier-sunglasses.webp",3,"BR"],
   ["atelier-accessory.webp",2,"BL"],
   ["atelier-scene-a.webp",1,"TR"],
   ["atelier-scene-b.webp",2,"TR"],
