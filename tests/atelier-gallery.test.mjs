@@ -40,7 +40,9 @@ test("new photography is generated from bundled original editorial image sheets"
   const src = read("scripts/prepare-atelier-media.mjs");
   const media = read("src/lib/showcase-photos.ts");
   const pkg = read("package.json");
-  assert.match(src, /images\.unsplash\.com/);
+  assert.match(src, /atelier-gallery-sheet-1\.webp/);
+  assert.match(src, /atelier-gallery-sheet-2\.webp/);
+  assert.doesNotMatch(src,/images\.unsplash\.com/);
   assert.match(src, /atelier-hero-desktop\.webp/);
   assert.match(src, /atelier-hero-mobile\.webp/);
   assert.match(src, /atelier-bag-b\.webp/);
