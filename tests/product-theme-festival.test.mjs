@@ -3,14 +3,16 @@ import assert from "node:assert/strict";
 import {readFileSync} from "node:fs";
 const read=p=>readFileSync(p,"utf8");
 
-test("festival always includes available products beyond the manually pinned first item",()=>{
- const page=read("src/app/page.tsx");
- assert.match(page,/\.\.\.chosen,\.\.\.discounted\.filter/);
- assert.match(page,/inStock\.filter/);
- assert.match(page,/\.slice\(0,12\)/);
- assert.match(page,/data-festival-product-count=\{saleProducts\.length\}/);
- assert.match(page,/id="festival-products"/);
- assert.match(page,/href=\{festival\.target\.kind==="products"\?"#festival-products":targetUrl/);
+test("festival homepage leads to the separate discounted archive and retains four curated highlights",()=>{
+ const home=read("src/components/LuxuryHome.tsx");
+ const archive=read("src/app/festival/page.tsx");
+ const logic=read("src/lib/luxury-catalog.ts");
+ assert.match(home,/id="festival-products"/);
+ assert.match(home,/sale\.slice\(0,4\)/);
+ assert.match(home,/data-festival-product-count/);
+ assert.match(home,/href="\/festival"/);
+ assert.match(archive,/LuxuryFestivalCollection/);
+ assert.match(logic,/p\.comparePrice>p\.price/);
 });
 test("product photo background is the store theme, with an image frame that never shifts ratio",()=>{
  const media=read("src/app/product-theme-polish.css");
@@ -25,12 +27,12 @@ test("product photo background is the store theme, with an image frame that neve
  assert.doesNotMatch(card,/onLoad=\{event=>/);
  assert.doesNotMatch(card,/naturalWidth.*naturalHeight/);
 });
-test("desktop/mobile QA checks eight sale products and captures an actual festival screenshot",()=>{
+test("desktop/mobile QA validates new festival layout and screenshots with stable product ratios",()=>{
  const qa=read("scripts/test-admin-browser.mjs");
  const smoke=read(".github/workflows/production-smoke.yml");
- assert.match(qa,/discountedCards>=8/);
+ assert.match(qa,/luxury-sale-item/);
  assert.match(qa,/storefront-festival\.png/);
  assert.match(qa,/merch\.ratio>/);
  assert.match(smoke,/data-festival-product-count/);
- assert.match(smoke,/visible<8|visible < 8/);
+ assert.match(smoke,/\/festival/);
 });
