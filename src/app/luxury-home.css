@@ -1,0 +1,152 @@
+/* Midnight Sapphire / Essential 01 — isolated visual identity, storefront only */
+body:has(.luxury-home),body:has(.luxury-festival-page){--primary:#164b82;--primary-dark:#0a294d;--ink:#0c2138;--pale:#faf9f6}
+body:has(.luxury-home) .announcement,body:has(.luxury-festival-page) .announcement{background:#071b33;color:#b5c9da;height:30px;font-size:10px;letter-spacing:.035em}
+body:has(.luxury-home) .site-header,body:has(.luxury-festival-page) .site-header{background:#071b33;border-bottom:1px solid #ffffff1b;position:sticky;top:0;z-index:140}
+body:has(.luxury-home) .site-header .brand,body:has(.luxury-festival-page) .site-header .brand{color:#f2f5f7}
+body:has(.luxury-home) .site-header .brand-icon,body:has(.luxury-festival-page) .site-header .brand-icon{color:#b7cfe2}
+body:has(.luxury-home) .desktop-links>a,body:has(.luxury-home) .category-nav>button,body:has(.luxury-festival-page) .desktop-links>a,body:has(.luxury-festival-page) .category-nav>button{color:#e5edf4}
+body:has(.luxury-home) .site-header .icon-action,body:has(.luxury-festival-page) .site-header .icon-action{color:#eef3f7}
+body:has(.luxury-home) .header-search,body:has(.luxury-festival-page) .header-search{border:1px solid #9bb8d13b;background:#ffffff0e;color:#c5d8e8}
+body:has(.luxury-home) .header-search input,body:has(.luxury-festival-page) .header-search input{color:#fff}
+body:has(.luxury-home) .site-header .header-search input::placeholder,body:has(.luxury-festival-page) .site-header .header-search input::placeholder{color:#afc2d5}
+body:has(.luxury-home) .site-header .header-search button,body:has(.luxury-festival-page) .site-header .header-search button{color:#bcd8f0}
+body:has(.luxury-home) .site-footer,body:has(.luxury-festival-page) .site-footer{background:#071b33!important;color:#d8e5ef}
+body:has(.luxury-home) .site-footer .brand,body:has(.luxury-festival-page) .site-footer .brand{color:white}
+body:has(.luxury-home) .site-footer .copyright,body:has(.luxury-festival-page) .site-footer .copyright{background:#051526;color:#8ba7be}
+body:has(.luxury-home) .mobile-bottom-nav,body:has(.luxury-festival-page) .mobile-bottom-nav{background:#071b33;color:#f6f6f6}
+.luxury-home{overflow:clip;background:#faf9f6;color:#071b33;isolation:isolate}
+.luxury-home a,.luxury-festival-page a{text-decoration:none}
+.luxury-inner{width:min(1250px,calc(100% - 64px));margin-inline:auto}
+.luxury-kicker{font:600 11px/1.6 Arial,sans-serif;letter-spacing:.21em;direction:ltr;display:inline-block;color:#94adca}
+.luxury-hero{height:calc(100svh - 98px);min-height:590px;max-height:1080px;position:relative;overflow:hidden;background:#071b33;color:#fff;isolation:isolate}
+.luxury-hero-media{position:absolute;inset:-2%;z-index:-2;overflow:hidden}
+.luxury-hero-media picture,.luxury-hero-media img{position:absolute;inset:0;width:100%;height:100%;display:block}
+.luxury-hero-img{object-fit:cover;object-position:50% 42%;filter:saturate(.85)}
+.luxury-hero-shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(270deg,#051626d9 0%,#071b339d 42%,transparent 75%),linear-gradient(0deg,#071b3368,transparent 40%)}
+.luxury-hero-text{position:absolute;z-index:1;right:max(6%,calc((100vw - 1250px)/2));top:50%;transform:translateY(-47%);width:min(580px,84vw);text-align:right}
+.luxury-hero-overline{font:500 11px/1.4 Arial,sans-serif;letter-spacing:.24em;direction:ltr;color:#bed1df;display:inline-block}
+.luxury-hero-text h1{font-size:clamp(58px,6.4vw,105px);line-height:1.34;letter-spacing:-.065em;font-weight:500;margin:25px 0 18px;color:#faf9f6}
+.luxury-hero-text p{font-size:clamp(13px,1.25vw,17px);color:#d4e0ea;line-height:2.3;margin:0 0 34px;font-weight:400}
+.luxury-outline-button,.luxury-solid-button{display:inline-flex;align-items:center;justify-content:space-between;gap:33px;min-height:52px;padding:13px 25px;font-size:13px;font-weight:650;transition:background .4s,color .4s,transform .4s;border-radius:2px}
+.luxury-outline-button{border:1px solid #f0f5f7a8;color:#f2f6f8}
+.luxury-outline-button:hover{background:#f0f5f7;color:#071b33;transform:translateY(-2px)}
+.luxury-hero-index{position:absolute;bottom:35px;left:5.3%;color:#c6d9e5;font:11px Arial,sans-serif;letter-spacing:.18em}
+.luxury-hero-scroll{position:absolute;bottom:35px;right:5.3%;color:#c6d9e5;display:flex;gap:16px;align-items:center;font:10px Arial,sans-serif;letter-spacing:.2em}
+.luxury-hero-scroll i{height:1px;width:54px;background:#aec5d7}
+.luxury-section-pretitle{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:20px;color:#7d9bb7;font:11px Arial,sans-serif;letter-spacing:.16em}
+.luxury-festival{padding:clamp(70px,9vw,124px) 0 100px;background:#071b33;color:white}
+.luxury-festival-feature{display:grid;grid-template-columns:1.08fr 1fr;min-height:540px;background:#102a47;overflow:hidden;direction:ltr}
+.luxury-festival-media{position:relative;min-height:520px;overflow:hidden}
+.luxury-festival-media img{object-fit:cover;object-position:center;display:block}
+.luxury-festival-copy{direction:rtl;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:clamp(35px,5vw,78px);text-align:right}
+.luxury-festival-copy h2{font-size:clamp(37px,4.5vw,65px);line-height:1.46;color:white;letter-spacing:-.05em;font-weight:500;margin:12px 0 13px}
+.luxury-festival-copy h2 i{font-style:normal;color:#adcbe0}
+.luxury-festival-copy>p{color:#c0d0dd;max-width:440px;line-height:2.1;font-size:13px;margin:0 0 12px}
+.luxury-countdown{margin:10px 0 27px;width:100%;max-width:370px}
+.luxury-countdown .ed2-festival-clock{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.luxury-countdown .ed2-festival-clock-unit{background:#ffffff10;border:1px solid #ffffff30;color:white;min-height:70px}
+.luxury-countdown .ed2-festival-clock-unit strong{color:#fff;font-size:22px}
+.luxury-countdown .ed2-festival-clock-unit small,.luxury-countdown .ed2-festival-timer-caption{color:#b5cadb}
+.luxury-solid-button{background:#f4f5f5;color:#091b30}
+.luxury-solid-button:hover{background:#bed6e7;transform:translateY(-2px)}
+.luxury-fest-count{margin-top:18px;color:#8daac2;font-size:11px}
+.luxury-festival-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:48px 0 22px}
+.luxury-festival-bottom p{margin:0;font-size:20px;font-weight:600;color:#eaf1f5}
+.luxury-festival-bottom a{display:flex;align-items:center;gap:6px;color:#b9d1e3;font-size:12px}
+.luxury-shelf{padding:clamp(76px,9vw,128px) 0}
+.luxury-shelf--best{background:#faf9f6}
+.luxury-shelf--new{background:#e9f0f6}
+.luxury-section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:35px}
+.luxury-section-head h2{font-size:clamp(34px,4.2vw,58px);font-weight:550;line-height:1.5;margin:12px 0 8px;letter-spacing:-.045em;color:#0a2139}
+.luxury-section-head p{color:#647688;line-height:2;font-size:13px;margin:0}
+.luxury-text-link{display:inline-flex;align-items:center;gap:10px;font-size:13px;font-weight:550;white-space:nowrap;padding-bottom:7px;border-bottom:1px solid #b4c6d6}
+.luxury-text-link:hover{color:#164b82}
+.luxury-product-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.luxury-product-wrap{min-width:0}
+.luxury-product-wrap .product-card{height:100%;overflow:hidden;background:#fff;border:0!important;box-shadow:none!important;border-radius:3px!important;transition:transform .5s ease}
+.luxury-product-wrap .product-card:hover{transform:translateY(-4px)}
+.luxury-product-wrap .product-image-box{height:auto!important;aspect-ratio:4/5!important;background:#dce7f0!important;overflow:hidden;border-radius:2px!important}
+.luxury-product-wrap .product-image-box img{width:100%;height:100%;object-fit:cover!important;object-position:center;transition:transform .85s cubic-bezier(.2,.7,.2,1)}
+.luxury-product-wrap .product-card:hover .product-image-box img{transform:scale(1.045)}
+.luxury-product-wrap .product-card-body{padding:17px 14px 19px}
+.luxury-product-wrap .product-card-title{font-size:14px;font-weight:650}
+.luxury-product-wrap .product-card-body>p{color:#74849a;font-size:11px}
+.luxury-product-wrap .card-add{border-radius:2px!important}
+.luxury-product-wrap .discount-tag{border-radius:2px!important;background:#0c3458!important}
+.luxury-festival .luxury-product-wrap .product-card{background:#f8fafb}
+.luxury-festival .luxury-product-grid{gap:16px}
+.luxury-empty{grid-column:1/-1;color:#96afc2;text-align:center;padding:35px;border:1px solid #ffffff24}
+.luxury-outro{padding:110px 0;background:#102b48;color:#e9f1f7;text-align:center}
+.luxury-outro span{font:11px Arial,sans-serif;letter-spacing:.25em;color:#a7bfd2}
+.luxury-outro h2{font-size:clamp(38px,5vw,68px);line-height:1.45;font-weight:450;margin:20px 0 27px;color:#fff}
+.luxury-outro a{display:inline-flex;gap:12px;align-items:center;color:#fff;border-bottom:1px solid #aac1d1;padding:8px 0}
+.luxury-festival-page{background:#faf9f6;min-height:70vh}
+.luxury-festival-page-head{background:#071b33;color:white;padding:75px 0 82px}
+.luxury-festival-page-head h1{font-size:clamp(38px,5vw,68px);font-weight:500;margin:12px 0}
+.luxury-festival-page-head p{color:#b8cddd;margin:0 0 15px}
+.luxury-crumb{display:flex;align-items:center;gap:10px;font-size:12px;color:#c2d6e5;margin-bottom:33px}
+.luxury-page-count{font-size:12px;color:#90afc5}
+.luxury-festival-page-content{padding-block:70px 110px}
+.luxury-empty-state{text-align:center;padding:70px 20px}
+.luxury-empty-state h2{font-size:25px;color:#122943}
+.luxury-empty-state p{color:#667d8d}
+.luxury-empty-state a{display:inline-flex;align-items:center;gap:9px;margin-top:14px;background:#102b48;color:#fff;padding:12px 20px}
+.luxury-intro{position:fixed;inset:0;z-index:99999;pointer-events:all;overflow:hidden;background:transparent;perspective:1300px;isolation:isolate}
+.luxury-intro-perspective{position:absolute;inset:0;transform-style:preserve-3d;perspective:1350px}
+.luxury-intro-leaf{position:absolute;top:0;bottom:0;width:50.05%;backface-visibility:hidden;transform-style:preserve-3d;background:#071b33;box-shadow:inset 0 0 90px #0005}
+.luxury-intro-leaf--left{left:0;transform-origin:right center;background:linear-gradient(100deg,#071b33 68%,#20476c)}
+.luxury-intro-leaf--right{right:0;transform-origin:left center;background:linear-gradient(260deg,#071b33 68%,#20476c)}
+.luxury-intro-crease{position:absolute;top:0;bottom:0;left:calc(50% - 1px);width:2px;background:#abc9e060;box-shadow:0 0 19px #d5e8f6a8;opacity:0;transition:opacity .35s}
+.luxury-intro-content{position:absolute;inset:0;display:flex;flex-direction:column;gap:17px;align-items:center;justify-content:center;color:#f5f6f7;text-align:center;transition:opacity .24s ease,transform .24s ease}
+.luxury-intro-name{font:400 clamp(28px,6.5vw,67px)/1.1 Georgia,serif;letter-spacing:.19em;filter:blur(9px);opacity:0;transform:translateY(18px);animation:luxuryIntroType .8s cubic-bezier(.2,.75,.2,1) forwards}
+.luxury-intro-rule{width:min(240px,60vw);height:1px;background:#ffffff24;overflow:hidden}
+.luxury-intro-rule i{display:block;height:1px;width:100%;background:linear-gradient(90deg,transparent,#e3f0fb,transparent);transform:scaleX(0);transition:transform .63s cubic-bezier(.2,.7,.2,1)}
+.luxury-intro-content span{font:10px Arial,sans-serif;letter-spacing:.28em;color:#adc3d8}
+.luxury-intro--line .luxury-intro-rule i,.luxury-intro--fold .luxury-intro-rule i{transform:scaleX(1)}
+.luxury-intro--fold .luxury-intro-content{opacity:0;transform:scale(.965)}
+.luxury-intro--fold .luxury-intro-crease{opacity:1;animation:luxuryCrease 1s ease both}
+.luxury-intro--fold .luxury-intro-leaf--left{animation:luxuryFoldLeft 1.12s cubic-bezier(.3,.05,.12,1) forwards}
+.luxury-intro--fold .luxury-intro-leaf--right{animation:luxuryFoldRight 1.12s cubic-bezier(.3,.05,.12,1) forwards}
+@keyframes luxuryIntroType{to{opacity:1;filter:blur(0);transform:translateY(0)}}
+@keyframes luxuryFoldLeft{0%{transform:rotateY(0) translateX(0);filter:brightness(1)}40%{transform:rotateY(-57deg);filter:brightness(.73)}75%{transform:rotateY(-86deg) translateX(-6vw);filter:brightness(.55)}100%{transform:rotateY(-94deg) translateX(-55vw);filter:brightness(.35)}}
+@keyframes luxuryFoldRight{0%{transform:rotateY(0) translateX(0);filter:brightness(1)}40%{transform:rotateY(57deg);filter:brightness(.73)}75%{transform:rotateY(86deg) translateX(6vw);filter:brightness(.55)}100%{transform:rotateY(94deg) translateX(55vw);filter:brightness(.35)}}
+@keyframes luxuryCrease{20%{opacity:1}60%{opacity:.9}100%{opacity:0}}
+@media(max-width:1050px){.luxury-inner{width:calc(100% - 48px)}.luxury-festival-feature{min-height:470px}.luxury-festival-media{min-height:470px}.luxury-product-grid{gap:11px}}
+@media(max-width:760px){
+ body:has(.luxury-home) .site-header,body:has(.luxury-festival-page) .site-header{position:sticky;top:0}
+ .luxury-inner{width:calc(100% - 30px)}
+ .luxury-hero{height:calc(100svh - 110px);min-height:570px;max-height:900px}
+ .luxury-hero-media{inset:0}.luxury-hero-img{object-position:45% top}
+ .luxury-hero-shade{background:linear-gradient(0deg,#071b33ee 0%,#071b3390 42%,transparent 80%)}
+ .luxury-hero-text{right:24px;left:24px;top:auto;bottom:85px;transform:none;width:auto}
+ .luxury-hero-text h1{font-size:clamp(42px,9vw,65px);line-height:1.42;margin:13px 0 8px}
+ .luxury-hero-text p{font-size:12px;margin-bottom:19px;line-height:2.05}
+ .luxury-hero-overline{font-size:9px}
+ .luxury-hero-index,.luxury-hero-scroll{bottom:18px;font-size:9px}
+ .luxury-hero-scroll{right:23px}.luxury-hero-index{left:23px}
+ .luxury-festival{padding:59px 0 67px}
+ .luxury-festival-feature{display:flex;flex-direction:column;min-height:0}
+ .luxury-festival-media{min-height:0;height:310px;width:100%}
+ .luxury-festival-copy{padding:35px 23px 42px}
+ .luxury-festival-copy h2{font-size:clamp(35px,7vw,49px)}
+ .luxury-countdown{margin-bottom:19px}
+ .luxury-festival-bottom{margin:33px 0 15px}
+ .luxury-festival-bottom p{font-size:16px}
+ .luxury-festival-bottom a{font-size:11px}
+ .luxury-shelf{padding:65px 0 72px}
+ .luxury-section-head{align-items:start;gap:20px;margin-bottom:24px}
+ .luxury-section-head h2{font-size:33px}
+ .luxury-section-head p{font-size:11px}
+ .luxury-text-link{font-size:11px}
+ .luxury-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ .luxury-product-wrap .product-card-body{padding:12px 9px 15px}
+ .luxury-product-wrap .product-card-title{font-size:12px}
+ .luxury-product-wrap .card-add{font-size:10px;padding:10px 6px;white-space:normal}
+ .luxury-product-wrap .product-card-prices{flex-wrap:wrap}
+ .luxury-outro{padding:70px 0}
+ .luxury-festival-page-head{padding:50px 0 55px}
+ .luxury-festival-page-content{padding-block:40px 70px}
+ .luxury-intro-name{letter-spacing:.12em}
+}
+@media(max-width:390px){.luxury-hero-text{right:17px;left:17px;bottom:90px}.luxury-hero-text h1{font-size:42px}.luxury-section-head{flex-direction:column;gap:12px}.luxury-shelf{padding-block:56px}.luxury-product-grid{gap:8px}.luxury-festival-media{height:270px}}
+@media(prefers-reduced-motion:reduce){.luxury-home *, .luxury-intro *, .luxury-festival-page *{scroll-behavior:auto!important;animation:none!important;transition:none!important}.luxury-intro{display:none!important}}
