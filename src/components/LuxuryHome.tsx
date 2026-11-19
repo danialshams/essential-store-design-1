@@ -72,7 +72,7 @@ export function LuxuryHome({store}:{store:StoreData}){
      </div>
     </div>
     <div className="luxury-festival-bottom" data-lux-reveal><p>منتخب‌های جشنواره</p><Link href="/festival">نمایش تمام پیشنهادها <ChevronLeft size={17}/></Link></div>
-    <div className="luxury-product-grid luxury-festival-products">{sale.slice(0,4).map(p=><div className="luxury-product-wrap" key={p.id} data-lux-reveal><ProductCard product={p}/></div>)}{sale.length===0&&<p className="luxury-empty">جشنواره فعلاً محصول تخفیف‌دار فعالی ندارد.</p>}</div>
+    <div className="luxury-product-grid luxury-festival-products" id="festival-products" data-festival-product-count={sale.length}>{sale.slice(0,4).map(p=><div className="luxury-product-wrap luxury-sale-item" key={p.id} data-lux-reveal><ProductCard product={p}/></div>)}{sale.length===0&&<p className="luxury-empty">جشنواره فعلاً محصول تخفیف‌دار فعالی ندارد.</p>}</div>
    </div>
   </section>}
   <ShopShelf title="پرفروش‌ترین محصولات" eyebrow="02 — BEST SELLERS" description="آن‌هایی که همیشه بیشتر از بقیه انتخاب می‌شوند." items={top} href="/products?sort=popular" variant="best"/>
