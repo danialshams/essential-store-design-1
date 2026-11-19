@@ -19,7 +19,7 @@ test("all curated demo photo aliases resolve to bundled image files",()=>{
 });
 test("live product and hero images always go through the safe registry",()=>{
  const catalog=read("src/lib/catalog.ts");
- const home=read("src/app/page.tsx");
+ const home=read("src/components/LuxuryHome.tsx");
  assert.match(catalog,/gallery:p\.gallery\.map\(showcasePhoto\)/);
- assert.match(home,/showcasePhoto/);
+ assert.match(home,/showcasePhoto\(configuredHero/);
 });
