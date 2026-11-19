@@ -20,7 +20,7 @@ for(const [file,id,w,h,fallback] of rows){
  const dest=join(publicDir,file);
  try{await access(dest);continue;}catch{}
  try{
-  const url=`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&h=${h}&q=83`;
+  const url=`https://images.unsplash.com/${id}?fm=webp&fit=crop&w=${w}&h=${h}&q=83`;
   const res=await fetch(url,{signal:AbortSignal.timeout(16000),headers:{"User-Agent":"DairaStoreShowcase/1.0"}});
   if(!res.ok||!String(res.headers.get("content-type")).startsWith("image/"))throw Error("Image HTTP "+res.status);
   const bytes=Buffer.from(await res.arrayBuffer());
