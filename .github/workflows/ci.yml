@@ -29,5 +29,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: atelier-visual-review
-          path: .artifacts/atelier/*.png
+          path: .artifacts/atelier/*.jpg
           if-no-files-found: ignore
