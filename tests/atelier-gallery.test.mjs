@@ -36,7 +36,7 @@ test("Grabfold WebGL loader reveals letters in RTL order and turns corner across
   assert.match(css, /z-index:999999/);
   assert.match(css, /prefers-reduced-motion/);
 });
-test("new photography is generated at build time from unrelated licensed sources", () => {
+test("new photography is generated from bundled original editorial image sheets", () => {
   const src = read("scripts/prepare-atelier-media.mjs");
   const media = read("src/lib/showcase-photos.ts");
   const pkg = read("package.json");
