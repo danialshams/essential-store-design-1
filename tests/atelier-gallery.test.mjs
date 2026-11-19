@@ -51,6 +51,7 @@ test("new photography is generated from bundled original editorial image sheets"
   assert.match(src, /atelier-hero-desktop\.webp/);
   assert.match(src, /atelier-hero-mobile\.webp/);
   assert.match(src, /atelier-bag-b\.webp/);
-  assert.match(media, /atelier-shoe-b\.webp/);
+  assert.match(media, /atelier-v3-item-06\.webp/);
   assert.match(pkg, /prepare-atelier-media/);
+  assert.match(pkg, /prepare-atelier-v3-media/);
 });
