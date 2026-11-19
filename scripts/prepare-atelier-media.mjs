@@ -85,7 +85,7 @@ async function compose(file, width, height, imageWidth, imageHeight, left, top, 
   console.log("[DAIRA Atelier] " + file);
 }
 const heroBase = path.join(dir, "atelier-hero-cinema.webp");
-if (!(await exists("atelier-hero-cinema.webp"))) {
+if (!((await stat(heroBase).catch(() => ({size:0}))).size > 10000)) {
   throw Error("Bundled original hero campaign missing; do not fall back to an old hero image");
 }
 if (!(await exists("atelier-hero-desktop.webp"))) {
