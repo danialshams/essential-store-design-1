@@ -14,7 +14,7 @@ type Shape = "standard" | "feature" | "portrait" | "landscape";
  */
 const stagedImages:Record<string,string[]> = {
   bags:["/images/atelier-bag-a.webp","/images/atelier-bag-b.webp"],
-  shoes:["/images/atelier-shoe-a.webp","/images/atelier-shoe-b.webp"],
+  shoes:["/images/atelier-shoe-a.webp","/images/atelier-shoe-b.webp","/images/atelier-shoe-c.webp","/images/atelier-shoe-d.webp"],
   clothing:["/images/atelier-shirt-a.webp","/images/atelier-shirt-b.webp","/images/atelier-clothing-c.webp"],
   accessories:["/images/atelier-watch-a.webp","/images/atelier-watch-b.webp","/images/atelier-sunglasses.webp"],
 };
