@@ -1,0 +1,38 @@
+name: Bundle luxury campaign photographs
+on:
+  push:
+    branches: ["feat/midnight-luxury-home-20261119"]
+    paths:
+      - ".github/workflows/bundle-luxury-photography.yml"
+permissions:
+  contents: write
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Download licensed editorial photography to static assets
+        run: node scripts/prepare-luxury-media.mjs
+      - name: Verify every generated photograph is real WEBP, not an empty placeholder
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          keys=["hero","hero-mobile","festival","bag","shoe","clothing","watch","sunglasses"]
+          for key in keys:
+              f=Path("public/images/luxury-"+key+".webp")
+              data=f.read_bytes()
+              assert len(data)>15000 and data[:4]==b"RIFF" and data[8:12]==b"WEBP",(f,len(data))
+              print("VERIFIED",f,len(data))
+          PY
+      - name: Commit static assets to the feature branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/images/luxury-*.webp
+          git diff --cached --quiet || (git commit -m "assets(luxury): bundle eight new local fashion images" && git push)
