@@ -99,7 +99,9 @@ export function AtelierIntro() {
       const t = Math.max(0, Math.min(1, (now - start) / duration));
       const eased = t * t * (3 - 2 * t);
       const x = startX + rect.width * 0.99 * eased;
-      // Keep horizontal displacement greater than vertical from the FIRST frames:\n      // Grabfold otherwise interprets a tall phone\u0027s motion as scrolling, not turning.\n      const y = startY + Math.min(rect.height * 0.35, rect.width * 0.25) * Math.sin(Math.PI * eased * 0.83);
+      // Keep horizontal displacement greater than vertical from the FIRST frames:
+      // A tall phone would otherwise interpret the motion as scrolling.
+      const y = startY + Math.min(rect.height * 0.35, rect.width * 0.25) * Math.sin(Math.PI * eased * 0.83);
       dispatch("pointermove", x, y, 1);
       if (t < 1) {
         frame = requestAnimationFrame(animate);
