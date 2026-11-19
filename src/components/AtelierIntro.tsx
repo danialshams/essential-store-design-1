@@ -65,6 +65,8 @@ export function AtelierIntro() {
   useEffect(() => {
     if (phase !== "turn" || started.current) return;
     started.current = true;
+    // Begin the hero mask under the turning sheet; no blank frame after the loader.
+    window.dispatchEvent(new Event("atelier:intro-turn"));
     const root = document.querySelector<HTMLElement>(".atelier-grabfold .grabfold");
     if (!root) {
       window.setTimeout(() => finish(), 900);
