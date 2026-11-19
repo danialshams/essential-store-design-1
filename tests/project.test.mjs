@@ -25,7 +25,7 @@ test("shared admin public catalog adapter remains read-only",()=>{
  assert.doesNotMatch(api,/export async function POST|export async function PATCH/);
 });
 test("mobile navigation and accessible controls present",()=>{
- const bottom=read("src/components/BottomNav.tsx"),home=read("src/app/page.tsx"),css=read("src/app/globals.css");
+ const bottom=read("src/components/BottomNav.tsx"),home=read("src/components/LuxuryHome.tsx"),css=read("src/app/globals.css");
  assert.match(bottom,/خانه/);assert.match(bottom,/سبد خرید/);assert.match(home,/پرفروش‌ترین محصولات/);
  assert.match(css,/@media\(max-width:760px\)/);
  assert.match(css,/\.mobile-bottom-nav/);
