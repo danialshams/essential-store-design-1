@@ -33,6 +33,15 @@ const previouslyExternal:Record<string,string>={
  "photo-1590874103328-eac38a683ce7":"/images/bag.webp",
  "photo-1620799140188-3b2a02fd9a77":"/images/linen-shirt.webp"
 };
+const luxuryTemplateMap:Record<string,string>={
+ "/images/hero-woman.webp":"/images/luxury-hero.webp",
+ "/images/hero-mobile.webp":"/images/luxury-hero-mobile.webp",
+ "/images/bag.webp":"/images/luxury-bag.webp",
+ "/images/sneakers.webp":"/images/luxury-shoe.webp",
+ "/images/linen-shirt.webp":"/images/luxury-clothing.webp",
+ "/images/classic-watch.webp":"/images/luxury-watch.webp",
+ "/images/sunglasses.webp":"/images/luxury-sunglasses.webp"
+};
 export function showcasePhoto(raw:string|null|undefined):string{
  if(!raw)return "";
  let key=raw;
@@ -49,7 +58,9 @@ export function showcasePhoto(raw:string|null|undefined):string{
    if(known)return generatedShowcasePhotos[known]||known;
   }catch{return raw}
  }
- return generatedShowcasePhotos[key]||bundled[key]||key;
+ const original=generatedShowcasePhotos[key]||bundled[key]||key;
+ const mapped=key.replace(/^\\/images\\/real-photo-v\\d+\\//,"/images/").replace(/\\.webp\\.jpg$/,".webp");
+ return luxuryTemplateMap[key]||luxuryTemplateMap[mapped]||original;
 }
 export const legacyTemplatePhoto=(raw:string|null|undefined):boolean=>{
  if(!raw)return false;
