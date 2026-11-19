@@ -12,11 +12,11 @@ import { legacyTemplatePhoto, showcasePhoto } from "@/lib/showcase-photos";
 export function AtelierHome({ store }: { store: StoreData }) {
   const edition = store.settings.editorialConfig;
   const configuredHero = edition?.hero?.find((item) => item.enabled);
-  const customHero = Boolean(configuredHero?.imageUrl && !legacyTemplatePhoto(configuredHero.imageUrl));
+  const customHero = Boolean(configuredHero?.imageUrl && !legacyTemplatePhoto(configuredHero.imageUrl) && !configuredHero.imageUrl.includes("/images/luxury-"));
   const heroDesktop = customHero ? showcasePhoto(configuredHero?.imageUrl) : "/images/atelier-hero-desktop.webp";
   const heroMobile = customHero ? showcasePhoto(configuredHero?.mobileImageUrl || configuredHero?.imageUrl) : "/images/atelier-hero-mobile.webp";
   const festival = edition?.festival ?? editionTwoDefaults.festival;
-  const customFestival = Boolean(festival.imageUrl && !legacyTemplatePhoto(festival.imageUrl));
+  const customFestival = Boolean(festival.imageUrl && !legacyTemplatePhoto(festival.imageUrl) && !festival.imageUrl.includes("/images/luxury-"));
   const festivalImage = customFestival ? showcasePhoto(festival.imageUrl) : "/images/atelier-festival.webp";
   const sale = festivalProducts(store);
   const best = popularProducts(store);
