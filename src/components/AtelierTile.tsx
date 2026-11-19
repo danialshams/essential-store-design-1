@@ -13,10 +13,10 @@ type Shape = "standard" | "feature" | "portrait" | "landscape";
  * variant, price, availability and purchase target all stay live.
  */
 const stagedImages:Record<string,string[]> = {
-  bags:["/images/atelier-v3-item-01.webp","/images/atelier-v3-item-02.webp","/images/atelier-v3-item-03.webp","/images/atelier-v3-item-04.webp"],
-  shoes:["/images/atelier-v3-item-05.webp","/images/atelier-v3-item-06.webp","/images/atelier-v3-item-07.webp","/images/atelier-v3-item-08.webp","/images/atelier-v3-item-19.webp"],
-  clothing:["/images/atelier-v3-item-09.webp","/images/atelier-v3-item-10.webp","/images/atelier-v3-item-11.webp","/images/atelier-v3-item-12.webp","/images/atelier-v3-item-17.webp","/images/atelier-v3-item-18.webp"],
-  accessories:["/images/atelier-v3-item-13.webp","/images/atelier-v3-item-14.webp","/images/atelier-v3-item-15.webp","/images/atelier-v3-item-16.webp","/images/atelier-v3-item-20.webp"],
+  bags:["/images/atelier-v4-item-27.webp","/images/atelier-v4-item-31.webp","/images/atelier-v3-item-01.webp","/images/atelier-v3-item-02.webp","/images/atelier-v3-item-03.webp","/images/atelier-v3-item-04.webp"],
+  shoes:["/images/atelier-v4-item-21.webp","/images/atelier-v4-item-22.webp","/images/atelier-v3-item-05.webp","/images/atelier-v3-item-06.webp","/images/atelier-v3-item-07.webp","/images/atelier-v3-item-08.webp","/images/atelier-v3-item-19.webp"],
+  clothing:["/images/atelier-v4-item-25.webp","/images/atelier-v4-item-26.webp","/images/atelier-v4-item-29.webp","/images/atelier-v4-item-30.webp","/images/atelier-v3-item-09.webp","/images/atelier-v3-item-10.webp","/images/atelier-v3-item-11.webp","/images/atelier-v3-item-12.webp","/images/atelier-v3-item-17.webp","/images/atelier-v3-item-18.webp"],
+  accessories:["/images/atelier-v4-item-23.webp","/images/atelier-v4-item-24.webp","/images/atelier-v3-item-13.webp","/images/atelier-v3-item-14.webp","/images/atelier-v3-item-15.webp","/images/atelier-v3-item-16.webp","/images/atelier-v3-item-20.webp"],
 };
 function editorialPhoto(product:Product):string{
   const source=product.image || "";
@@ -36,7 +36,7 @@ export function AtelierTile({ product, shape = "standard", index = 0, editorialI
   const available = product.variants?.length ? product.variants.some((v) => v.inventory > 0) : product.inventory > 0;
   const sale = Boolean(product.comparePrice && product.comparePrice > product.price);
   const selected=editorialImage||editorialPhoto(product);
-  const imageSrc=shape==="landscape" && selected.startsWith("/images/atelier-v3-item-")
+  const imageSrc=shape==="landscape" && /^\/images\/atelier-v[34]-item-/.test(selected)
     ?selected.replace(/\.webp$/,"-wide.webp"):selected;
   return <article className={"atelier-tile atelier-tile--" + shape} data-cine-reveal data-cine-tile style={{ "--tile-index": index } as React.CSSProperties}>
     <div className="atelier-tile-photo">
