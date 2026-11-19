@@ -8,6 +8,7 @@ import "./visual-upgrade.css";
 import "./product-theme-polish.css";
 import "./engagement.css";
 import "./luxury-home.css";
+import "./atelier-v2.css";
 export async function generateMetadata():Promise<Metadata>{
  const store=await loadStore();
  const base=seoMeta(store,"/",{title:store.settings.seoTitle||store.settings.storeName,
