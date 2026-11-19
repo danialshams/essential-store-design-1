@@ -66,9 +66,11 @@ try {
     if (reply.exceptionDetails) throw Error("Browser runtime error: " + JSON.stringify(reply.exceptionDetails).slice(0,800));
     return reply.result?.value;
   };
-  const capture = async name => {
-    const screenshot = await send("Page.captureScreenshot", { format: "png", captureBeyondViewport: false, fromSurface: true });
-    writeFileSync(join(output,name+".png"),Buffer.from(screenshot.data,"base64"));
+  const capture = async (name, full = false) => {
+    const screenshot = await send("Page.captureScreenshot", {
+      format: "jpeg", quality: 78, captureBeyondViewport: full, fromSurface: true
+    });
+    writeFileSync(join(output,name+".jpg"),Buffer.from(screenshot.data,"base64"));
   };
   await send("Page.enable");
   await send("Runtime.enable");
@@ -120,7 +122,16 @@ try {
     assert.equal(data.whiteCards,0,name+" must not render legacy cards");
     assert.equal(data.sales,4,name+" must show four featured sale items");
     assert.ok(data.best>0 && data.newest>0,name+" must render two product galleries");
-    await capture(name);
+    // Exercise GSAP scroll triggers before photographing the complete editorial gallery.
+    const numberOfScreens = await evaluate("Math.ceil(document.documentElement.scrollHeight / innerHeight)");
+    for (let screen = 1; screen <= numberOfScreens; screen++) {
+      await evaluate("window.scrollTo(0," + screen + "*innerHeight);true");
+      await delay(160);
+    }
+    await delay(600);
+    await evaluate("window.scrollTo(0,0);true");
+    await delay(180);
+    await capture(name, true);
     await send("Page.navigate",{url:origin+"/festival"});
     await waitFor(() => evaluate('!!document.querySelector(".luxury-festival-page")'),name+" festival route");
     assert.ok(await evaluate('document.querySelectorAll(".luxury-festival-filters button").length>1'),name+" festival filters");
