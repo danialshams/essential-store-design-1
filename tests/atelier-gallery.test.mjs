@@ -15,6 +15,10 @@ test("new homepage includes four original editorial layouts and retains purchasi
   assert.match(tile, /toggleFavorite/);
   assert.match(tile, /add\(product\)/);
   assert.doesNotMatch(home, /ProductCard/);
+  const footer=read("src/components/AtelierFooter.tsx");
+  assert.match(footer,/atelier-footer-wordmark/);
+  assert.match(footer,/store.settings.contactPhone/);
+  assert.match(read("src/components/StoreChrome.tsx"),/AtelierFooter/);
   assert.match(css, /\.atelier-tile\{[^}]*background:transparent/);
   assert.match(css, /\.atelier-hero-image\{object-fit:contain/);
   assert.match(css, /\.site-footer\{margin-top:0!important/);
