@@ -57,7 +57,7 @@ await Promise.all(library.map(async ([file, photoId]) => {
 /* Prepare a navy fashion editorial: selectively transform gold garment fabric
    in a NEW photograph while preserving naturally colored skin and the set.
    This is not a blue overlay on any previously used homepage image. */
-const source = await download("photo-1515886657613-9f3515b0c78f", 1200, 1800);
+const source = await download("photo-1771072426488-87e6bbcc0cf7", 1200, 1800);
 const masterWidth = 1050;
 const masterHeight = 1500;
 const { data: pixels, info } = await sharp(source)
