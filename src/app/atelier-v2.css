@@ -223,3 +223,6 @@ body:has(.luxury-festival-page) .copyright{background:#05111e!important;color:#8
 .luxury-festival-page .atelier-tile-caption{min-height:94px}
 .luxury-festival-page .atelier-tile-names>a{color:#071827}
 .luxury-festival-page .atelier-tile-off{background:#071827e0;color:#f2f1ed}
+
+/* The navigation never shows behind the intro text or before the paper turn is complete. */
+body:has(.atelier-intro) .site-header,body:has(.atelier-intro) .mobile-bottom-nav{visibility:hidden!important;pointer-events:none!important}
