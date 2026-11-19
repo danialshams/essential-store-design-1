@@ -40,7 +40,7 @@ jobs:
                           if product[k] != storefront[k]:
                               raise AssertionError(f'{slug} {k} not synchronized')
                   # A passing API is not enough: verify the rendered storefront pages as users see them.
-                  page_paths = ['/', '/products', '/category/clothing', '/product/minimal-leather-bag', '/cart', '/checkout', '/account', '/info/privacy', '/blog']
+                  page_paths = ['/', '/festival', '/products', '/category/clothing', '/product/minimal-leather-bag', '/cart', '/checkout', '/account', '/info/privacy', '/blog']
                   for path in page_paths:
                       request = urllib.request.Request('https://essential-store-design-1.vercel.app'+path,
                           headers={'User-Agent': 'Commerce-SSR-Healthcheck/1.0'})
@@ -48,18 +48,20 @@ jobs:
                           html = response.read(12000).decode('utf-8', 'replace')
                           if response.status != 200 or '<html' not in html:
                               raise AssertionError(f'Invalid storefront page {path}: {response.status}')
-                  # Validate rendered festival, not only an eight-product catalog API.
+                  # The homepage highlights four actual discounted products; the archive lists all.
                   import re
                   with urllib.request.urlopen('https://essential-store-design-1.vercel.app/', timeout=18) as response:
                       homepage = response.read().decode('utf-8', 'replace')
-                  count = re.search(r'data-festival-product-count="(\d+)"', homepage)
-                  total = int(count.group(1)) if count else 0
-                  visible = homepage.count('class="ed1-sale-item"')
-                  if total < 8 or visible < 8:
-                      raise AssertionError(f'Only {visible} festival cards rendered; data count={total}; expected >=8')
-                  if 'ed1-sale-header-count' not in homepage:
-                      raise AssertionError('Festival product total is not visible to the visitor')
-                  print(f'PASS: {visible} rendered festival cards / data count {total}')
+                  match = re.search(r'data-festival-product-count="(\\d+)"', homepage)
+                  total = int(match.group(1)) if match else 0
+                  visible = homepage.count('class="luxury-product-wrap luxury-sale-item"')
+                  if total < 4 or visible != min(4,total):
+                      raise AssertionError(f'Festival highlights: {visible} rendered / {total} real discounted products')
+                  with urllib.request.urlopen('https://essential-store-design-1.vercel.app/festival', timeout=18) as response:
+                      archive = response.read().decode('utf-8', 'replace')
+                  if 'luxury-festival-controls' not in archive or 'luxury-festival-page' not in archive:
+                      raise AssertionError('Separate festival archive or interactive filters missing')
+                  print(f'PASS: {visible} homepage highlights and {total} eligible festival products')
                   with urllib.request.urlopen('https://essential-store-design-1.vercel.app/admin', timeout=18) as response:
                       if response.status != 200: raise AssertionError('Integrated admin failed to render')
                       markup = response.read().decode('utf-8','replace')
