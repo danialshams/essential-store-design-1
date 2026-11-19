@@ -52,7 +52,7 @@ jobs:
                   import re
                   with urllib.request.urlopen('https://essential-store-design-1.vercel.app/', timeout=18) as response:
                       homepage = response.read().decode('utf-8', 'replace')
-                  match = re.search(r'data-festival-product-count="(\\d+)"', homepage)
+                  match = re.search(r'data-festival-product-count="(\d+)"', homepage)
                   total = int(match.group(1)) if match else 0
                   visible = homepage.count('class="luxury-product-wrap luxury-sale-item"')
                   if total < 4 or visible != min(4,total):
