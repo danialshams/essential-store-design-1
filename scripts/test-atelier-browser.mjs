@@ -126,5 +126,5 @@ try {
   try { socket?.close(); } catch {}
   try { if(chrome && !chrome.killed)chrome.kill("SIGTERM"); } catch {}
   try { if(server && !server.killed)process.kill(-server.pid,"SIGTERM"); } catch {}
-  rmSync(profile,{recursive:true,force:true});
+  try { rmSync(profile,{recursive:true,force:true,maxRetries:5,retryDelay:250}); } catch { /* Chrome can still be releasing its profile. */ }
 }
