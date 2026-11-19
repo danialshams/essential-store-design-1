@@ -4,8 +4,20 @@ import {useEffect} from "react";
 /** Gallery choreography — the masks reveal exactly framed media; images themselves never outgrow the frame. */
 export function AtelierMotion(){
   useEffect(()=>{
+    // Match the real fixed header height, including the mobile search drawer.
+    // The CSS fallback handles first paint; ResizeObserver handles font/layout changes.
+    const gallery=document.querySelector<HTMLElement>(".atelier-home");
+    const header=document.querySelector<HTMLElement>(".site-header");
+    const measureHeader=()=>{
+      if(gallery&&header)gallery.style.setProperty("--atelier-header-h",Math.ceil(header.getBoundingClientRect().height)+"px");
+    };
+    measureHeader();
+    const headerObserver=header&&typeof ResizeObserver!=="undefined"?new ResizeObserver(measureHeader):null;
+    if(header&&headerObserver)headerObserver.observe(header);
+    window.addEventListener("resize",measureHeader);
+    const cleanupHeader=()=>{headerObserver?.disconnect();window.removeEventListener("resize",measureHeader)};
     const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if(reduced)return;
+    if(reduced)return cleanupHeader;
     let cancelled=false;
     let context:{revert:()=>void}|undefined;
     let started=false;
@@ -49,7 +61,7 @@ export function AtelierMotion(){
     window.addEventListener("atelier:intro-complete",reveal,{once:true});
     // Failsafe for a loader that completes via CSS rather than the custom event.
     const safety=window.setTimeout(()=>{if(!started)void reveal()},5700);
-    return()=>{cancelled=true;window.clearTimeout(safety);window.removeEventListener("atelier:intro-complete",reveal);context?.revert()};
+    return()=>{cancelled=true;window.clearTimeout(safety);window.removeEventListener("atelier:intro-complete",reveal);context?.revert();cleanupHeader()};
   },[]);
   return null;
 }
