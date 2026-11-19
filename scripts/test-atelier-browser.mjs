@@ -132,6 +132,23 @@ try {
     assert.equal(data.whiteCards,0,name+" must not render legacy cards");
     const gallerySources=await evaluate('Array.from(document.querySelectorAll(".atelier-home .atelier-tile img")).map(img=>img.getAttribute("src")||"")');
     assert.equal(new Set(gallerySources).size,gallerySources.length,name+" visible home product images must never repeat");
+    // All three shelves expose accessible category filters without empty options.
+    const filterState=await evaluate('Array.from(document.querySelectorAll(".atelier-category-tabs")).map(t=>({kind:t.dataset.atelierFilter,choices:[...t.querySelectorAll("button")].map(b=>({category:b.dataset.categoryId,pressed:b.getAttribute("aria-pressed")}))}))');
+    assert.deepEqual(filterState.map(x=>x.kind),["sale","best","new"],name+" must offer three category filters");
+    for(const shelf of ["sale","best","new"]){
+      const state=filterState.find(x=>x.kind===shelf);
+      assert.ok(state.choices.length>=2,name+" "+shelf+" must have at least one category");
+      const selected=state.choices.find(x=>x.category!=="all").category;
+      const selector='[data-atelier-filter="'+shelf+'"] [data-category-id="'+selected+'"]';
+      await evaluate('document.querySelector('+JSON.stringify(selector)+').click();true');
+      await waitFor(()=>evaluate('document.querySelector('+JSON.stringify(selector)+')?.getAttribute("aria-pressed")==="true"'),name+" "+shelf+" category active",6000);
+      const selectedCards=await evaluate('Array.from(document.querySelectorAll(".atelier-category-collection--'+shelf+' .atelier-category-grid .atelier-tile")).map(card=>card.dataset.category)');
+      assert.ok(selectedCards.length>0&&selectedCards.length<=4,name+" "+shelf+" should show 1–4 category products");
+      assert.ok(selectedCards.every(cat=>cat===selected),name+" "+shelf+" must show selected category only");
+      const reset='[data-atelier-filter="'+shelf+'"] [data-category-id="all"]';
+      await evaluate('document.querySelector('+JSON.stringify(reset)+').click();true');
+      await waitFor(()=>evaluate('document.querySelector('+JSON.stringify(reset)+')?.getAttribute("aria-pressed")==="true"'),name+" "+shelf+" reset",6000);
+    }
     if(width<761){
       await evaluate('document.querySelector(".hamburger").click();true');
       await waitFor(()=>evaluate('!!document.querySelector(".mobile-drawer")'),name+" new mobile navigation",7000);

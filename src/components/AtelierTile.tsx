@@ -38,7 +38,7 @@ export function AtelierTile({ product, shape = "standard", index = 0, editorialI
   const selected=editorialImage||editorialPhoto(product);
   const imageSrc=shape==="landscape" && /^\/images\/atelier-v[34]-item-/.test(selected)
     ?selected.replace(/\.webp$/,"-wide.webp"):selected;
-  return <article className={"atelier-tile atelier-tile--" + shape} data-cine-reveal data-cine-tile style={{ "--tile-index": index } as React.CSSProperties}>
+  return <article className={"atelier-tile atelier-tile--" + shape} data-category={product.category} data-cine-reveal data-cine-tile style={{ "--tile-index": index } as React.CSSProperties}>
     <div className="atelier-tile-photo">
       <Link href={"/product/" + product.slug} aria-label={"مشاهده " + product.name}>
         <Image src={imageSrc} alt={imageSrc===product.image?(product.seoImageAlt||product.name):("تصویر ژورنالی دسته "+product.categoryLabel)} fill

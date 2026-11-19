@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown, ArrowUpLeft } from "lucide-react";
 import type { StoreData } from "@/lib/live-store";
-import { AtelierTile } from "@/components/AtelierTile";
+import { AtelierCategoryGallery } from "@/components/AtelierCategoryGallery";
 import { AtelierMotion } from "@/components/AtelierMotion";
 import { AtelierCountdown } from "@/components/AtelierCountdown";
 import { festivalProducts, popularProducts, recentProducts } from "@/lib/luxury-catalog";
@@ -24,6 +24,9 @@ export function AtelierHome({ store }: { store: StoreData }) {
   const sale = festivalProducts(store);
   const best = popularProducts(store);
   const newest = recentProducts(store);
+  const available = store.products.filter(p=>p.inventory>0);
+  const bestPool = available.slice().sort((a,b)=>Number(Boolean(b.featured))-Number(Boolean(a.featured)));
+  const newPool = available.slice().sort((a,b)=>Number(Boolean(b.newArrival))-Number(Boolean(a.newArrival)));
   const [saleMedia,bestMedia,newMedia]=allocateEditorialMedia([sale.slice(0,4),best,newest]);
 
   return <div className="atelier-home" dir="rtl">
@@ -42,7 +45,7 @@ export function AtelierHome({ store }: { store: StoreData }) {
         <div className="atelier-hero-copy" data-cine-reveal>
           <span className="atelier-overline">THE ART OF SELECTING</span>
           <h1>انتخابی که<br /><em>شبیه توست.</em></h1>
-          <p>جایی برای کشف جزئیاتی که یک استایل را ماندگار می‌کند.</p>
+          <p>استایل، در جزئیات.</p>
           <Link className="atelier-outline-cta" href="/products">کشف مجموعه <ArrowUpLeft size={18} /></Link>
         </div>
         <div className="atelier-hero-bottom">
@@ -63,7 +66,7 @@ export function AtelierHome({ store }: { store: StoreData }) {
         <div className="atelier-campaign-copy" data-cine-reveal>
           <span className="atelier-overline">MIDNIGHT SELECTION</span>
           <h2>فرصت کوتاه.<br /><em>انتخاب ماندگار.</em></h2>
-          <p>{festival.description || "منتخبی از محصولات با قیمت‌های ویژه، برای سلیقه‌هایی که به جزئیات توجه می‌کنند."}</p>
+          <p>{festival.description || "منتخبی از انتخاب‌های خاص."}</p>
           {festival.showCountdown !== false && <div className="atelier-countdown">
             <AtelierCountdown endsAt={festival.endsAt || editionTwoDefaults.festival.endsAt}
               expiredText={festival.expiredText} />
@@ -77,12 +80,8 @@ export function AtelierHome({ store }: { store: StoreData }) {
           <div><span>EXCLUSIVE PIECES</span><h3>منتخب جشنواره</h3></div>
           <Link href="/festival">تمام پیشنهادها <ArrowUpLeft size={17} /></Link>
         </header>
-        <div className="atelier-sale-grid" data-festival-product-count={sale.length}>
-          {sale.slice(0, 4).map((product, index) =>
-            <div className="luxury-product-wrap luxury-sale-item" key={product.id}>
-              <AtelierTile product={product} editorialImage={saleMedia[index]} shape={index === 0 ? "portrait" : "standard"} index={index} />
-            </div>
-          )}
+        <div data-festival-product-count={sale.length}>
+          <AtelierCategoryGallery kind="sale" products={sale} initialProducts={sale.slice(0,4)} initialMedia={saleMedia} gridClassName="atelier-sale-grid" />
         </div>
       </div>
     </section>}
@@ -97,12 +96,7 @@ export function AtelierHome({ store }: { store: StoreData }) {
             <h2 id="atelier-best-title">پرفروش‌ترین‌ها،<br /><em>با نگاهی متفاوت.</em></h2></div>
           <Link href="/products?sort=popular">دیدن همه پرفروش‌ها <ArrowUpLeft size={19} /></Link>
         </header>
-        <div className="atelier-best-gallery">
-          {best.map((product, index) =>
-            <AtelierTile key={product.id} product={product}
-              shape={index === 0 ? "feature" : index === 2 ? "landscape" : "portrait"} editorialImage={bestMedia[index]} index={index} />
-          )}
-        </div>
+        <AtelierCategoryGallery kind="best" products={bestPool} initialProducts={best} initialMedia={bestMedia} gridClassName="atelier-best-gallery" />
       </div>
     </section>
 
@@ -116,19 +110,16 @@ export function AtelierHome({ store }: { store: StoreData }) {
             <h2 id="atelier-new-title">تازه از راه رسیده.<br /><em>برای فصل تازه.</em></h2></div>
           <Link href="/products?sort=new">مشاهده تازه‌ترین‌ها <ArrowUpLeft size={19} /></Link>
         </header>
-        <div className="atelier-new-gallery">
-          <div className="atelier-new-editorial" data-cine-reveal data-cine-photo>
-            <Image src="/images/atelier-v4-editorial.webp" alt="ژورنال تصویری کالکشن جدید" unoptimized fill
+        <AtelierCategoryGallery kind="new" products={newPool} initialProducts={newest} initialMedia={newMedia}
+          gridClassName="atelier-new-products" layoutClassName="atelier-new-gallery"
+          editorial={<div className="atelier-new-editorial" data-cine-reveal data-cine-photo>
+            <Image src="/images/atelier-v4-editorial.webp" alt="ژورنال کالکشن جدید" unoptimized fill
               sizes="(max-width:760px) 100vw, 40vw" />
             <div><span>DAIRA / NEW SEASON</span>
-              <strong>THE NEW<br />PERSPECTIVE</strong>
-              <Link href="/products?sort=new">دیدن کالکشن <ArrowUpLeft size={18} /></Link>
+              <strong>THE NEW<br/>PERSPECTIVE</strong>
+              <Link href="/products?sort=new">دیدن کالکشن <ArrowUpLeft size={18}/></Link>
             </div>
-          </div>
-          <div className="atelier-new-products">
-            {newest.map((product, index) => <AtelierTile key={product.id} product={product} editorialImage={newMedia[index]} index={index} />)}
-          </div>
-        </div>
+          </div>} />
       </div>
     </section>
   </div>;

@@ -1,0 +1,133 @@
+/* ATELIER / restrained category navigation and additional editorial breathing room.
+   Only text/category separators: no filled pills, boxes, banners, or redundant paragraphs. */
+.atelier-category-collection{min-width:0;width:100%}
+.atelier-category-tabs{
+  display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+  gap:clamp(18px,2.8vw,43px);
+  max-width:min(100%,970px);margin:0 auto clamp(46px,5vw,80px);
+  border-bottom:1px solid rgba(89,123,151,.27);
+  padding:0 clamp(6px,1.5vw,20px) 2px;
+  color:#597b97;
+}
+.atelier-category-tabs button{
+  appearance:none;position:relative;flex:none;min-height:49px;
+  background:transparent!important;border:0!important;border-radius:0!important;
+  color:inherit!important;padding:10px 1px 19px;
+  font-size:clamp(12px,1.05vw,14px);line-height:1.5;font-weight:400;
+  transition:color .34s ease;white-space:nowrap;
+}
+.atelier-category-tabs button::after{
+  content:"";position:absolute;bottom:-2px;right:50%;left:50%;height:2px;
+  background:currentColor;transition:inset .36s cubic-bezier(.22,.8,.2,1);
+}
+.atelier-category-tabs button.is-active{color:#173b59!important;font-weight:550}
+.atelier-category-tabs button.is-active::after{left:0;right:0}
+.atelier-category-tabs button:hover{color:#071827!important}
+.atelier-category-tabs button:focus-visible{outline:2px solid #597b97;outline-offset:3px}
+.atelier-category-tabs--sale{
+  color:#9fb4c5;border-color:rgba(207,216,223,.19);
+}
+.atelier-category-tabs--sale button.is-active,
+.atelier-category-tabs--sale button:hover{color:#f2f1ed!important}
+.atelier-a11y-only{
+  position:absolute!important;width:1px!important;height:1px!important;
+  overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;
+}
+.atelier-category-grid>.atelier-tile,
+.atelier-category-grid>.luxury-product-wrap{
+  animation:atelierCategoryReveal .66s cubic-bezier(.2,.7,.2,1) both;
+}
+.atelier-category-grid>:nth-child(2){animation-delay:65ms}
+.atelier-category-grid>:nth-child(3){animation-delay:110ms}
+.atelier-category-grid>:nth-child(4){animation-delay:145ms}
+@keyframes atelierCategoryReveal{
+  from{opacity:0;transform:translateY(17px)}
+  to{opacity:1;transform:none}
+}
+/* A single category may contain fewer than four items. Maintain gallery rhythm. */
+.atelier-sale-grid.atelier-category-grid--count-1{
+  grid-template-columns:minmax(0,min(370px,100%));justify-content:center;
+}
+.atelier-sale-grid.atelier-category-grid--count-2{
+  grid-template-columns:repeat(2,minmax(0,min(370px,48%)));justify-content:center;
+}
+.atelier-sale-grid.atelier-category-grid--count-3{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+.atelier-best-gallery.atelier-category-grid--count-1{
+  grid-template-columns:minmax(0,min(520px,100%));grid-template-rows:auto;justify-content:center;
+}
+.atelier-best-gallery.atelier-category-grid--count-2{
+  grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto;
+}
+.atelier-best-gallery.atelier-category-grid--count-3{
+  grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:auto;
+}
+.atelier-best-gallery.atelier-category-grid--count-1>.atelier-tile:first-child,
+.atelier-best-gallery.atelier-category-grid--count-2>.atelier-tile:first-child,
+.atelier-best-gallery.atelier-category-grid--count-3>.atelier-tile:first-child,
+.atelier-best-gallery.atelier-category-grid--count-3>.atelier-tile:nth-child(4){
+  grid-row:auto;grid-column:auto;
+}
+.atelier-best-gallery.atelier-category-grid--count-3 .atelier-tile-photo,
+.atelier-best-gallery.atelier-category-grid--count-2 .atelier-tile-photo,
+.atelier-best-gallery.atelier-category-grid--count-1 .atelier-tile-photo{
+  min-height:unset;height:auto;aspect-ratio:4/5;
+}
+.atelier-best-gallery.atelier-category-grid--count-3>.atelier-tile,
+.atelier-best-gallery.atelier-category-grid--count-2>.atelier-tile,
+.atelier-best-gallery.atelier-category-grid--count-1>.atelier-tile{min-height:0}
+.atelier-new-products.atelier-category-grid--count-1{
+  grid-template-columns:minmax(0,min(370px,100%));justify-content:center;grid-template-rows:auto;
+}
+.atelier-new-products.atelier-category-grid--count-2{
+  grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto;
+}
+.atelier-new-products.atelier-category-grid--count-3{
+  grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto;
+}
+/* Editorial density: generous margins without stacking extra marketing copy. */
+body:has(.atelier-home) .atelier-festival{padding-block:clamp(170px,12vw,245px) clamp(190px,14vw,260px)!important}
+body:has(.atelier-home) .atelier-best{padding-block:clamp(190px,14vw,270px) clamp(195px,14vw,280px)!important}
+body:has(.atelier-home) .atelier-new{padding-top:clamp(190px,13vw,255px)!important}
+body:has(.atelier-home) .atelier-new-gallery{padding-bottom:clamp(170px,12vw,245px)!important}
+body:has(.atelier-home) .atelier-gallery-head{padding-top:clamp(110px,9vw,160px)!important;padding-bottom:36px!important}
+body:has(.atelier-home) .atelier-section-head{margin-block:clamp(60px,6vw,105px) 24px!important}
+body:has(.atelier-home) .atelier-section-tag{margin-bottom:clamp(52px,5vw,82px)!important}
+body:has(.atelier-home) .atelier-section-tag>span:last-child,
+body:has(.atelier-home) .atelier-section-head .atelier-overline,
+body:has(.atelier-home) .atelier-gallery-head>div>span,
+body:has(.atelier-home) .atelier-campaign-count{display:none!important}
+body:has(.atelier-home) .atelier-campaign-copy p{
+  max-width:345px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+body:has(.atelier-home) .atelier-hero-copy p{max-width:340px}
+body:has(.atelier-home) .atelier-category-collection--new{width:100%}
+body:has(.atelier-home) .atelier-category-collection--new .atelier-new-gallery{margin-top:0!important}
+@media(max-width:760px){
+  .atelier-category-tabs{
+    flex-wrap:nowrap;justify-content:flex-start;gap:25px;overflow-x:auto;overflow-y:hidden;
+    max-width:100%;padding-inline:9px;margin-bottom:35px;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  .atelier-category-tabs::-webkit-scrollbar{display:none}
+  .atelier-category-tabs button{min-height:46px;font-size:12px;padding-bottom:14px}
+  body:has(.atelier-home) .atelier-festival{padding-block:125px 144px!important}
+  body:has(.atelier-home) .atelier-best{padding-block:155px 172px!important}
+  body:has(.atelier-home) .atelier-new{padding-top:150px!important}
+  body:has(.atelier-home) .atelier-new-gallery{padding-bottom:150px!important}
+  body:has(.atelier-home) .atelier-section-head{margin-block:50px 25px!important}
+  body:has(.atelier-home) .atelier-gallery-head{padding-block:75px 30px!important}
+  body:has(.atelier-home) .atelier-section-tag{margin-bottom:36px!important}
+  .atelier-best-gallery.atelier-category-grid--count-3{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .atelier-best-gallery.atelier-category-grid--count-3>.atelier-tile:first-child{
+    grid-column:1/-1;
+  }
+  .atelier-sale-grid.atelier-category-grid--count-3{grid-template-columns:repeat(2,minmax(0,1fr));}
+}
+@media(prefers-reduced-motion:reduce){
+  .atelier-category-grid>.atelier-tile,
+  .atelier-category-grid>.luxury-product-wrap{animation:none!important}
+  .atelier-category-tabs button,
+  .atelier-category-tabs button::after{transition:none!important}
+}
