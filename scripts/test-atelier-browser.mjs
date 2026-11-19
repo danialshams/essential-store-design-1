@@ -95,12 +95,15 @@ try {
       if(state.drag)dragged=true;
       if(state.turning)turning=true;
       if(state.canvas)canvas=true;
+      if((name==="desktop"||name==="mobile") && (i===1||i===4)) {
+        await capture("curl-"+name+(i===1?"-early":"-mid"));
+      }
       await delay(90);
     }
     assert.ok(canvas,name+" loader must render the WebGL curling paper");
     if(!dragged)console.error("ATELIER_CURL_DIAGNOSTIC "+name+" "+JSON.stringify(curlSamples));
     assert.ok(dragged,name+" WebGL fold must begin as a top-corner drag, not a center-edge fallback: "+JSON.stringify(curlSamples.slice(-2)));
-    if(name==="desktop")await capture("curl-desktop");
+    // During the fold the moving sheet is captured above, not after it disappears.
     await waitFor(() => evaluate('!document.querySelector(".atelier-intro")'), name+" loader completion",9000);
     const data=await evaluate(`(() => {
       const host=document.querySelector(".atelier-home");
